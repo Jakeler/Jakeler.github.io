@@ -10,4 +10,4 @@ Note: It makes sense to create an additional database user with limited privileg
 ### Quick overview of the Volkszaehler database structure
 There are only 2 tables really necessary for reading, `data` and `properties`:
 ##### data
-![vz data example]({{ "/assets/vz-data-structure.jpg" }})
+![vz data example]({{ "/assets/vz-data-structure.png" }})
