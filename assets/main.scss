@@ -7,9 +7,9 @@
 
 .site-header, .site-footer, .page-content {
     background-color: #FFF;
-    width: 60%;
+    max-width: 1000px;
     position: relative;
-    left:20%
+    margin: auto
 }
 
 canvas{
