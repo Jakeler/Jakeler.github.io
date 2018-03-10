@@ -8,9 +8,6 @@ github_username:  Jakeler
 
 google_analytics: UA-115359281-1
 
-# Build settings
-paginate: 4
-
 author: Jake
 
 theme: minima
