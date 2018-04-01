@@ -36,4 +36,4 @@ Then there is the alarm feature, that let's the phone vibrate and/or ring if the
 After a alarm was triggered you will see a notification like this. Note that the alarm feature works also with disabled screen, so you can save some battery.
 
 
-All source code is available under the Apache 2 License on my [GitHub Repo](https://github.com/Jakeler/UT61E-Toolkit). If you looking just for the data decoding part to build an own app go to my [Java lib repo](https://github.com/Jakeler/ut61e_decoder). It compiles with Android Studio 3.1. Prebuilt .apk's are coming soon, also to the Google Play Store! 
+All source code is available under the Apache 2 License on my [GitHub Repo](https://github.com/Jakeler/UT61E-Toolkit). If you looking just for the data decoding part to build an own app go to my [Java lib repo](https://github.com/Jakeler/ut61e_decoder). It compiles with Android Studio 3.1. Prebuilt .apk's are on the [releases tab](https://github.com/Jakeler/UT61E-Toolkit/releases), coming soon to the Google Play Store! 
