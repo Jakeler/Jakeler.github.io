@@ -1,0 +1,255 @@
+[
+    {
+        "id": "4d2bd9f4.d173a8",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "73885556.71415c",
+        "type": "modbus-read",
+        "z": "4d2bd9f4.d173a8",
+        "name": "Read voltage",
+        "topic": "",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "unitid": "",
+        "dataType": "HoldingRegister",
+        "adr": "2",
+        "quantity": "3",
+        "rate": "3",
+        "rateUnit": "s",
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "server": "a0a98d2e.0186f",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "x": 140,
+        "y": 180,
+        "wires": [
+            [
+                "b36717db.19ef98"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "66f2f3fd.04436c",
+        "type": "csv",
+        "z": "4d2bd9f4.d173a8",
+        "name": "log",
+        "sep": ";",
+        "hdrin": "",
+        "hdrout": false,
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "Voltage, Current",
+        "skip": "0",
+        "x": 590,
+        "y": 240,
+        "wires": [
+            [
+                "f26536d5.c77228"
+            ]
+        ]
+    },
+    {
+        "id": "f26536d5.c77228",
+        "type": "file",
+        "z": "4d2bd9f4.d173a8",
+        "name": "",
+        "filename": "logfile_new.csv",
+        "appendNewline": false,
+        "createDir": false,
+        "overwriteFile": "false",
+        "x": 850,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "b36717db.19ef98",
+        "type": "function",
+        "z": "4d2bd9f4.d173a8",
+        "name": "Convert values",
+        "func": "msg.payload[0] /= 100.0; //Voltage (V)\nmsg.payload[1] /= 1000.0; //Current (A)\nmsg.payload[2] /= 100.0; //Power (W)\nmsg.payload[3] = global.get(\"wh\")+(msg.payload[2]/1200.0);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 390,
+        "y": 200,
+        "wires": [
+            [
+                "d15bc132.879ee",
+                "66f2f3fd.04436c",
+                "138aaa0b.25b2a6",
+                "f2cf5180.8353c"
+            ]
+        ]
+    },
+    {
+        "id": "d15bc132.879ee",
+        "type": "debug",
+        "z": "4d2bd9f4.d173a8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 660,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "138aaa0b.25b2a6",
+        "type": "change",
+        "z": "4d2bd9f4.d173a8",
+        "name": "set global.values",
+        "rules": [
+            {
+                "t": "set",
+                "p": "values",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 770,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a854e9b3.ee1088",
+        "type": "http in",
+        "z": "4d2bd9f4.d173a8",
+        "name": "Show measurments",
+        "url": "/show",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 240,
+        "y": 420,
+        "wires": [
+            [
+                "829c3ad5.d9bf98"
+            ]
+        ]
+    },
+    {
+        "id": "745584fb.2c8e9c",
+        "type": "http response",
+        "z": "4d2bd9f4.d173a8",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 710,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "829c3ad5.d9bf98",
+        "type": "function",
+        "z": "4d2bd9f4.d173a8",
+        "name": "build result",
+        "func": "values = global.get(\"values\");\nmsg.payload = \"<h3>DPS5005</h3>\"\nmsg.payload += \"Voltage: \" + values[0] + \" V<br>\"\nmsg.payload += \"Current: \" + values[1] + \" A<br>\"\nmsg.payload += \"Power: \" + values[2] + \" W<br>\"\nmsg.payload += \"Cap: \" + global.get(\"wh\") + \" Wh\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 490,
+        "y": 440,
+        "wires": [
+            [
+                "745584fb.2c8e9c"
+            ]
+        ]
+    },
+    {
+        "id": "f2cf5180.8353c",
+        "type": "function",
+        "z": "4d2bd9f4.d173a8",
+        "name": "accumulate Wh",
+        "func": "global.set(\"wh\", msg.payload[3])\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 790,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c4f009ff.2135b8",
+        "type": "inject",
+        "z": "4d2bd9f4.d173a8",
+        "name": "set wh to 0",
+        "topic": "",
+        "payload": "0.00",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 150,
+        "y": 320,
+        "wires": [
+            [
+                "a82b3c5.1d8c8c"
+            ]
+        ]
+    },
+    {
+        "id": "a82b3c5.1d8c8c",
+        "type": "change",
+        "z": "4d2bd9f4.d173a8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "wh",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 380,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a0a98d2e.0186f",
+        "type": "modbus-client",
+        "z": "",
+        "name": "USB0 ",
+        "clienttype": "simpleser",
+        "bufferCommands": true,
+        "stateLogEnabled": false,
+        "tcpHost": "127.0.0.1",
+        "tcpPort": "502",
+        "tcpType": "DEFAULT",
+        "serialPort": "/dev/rfcomm0",
+        "serialType": "RTU-BUFFERD",
+        "serialBaudrate": "9600",
+        "serialDatabits": "8",
+        "serialStopbits": "1",
+        "serialParity": "none",
+        "serialConnectionDelay": "100",
+        "unit_id": 1,
+        "commandDelay": 1,
+        "clientTimeout": 1000,
+        "reconnectTimeout": 2000
+    }
+] 
