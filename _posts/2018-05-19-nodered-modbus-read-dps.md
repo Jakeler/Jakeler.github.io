@@ -25,9 +25,9 @@ msg.payload[2] /= 100.0; //Power (W)
 msg.payload[3] = global.get("wh")+(msg.payload[2]/1200.0);
 return msg;
 ```
-The data is getting moved into a global variable a saved to disk in a csv file.
+The data is getting moved into a global variable a saved to disk in a csv file. In addition it calulates the accumulated Wh, which is interresting for battery charging. The capacity can be reset through triggering the `set wh to 0` node manually.
 
-The webserver shows a simple HTML page with the data, this is done in the build result node with some js again:
+The webserver shows a simple HTML page with the data from the global vaiable, this is done in the build result node with some js again:
 ```js
 values = global.get("values");
 msg.payload = "<h3>DPS5005</h3>"
@@ -37,5 +37,3 @@ msg.payload += "Power: " + values[2] + " W<br>"
 msg.payload += "Cap: " + global.get("wh") + " Wh"
 return msg;
 ```
-
-In addition it calulates the accumulated Wh, which is interresting for battery charging. The capacity can be reset through triggering the `set wh to 0` node manually.
