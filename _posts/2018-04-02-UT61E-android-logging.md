@@ -39,3 +39,5 @@ After a alarm was triggered you will see a notification like this. Note that the
 All source code is available under the Apache 2 License on my [GitHub Repo](https://github.com/Jakeler/UT61E-Toolkit). If you looking just for the data decoding part to build an own app go to my [Java lib repo](https://github.com/Jakeler/ut61e_decoder). It compiles with Android Studio 3.1. Prebuilt .apk's are on the [releases tab](https://github.com/Jakeler/UT61E-Toolkit/releases), coming soon to the Google Play Store.
 
 Update: It is on [Google Play](https://play.google.com/store/apps/details?id=jk.ut61eTool)!
+
+New updates include more features like viewing logs in [update 1.1]({% post_url 2018-05-11-UT61E-toolkit-update1_1 %}) and external shunt current calculation in [update 1.2]({% post_url 2018-05-12-UT61E-toolkit-update1_2 %}).
