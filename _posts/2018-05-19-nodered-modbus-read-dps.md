@@ -17,6 +17,8 @@ You can also download it [here](/assets/dps-modbus-read.json) and import it dire
 
 The modbus node at the start reads the registers (function code 3) every 3 seconds. Address is the start and quantity is how many following get read. I choose 2 as start and 3 quantity, that corresponds to the voltage, current and power values (see the documentation mentioned above). The Server field must be set to the correct serial port, other defaults and 9600 baudrate is fine.
 
+For binding a Bluetooth device as serial port on Linux `rfcomm` can be used, instructions are [here.](https://gist.github.com/0/c73e2557d875446b9603)
+
 It outputs integer numbers, so it must be divided by these factors in a small javascript node:
 ```js
 msg.payload[0] /= 100.0; //Voltage (V)
