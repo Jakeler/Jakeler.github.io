@@ -12,8 +12,8 @@ Then lets get started with creating the Node-RED flow. After the server was star
 First we need to communicate with the modbus serial port, there is a additional module available that does exactly this. It can be installed from Settings -> Palette -> Install -> Search `node-red-contrib-modbus`. For reading the data registers periodically the Modbus Read node is suitable.
 
 This is my final flow:
-![node red flow screenshot](/assets/dps-modbus-nodered.png)
-You can also download it [here](/assets/dps-modbus-read.json) and import it directly onto your instance to play around.
+![node red flow screenshot](/assets/dps-modbus-nodered/read-flow.png)
+You can also download it [here](/assets/dps-modbus-nodered/read.json) and import it directly onto your instance to play around.
 
 The modbus node at the start reads the registers (function code 3) every 3 seconds. Address is the start and quantity is how many following get read. I choose 2 as start and 3 quantity, that corresponds to the voltage, current and power values (see the documentation mentioned above). The Server field must be set to the correct serial port, other defaults and 9600 baudrate is fine.
 

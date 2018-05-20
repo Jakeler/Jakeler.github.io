@@ -11,12 +11,12 @@ Note: It makes sense to create an additional database user with limited privileg
 There are only 2 tables really necessary for reading, `data` and `properties`:
 #### data
 
-![vz data example](/assets/vz-data-structure.png)
+![vz data example](/assets/vz-grafana/data-structure.png)
 
 This is the main table, containing all measured values, with the timestamp (in UNIX format, milliseconds since 1970) and the corresponding channel ID. More information about the channel can be obtained from `properties`, which is linked to these channel IDs.
 #### properties
 
-![vz properties example](/assets/vz-prop-structure.png)
+![vz properties example](/assets/vz-grafana/prop-structure.png)
 
 Entity ID is the same as the channel ID from data, so it is possible to get for example the title for all channels from this table. 
 
