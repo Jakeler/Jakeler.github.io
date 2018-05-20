@@ -12,6 +12,10 @@ author: Jake
 
 theme: minima
 
+# social links
+github_username:  Jakeler
+rss: rss
+
 plugins:
  - jekyll-feed
  - jekyll-seo-tag
