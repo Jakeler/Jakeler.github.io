@@ -1,0 +1,431 @@
+[
+    {
+        "id": "acf8e851.fd8638",
+        "type": "tab",
+        "label": "Flow 3",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "445cf512.f15f5c",
+        "type": "modbus-write",
+        "z": "acf8e851.fd8638",
+        "name": "set voltage",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "unitid": "",
+        "dataType": "HoldingRegister",
+        "adr": "0x50",
+        "quantity": "1",
+        "server": "a0a98d2e.0186f",
+        "x": 590,
+        "y": 140,
+        "wires": [
+            [
+                "49c41c5d.e4aa44"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "49c41c5d.e4aa44",
+        "type": "debug",
+        "z": "acf8e851.fd8638",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 840,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "4ac5ed06.edf454",
+        "type": "modbus-write",
+        "z": "acf8e851.fd8638",
+        "name": "set current",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "unitid": "",
+        "dataType": "HoldingRegister",
+        "adr": "0x51",
+        "quantity": "1",
+        "server": "a0a98d2e.0186f",
+        "x": 590,
+        "y": 300,
+        "wires": [
+            [
+                "49c41c5d.e4aa44"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "61c75a97.4efaa4",
+        "type": "modbus-write",
+        "z": "acf8e851.fd8638",
+        "name": "power switch",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "unitid": "",
+        "dataType": "HoldingRegister",
+        "adr": "0x9",
+        "quantity": "1",
+        "server": "a0a98d2e.0186f",
+        "x": 500,
+        "y": 500,
+        "wires": [
+            [
+                "49c41c5d.e4aa44"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "8aff579a.749988",
+        "type": "range",
+        "z": "acf8e851.fd8638",
+        "minin": "0",
+        "maxin": "50.00",
+        "minout": "0",
+        "maxout": "5000",
+        "action": "clamp",
+        "round": true,
+        "property": "payload",
+        "name": "scale and limit ",
+        "x": 320,
+        "y": 140,
+        "wires": [
+            [
+                "445cf512.f15f5c"
+            ]
+        ]
+    },
+    {
+        "id": "d4f9f0e9.86712",
+        "type": "inject",
+        "z": "acf8e851.fd8638",
+        "name": "",
+        "topic": "",
+        "payload": "12.00",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 90,
+        "y": 140,
+        "wires": [
+            [
+                "8aff579a.749988"
+            ]
+        ]
+    },
+    {
+        "id": "53d02584.00b5bc",
+        "type": "inject",
+        "z": "acf8e851.fd8638",
+        "name": "",
+        "topic": "",
+        "payload": "5.00",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 90,
+        "y": 100,
+        "wires": [
+            [
+                "8aff579a.749988"
+            ]
+        ]
+    },
+    {
+        "id": "c145a88f.1776e8",
+        "type": "inject",
+        "z": "acf8e851.fd8638",
+        "name": "",
+        "topic": "",
+        "payload": "24.00",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 90,
+        "y": 180,
+        "wires": [
+            [
+                "8aff579a.749988"
+            ]
+        ]
+    },
+    {
+        "id": "fd8b09db.3a4328",
+        "type": "inject",
+        "z": "acf8e851.fd8638",
+        "name": "",
+        "topic": "",
+        "payload": "48.00",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 90,
+        "y": 220,
+        "wires": [
+            [
+                "8aff579a.749988"
+            ]
+        ]
+    },
+    {
+        "id": "7d656ff5.f703",
+        "type": "inject",
+        "z": "acf8e851.fd8638",
+        "name": "OFF",
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 130,
+        "y": 480,
+        "wires": [
+            [
+                "61c75a97.4efaa4"
+            ]
+        ]
+    },
+    {
+        "id": "89aa284b.20a7c8",
+        "type": "inject",
+        "z": "acf8e851.fd8638",
+        "name": "ON",
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 130,
+        "y": 520,
+        "wires": [
+            [
+                "61c75a97.4efaa4"
+            ]
+        ]
+    },
+    {
+        "id": "46cf4555.f5494c",
+        "type": "inject",
+        "z": "acf8e851.fd8638",
+        "name": "",
+        "topic": "",
+        "payload": "5.00",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 110,
+        "y": 380,
+        "wires": [
+            [
+                "3dd4aa29.acc086"
+            ]
+        ]
+    },
+    {
+        "id": "bc7b95ea.7e7458",
+        "type": "inject",
+        "z": "acf8e851.fd8638",
+        "name": "",
+        "topic": "",
+        "payload": "2.00",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 110,
+        "y": 340,
+        "wires": [
+            [
+                "3dd4aa29.acc086"
+            ]
+        ]
+    },
+    {
+        "id": "84d5cc95.949f8",
+        "type": "inject",
+        "z": "acf8e851.fd8638",
+        "name": "",
+        "topic": "",
+        "payload": "1.00",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 110,
+        "y": 300,
+        "wires": [
+            [
+                "3dd4aa29.acc086"
+            ]
+        ]
+    },
+    {
+        "id": "3dd4aa29.acc086",
+        "type": "range",
+        "z": "acf8e851.fd8638",
+        "minin": "0",
+        "maxin": "5.00",
+        "minout": "0",
+        "maxout": "5000",
+        "action": "clamp",
+        "round": true,
+        "property": "payload",
+        "name": "scale and limit ",
+        "x": 340,
+        "y": 320,
+        "wires": [
+            [
+                "4ac5ed06.edf454"
+            ]
+        ]
+    },
+    {
+        "id": "f5c791cb.bc433",
+        "type": "modbus-write",
+        "z": "acf8e851.fd8638",
+        "name": "key lock",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "unitid": "",
+        "dataType": "HoldingRegister",
+        "adr": "0x6",
+        "quantity": "1",
+        "server": "a0a98d2e.0186f",
+        "x": 500,
+        "y": 600,
+        "wires": [
+            [
+                "49c41c5d.e4aa44"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "a25b914f.6ef5a",
+        "type": "inject",
+        "z": "acf8e851.fd8638",
+        "name": "UNLOCK",
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 140,
+        "y": 600,
+        "wires": [
+            [
+                "f5c791cb.bc433"
+            ]
+        ]
+    },
+    {
+        "id": "3fbe3dd4.10b9e2",
+        "type": "inject",
+        "z": "acf8e851.fd8638",
+        "name": "LOCK",
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 130,
+        "y": 640,
+        "wires": [
+            [
+                "f5c791cb.bc433"
+            ]
+        ]
+    },
+    {
+        "id": "f13f1ce5.9bf68",
+        "type": "modbus-write",
+        "z": "acf8e851.fd8638",
+        "name": "write voltage+current",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "unitid": "",
+        "dataType": "MHoldingRegisters",
+        "adr": "0x0",
+        "quantity": "2",
+        "server": "a0a98d2e.0186f",
+        "x": 450,
+        "y": 840,
+        "wires": [
+            [
+                "49c41c5d.e4aa44"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "aaaf260a.6c09e8",
+        "type": "inject",
+        "z": "acf8e851.fd8638",
+        "name": "",
+        "topic": "",
+        "payload": "[1000,500]",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 170,
+        "y": 840,
+        "wires": [
+            [
+                "f13f1ce5.9bf68"
+            ]
+        ]
+    },
+    {
+        "id": "a0a98d2e.0186f",
+        "type": "modbus-client",
+        "z": "",
+        "name": "USB0 ",
+        "clienttype": "simpleser",
+        "bufferCommands": true,
+        "stateLogEnabled": false,
+        "tcpHost": "127.0.0.1",
+        "tcpPort": "502",
+        "tcpType": "DEFAULT",
+        "serialPort": "/dev/rfcomm0",
+        "serialType": "RTU-BUFFERD",
+        "serialBaudrate": "9600",
+        "serialDatabits": "8",
+        "serialStopbits": "1",
+        "serialParity": "none",
+        "serialConnectionDelay": "100",
+        "unit_id": 1,
+        "commandDelay": 1,
+        "clientTimeout": 1000,
+        "reconnectTimeout": 2000
+    }
+]
