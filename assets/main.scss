@@ -8,16 +8,11 @@ img {
     max-height: 40em;
 }
 
-body {
-    pointer-events: none;
-}
-
 .site-header, .site-footer, .page-content {
     background-color: #FFF;
     max-width: 1000px;
     position: relative;
     margin: auto;
-    pointer-events: auto;
 }
 
 canvas{
@@ -39,5 +34,4 @@ canvas{
   z-index: -1;
   position: fixed;
   top: 0;
-  pointer-events: auto;
 }
