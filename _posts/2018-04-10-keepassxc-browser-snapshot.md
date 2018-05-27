@@ -12,7 +12,7 @@ Normally a browser can be enabled from the KeePassXC settings checkboxes, but th
     const QString HostInstaller::TARGET_DIR_FIREFOX = "/.mozilla/native-messaging-hosts";
     const QString HostInstaller::TARGET_DIR_VIVALDI = "/.config/vivaldi/NativeMessagingHosts";
 ```
-[KeePassXC Source on GitHub](https://github.com/keepassxreboot/keepassxc/blob/release/2.3.2/src/browser/HostInstaller.cpp#L38)
+[KeePassXC Source on GitHub](https://github.com/keepassxreboot/keepassxc/blob/2.3.2/src/browser/HostInstaller.cpp#L38)
 
 Now for example vivaldi snapshot has instead `~/.config/vivaldi-snapshot/` as standard. For Google Chrome Beta it is `~/.config/google-chrome-beta`, there is also a comprehensive doc about the [User Data Directory here](https://chromium.googlesource.com/chromium/src/+/master/docs/user_data_dir.md). 
 
