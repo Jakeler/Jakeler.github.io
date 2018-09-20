@@ -3,7 +3,7 @@ title: Jake's Blog
 email: blog-contact@ja-ke.tech
 desc: All about eletronics and software
 description: > # this means to ignore newlines until "baseurl:"
-url: "http://blog.ja-ke.tech" # the base hostname & protocol for your site
+url: "https://blog.ja-ke.tech" # the base hostname & protocol for your site
 github_username:  Jakeler
 
 google_analytics: UA-115359281-1
