@@ -1,16 +1,23 @@
 ---
 # Only the main Sass file needs front matter (the dashes are enough)
 ---
+// Width of the content area
+$content-width:  1000px;
 
 @import "minima";
+
 
 img {
     max-height: 40em;
 }
 
+img[src*="large"] {
+  max-height: 100em;
+}
+
 .site-header, .site-footer, .page-content {
     background-color: #FFF;
-    max-width: 1000px;
+    max-width: 1200px;
     position: relative;
     margin: auto;
 }
