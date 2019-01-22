@@ -37,7 +37,7 @@ The typical modules combine the MCP2515 with a TJA1050 transreceiver. To get hig
 
 The TJA1050 should then be powered from 5V over the custom connection and the rest over the standard VCC pin. The SPI pins go to the hardware SPI port on the OrangePi and the INT (interrupt) can be any free pin on the OPi (configured in the overlay), default is PA7:
 
-![orange pi one pinout](/assets/orangepi_spi/orangepi_h3_pinout.png)
+![orange pi one pinout](/assets/orangepi/h3_pinout_mcp.png)
 
 ### Startup
 
