@@ -1,11 +1,11 @@
 ---
 layout: post
-title: "JupyterLab Keyboard Shortcut Cheatsheet"
+title: "JupyterLab Keyboard Shortcut Cheat Sheet"
 ---
 A complete overview of the current JupyterLab keyboard shortcuts:<br>
 
 <a href="https://raw.githubusercontent.com/Jakeler/jupyter-shortcuts/master/outputs/Shortcuts.png">
-![shortcut cheatsheet](https://raw.githubusercontent.com/Jakeler/jupyter-shortcuts/master/outputs/Shortcuts.png#large)
+![shortcut cheat sheet](https://raw.githubusercontent.com/Jakeler/jupyter-shortcuts/master/outputs/Shortcuts.png#large)
 </a>
 (click on the picture to view it in full size or download the PDF below)
 
