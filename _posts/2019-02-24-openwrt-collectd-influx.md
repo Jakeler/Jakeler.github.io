@@ -4,7 +4,7 @@ title: "OpenWRT Traffic Monitor with collectd and InfluxDB"
 ---
 This post shows how to log traffic (and other router health metrics) to a remote InfluxDB over the collectd protocol.
 
-### Prerequisite
+### Prerequisites
 - OpenWRT router
     - SSH access
     - about 200 KB free flash
@@ -13,6 +13,9 @@ This post shows how to log traffic (and other router health metrics) to a remote
 - Optional/Recommended: Grafana Installation for Visualization
 
 I used the latest openWRT snapshot as time of writing, collectd 5.8.1-3 and influxDB 1.7.4.
+
+Following i cover the direct setup from command line, alternatively it is also possible to install the luci-app-statistics package and then configure it over the WebUI, this pulls RRDtool as dependency though, which is actually not required for this purpose. 
+Overall this would require about double of the flash space, so i would not recommend it.
 
 ### OpenWRT collectd setup
 Connect per SSH and run the following commands.
@@ -168,3 +171,7 @@ Collectd sends the raw accumulated interface packets/bytes since boot, use the d
 ![grafana bandwidth graph](/assets/influx-grafana/bandwidth.png)
 
 The ping and load plugin are similar, write measurements with the same name.
+
+There is also a premade dashboard from another user available [here](https://grafana.com/dashboards/3484). 
+Just go to Create - Import and put the ID in. It requires a few more plugins to work properly: collectd-mod-iwinfo collectd-mod-cpu collectd-mod-memory collectd-mod-uptime, after installing don't forget to add the additional LoadPlugin directives in `collectd.conf`. 
+Also this dashboard was made for the older format, to get it working without editing all panels, change "parse-multivalue-plugin" back to "split" in `influxdb.conf`.
