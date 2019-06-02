@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "FastLED vs. NeoPixelBus vs. NeoPixel: ESP32 Performance"
+title: "ESP32: FastLED vs. NeoPixelBus vs. NeoPixel Library"
 --- 
-Following a comparison of the three most popular libraries for driving WS2812B addressable RGB LEDs. Everything was measured with a logic analyzer, to circumvent deviations in `millis()`, because some libraries disable interrupts.
+A performance comparison of the three most popular libraries for driving WS2812B addressable RGB LEDs. Everything was measured with a logic analyzer, to circumvent deviations in `millis()` (because some libraries disable interrupts).
 ## Introduction
 ### WS2812B Protocol
 ![protocol logic](/assets/neopixel-perf/protocol.png)
@@ -22,13 +22,13 @@ FastLED uses [RMT](https://docs.espressif.com/projects/esp-idf/en/latest/api-ref
 ![protocol logic](/assets/neopixel-perf/neopixel-bug.png)
 (every pixel should be 0x001a00 here)
 
-This also screws up the retransmisson for following chips, so they will usually all display wrong colors. I still included it in the tests, because i think the ressouce usage could be interesting for comparison and a hint for other platforms. 
+This also screws up the retransmisson for following chips, so they will usually all display wrong colors.
 [See the GitHub issue for details.](https://github.com/adafruit/Adafruit_NeoPixel/issues/139) They plan to fix this by utilizing RMT like in FastLED.
-
+I still included it in the tests, because i think the ressouce usage could be interesting for comparison and a hint for other platforms.
 
 ### Tests
 The test has three parts: switching one led to green and black, filling the whole strip with a single color and switching it off (black), calculating a rainbow with a linear hue gradient and switching it off again. Every action is done a hundred times as fast as possible.
-In addition the code writes a trigger pin for the logic analyzer and prints out the free heap (RAM) over serial, after every loop.
+In addition the code writes a trigger pin for the logic analyzer and prints out the free heap (RAM) over serial after every loop.
 
 Latest software versions at testing time:
 
@@ -67,12 +67,12 @@ NeoPixelBus with its I2C Method and brightness object is the clear loser here, e
 The following numbers are unless otherwise noted excluding transmission time, because it is always the same at 800 kbit/s. 
 
 *delay* (latency) is the time between calling `.show()` and the actual start of data transmission. 
-The others are measured in the cycle between end of last transmission and start of next transmission, 50 μs is the minimum, required as reset signal.
+The others are measured in the cycle between end of last transmission and start of next transmission, 50 μs would be the minimum, required as reset signal.
 
 #### 100 LEDs
 ![100 led performance graph](/assets/neopixel-perf/perf100.svg)
 
-NeoPixelBus takes unexpected much time in every discipline here, but shows no difference on the more compute intensive actions, it almost looks like there is some 2ms clock that has to run down here. NeoPixel stands out with almost no latency (only 2 μs), which makes sense, there is pretty much no setup required for bit banging. They seem to set the reset duration to a unnecessary long 300 μs though, which gives FastLED a marginal lead overall.
+NeoPixelBus takes unexpected much time in every discipline here, but shows no difference on the more compute intensive actions, it almost looks like there is some 2ms clock that has to run down. NeoPixel stands out with almost no latency (only 2 μs), which makes sense, there is pretty much no setup required for bit banging. They seem to set the reset duration to a unnecessary long 300 μs though, which gives FastLED a marginal lead overall.
 
 #### 1000 LEDs
 ![1000 led performance graph](/assets/neopixel-perf/perf1000.svg)
@@ -82,16 +82,16 @@ The situation with NeoPixelBus completely changes on the long strip, it even red
 In the real world you probably won't notice a difference though. At 800 kbit/s the data transmission for 1000 LEDs with 24 Bit each takes anyway already 30 ms, so the prepare time of 0.5 ms or even 2.2 ms is not really significant:
 ![1000 led performance graph with full transmission](/assets/neopixel-perf/real-perf1000.svg)
 
-All libraries are able to drive the 1000 LED strip with more than 30 Hz (below 33 ms) in the end. On less LEDs the difference is proportionally larger, but the question is if that is important when it already runs at 500 Hz...
+All libraries are able to drive the 1000 LED strip with more than 30 Hz (below 33 ms) in the end. On less LEDs the difference is proportionally larger, but the question is if that is important when it already runs at 200 Hz or more.
 
 ### Signal Timing Stability
 ![timing graph](/assets/neopixel-perf/timing.svg)
 
 FastLED with RMT is the obvious winner here, i could not measure deviations from 800 kHz, it is rock solid. 
 
-Ignoring the 1ms issue on NeoPixel the timing is pretty stable, but the frequency overall a bit below the spec. 
-
 NeoPixelBus hits the frequency on average, but is a bit unstable with +/- 30 kHz, this does not seem to make a difference in reality though, i did not notice any wrong colors on a real strip.
+
+Ignoring the 1ms issue on NeoPixel the timing is pretty stable, but the frequency overall a bit below the spec. 
 
 ## Conclusion
 It is a matter of taste. Adafruits NeoPixel would be the choice for simplicity and high speed with low resources, unfortunately it doesn't work anymore on the ESP32. 
