@@ -12,9 +12,9 @@ So i opened the controller and looked at the PCB first:
 ![controller pcb front](/assets/coolmoon-rgb-controller/pcb-front.jpg)
 Unfortunately the chips have no markings... the function is anyway quite obvious. The quartz with U1 does the RF part, U2 the LED control and U3 controls with the large FET above the speed control.
 
-Because i could not find a datasheet for the (assumed) FET i hooked a my transistor tester. This confirms that it is indeed a N-channel MOSFET.
+For the (assumed) FET i hooked a my transistor tester. This confirms that it is indeed a N-channel MOSFET.
 ![controller fan fet](/assets/coolmoon-rgb-controller/fet.jpg)
-Driving it with high frequency did not work well though.
+Looking closer i figured that it is probably a [HD30N03](https://datasheet.lcsc.com/szlcsc/HL-HD30N03_C216252.pdf). Driving it with high frequency did not work well though.
 
 ![controller pcb back](/assets/coolmoon-rgb-controller/pcb-back.jpg)
 No parts on the back. The traces show that every fan is connected directly in parallel.<br>
@@ -32,5 +32,5 @@ The serial led connection allows the control of every fan individually. For a si
 
 To reduce the fan speed/noise i use a DC-DC converter set to 7V.
 
-Each fan has 18 RGB LEDs, so for 5 fans that is already 90. In the PC sits a Arduino Pro Micro, the program is based on rawHID + FastLED and is therefore able to push a smooth 60Hz refresh rate. On the PC runs [hyperion.ng](https://github.com/hyperion-project/hyperion.ng), it provides a web interface to control the whole setup and Python scripts for effects.
+Each fan has 16 RGB LEDs, so for 5 fans that is already 80. In the PC sits a Arduino Pro Micro, the program is based on rawHID + FastLED and is therefore able to push a smooth 60Hz refresh rate. On the PC runs [hyperion.ng](https://github.com/hyperion-project/hyperion.ng), it provides a web interface to control the whole setup and Python scripts for effects.
 
