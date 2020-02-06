@@ -36,7 +36,7 @@ After that you can choose from different levels, i set `sec=krb5p` to encrypt al
 ### SMB3
 Relevant package/version: Samba 4.10.6
 
-The setups is mostly done with installing, creating the user DB, adding a share to `smb.conf` and starting the smb service. Encryption is disabled by default, for the encrypted test i set
+The setup is mostly done with installing, creating the user DB, adding a share to `smb.conf` and starting the smb service. Encryption is disabled by default, for the encrypted test i set
 `smb encrypt = required` on the server globally.
 It uses AES128-CCM then (visible in `smbstatus`).
 
@@ -100,6 +100,6 @@ This test consists of transfering a folder with rsync from/to the mounted share 
 No big surprises here, NFS fastest in plaintext, SSHFS fastest in encryption. SMB always slightly behind NFS.
 
 ## Conclusion
-In trusted home network NFS without encryption is the best choice on Linux. If you want encryption i would switch to SSHFS, it is a way simpler setup, more efficient and often not much slower than plaintext NFS. Samba/SMB is also not far behind, but only really makes sense in a mixed (Windows/Linux) environment.
+In trusted home networks NFS without encryption is the best choice on Linux. If you want encryption i would switch to SSHFS, it is a way simpler setup, more cpu efficient and often not much slower than plaintext NFS. Samba/SMB is also not far behind, but only really makes sense in a mixed (Windows/Linux) environment.
 
 Thanks for reading, i hope it was helpful.
