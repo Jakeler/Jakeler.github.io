@@ -1,0 +1,517 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   id="svg148"
+   version="1.1"
+   viewBox="0 0 977.01434 152"
+   height="152pt"
+   width="977.01434pt">
+  <metadata
+     id="metadata154">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs152" />
+  <g
+     transform="translate(4,148)"
+     class="graph"
+     id="page0,1_graph0">
+    <title
+       id="title2">%219</title>
+    <polygon
+       style="fill:#ffffff"
+       id="polygon4"
+       points="677,-148 677,4 -4,4 -4,-148 "
+       stroke="transparent" />
+    <g
+       class="cluster"
+       id="clust1">
+      <title
+         id="title6">cluster__cell_voltages</title>
+      <polygon
+         style="fill:none;stroke:#000000;stroke-dasharray:1, 5"
+         id="polygon8"
+         points="665,-136 665,-8 8,-8 8,-136 " />
+      <text
+         style="font-size:14px;font-family:Times, serif;text-anchor:middle"
+         id="text10"
+         font-size="14.00"
+         y="-120.8"
+         x="336.5">CellVoltages</text>
+    </g>
+    <g
+       class="cluster"
+       id="clust2">
+      <title
+         id="title13">cluster__voltage</title>
+      <polygon
+         style="fill:none;stroke:#000000;stroke-dasharray:1, 5"
+         id="polygon15"
+         points="657,-105 657,-16 271,-16 271,-105 " />
+      <text
+         style="font-size:14px;font-family:Times, serif;text-anchor:middle"
+         id="text17"
+         font-size="14.00"
+         y="-89.800003"
+         x="464">CellVoltages::Voltage</text>
+    </g>
+    <!-- cell_voltages__seq -->
+    <g
+       class="node"
+       id="node1">
+      <title
+         id="title20">cell_voltages__seq</title>
+      <polygon
+         style="fill:#e0ffe0"
+         id="polygon22"
+         points="60.5,-83 60.5,-62 24.5,-62 24.5,-83 "
+         stroke="transparent" />
+      <polygon
+         style="fill:none;stroke:#000000"
+         id="polygon24"
+         points="60.5,-83 60.5,-62 24.5,-62 24.5,-83 " />
+      <text
+         style="font-size:14px;font-family:Times, serif;text-anchor:start"
+         id="text26"
+         font-size="14.00"
+         y="-68.800003"
+         x="30">pos</text>
+      <polygon
+         style="fill:#e0ffe0"
+         id="polygon28"
+         points="97.5,-83 97.5,-62 60.5,-62 60.5,-83 "
+         stroke="transparent" />
+      <polygon
+         style="fill:none;stroke:#000000"
+         id="polygon30"
+         points="97.5,-83 97.5,-62 60.5,-62 60.5,-83 " />
+      <text
+         style="font-size:14px;font-family:Times, serif;text-anchor:start"
+         id="text32"
+         font-size="14.00"
+         y="-68.800003"
+         x="65">size</text>
+      <polygon
+         style="fill:#e0ffe0"
+         id="polygon34"
+         points="158.5,-83 158.5,-62 97.5,-62 97.5,-83 "
+         stroke="transparent" />
+      <polygon
+         style="fill:none;stroke:#000000"
+         id="polygon36"
+         points="158.5,-83 158.5,-62 97.5,-62 97.5,-83 " />
+      <text
+         style="font-size:14px;font-family:Times, serif;text-anchor:start"
+         id="text38"
+         font-size="14.00"
+         y="-68.800003"
+         x="112">type</text>
+      <polygon
+         style="fill:#e0ffe0"
+         id="polygon40"
+         points="199.5,-83 199.5,-62 158.5,-62 158.5,-83 "
+         stroke="transparent" />
+      <polygon
+         style="fill:none;stroke:#000000"
+         id="polygon42"
+         points="199.5,-83 199.5,-62 158.5,-62 158.5,-83 " />
+      <text
+         style="font-size:14px;font-family:Times, serif;text-anchor:start"
+         id="text44"
+         font-size="14.00"
+         y="-68.800003"
+         x="172">id</text>
+      <polygon
+         style="fill:none;stroke:#000000"
+         id="polygon46"
+         points="60.5,-62 60.5,-41 24.5,-41 24.5,-62 " />
+      <text
+         style="font-size:14px;font-family:Times, serif;text-anchor:start"
+         id="text48"
+         font-size="14.00"
+         y="-47.799999"
+         x="37.5">0</text>
+      <polygon
+         style="fill:none;stroke:#000000"
+         id="polygon50"
+         points="97.5,-62 97.5,-41 60.5,-41 60.5,-62 " />
+      <text
+         style="font-size:14px;font-family:Times, serif;text-anchor:start"
+         id="text52"
+         font-size="14.00"
+         y="-47.799999"
+         x="74">2</text>
+      <polygon
+         style="fill:none;stroke:#000000"
+         id="polygon54"
+         points="158.5,-62 158.5,-41 97.5,-41 97.5,-62 " />
+      <text
+         style="font-size:14px;font-family:Times, serif;text-anchor:start"
+         id="text56"
+         font-size="14.00"
+         y="-47.799999"
+         x="101">Voltage</text>
+      <polygon
+         style="fill:none;stroke:#000000"
+         id="polygon58"
+         points="199.5,-62 199.5,-41 158.5,-41 158.5,-62 " />
+      <text
+         style="font-size:14px;font-family:Times, serif;text-anchor:start"
+         id="text60"
+         font-size="14.00"
+         y="-47.799999"
+         x="162.5">cells</text>
+      <polygon
+         style="fill:none;stroke:#000000"
+         id="polygon62"
+         points="199.5,-41 199.5,-20 24.5,-20 24.5,-41 " />
+      <text
+         style="font-size:14px;font-family:Times, serif;text-anchor:start"
+         id="text64"
+         font-size="14.00"
+         y="-26.799999"
+         x="27.5">repeat to end of stream</text>
+    </g>
+    <!-- voltage__seq -->
+    <g
+       class="node"
+       id="node2">
+      <title
+         id="title67">voltage__seq</title>
+      <polygon
+         style="fill:#e0ffe0"
+         id="polygon69"
+         points="318.5,-70 318.5,-49 287.5,-49 287.5,-70 "
+         stroke="transparent" />
+      <polygon
+         style="fill:none;stroke:#000000"
+         id="polygon71"
+         points="318.5,-70 318.5,-49 287.5,-49 287.5,-70 " />
+      <text
+         style="font-size:14px;font-family:Times, serif;text-anchor:start"
+         id="text73"
+         font-size="14.00"
+         y="-55.799999"
+         x="290.5">pos</text>
+      <polygon
+         style="fill:#e0ffe0"
+         id="polygon75"
+         points="352.5,-70 352.5,-49 318.5,-49 318.5,-70 "
+         stroke="transparent" />
+      <polygon
+         style="fill:none;stroke:#000000"
+         id="polygon77"
+         points="352.5,-70 352.5,-49 318.5,-49 318.5,-70 " />
+      <text
+         style="font-size:14px;font-family:Times, serif;text-anchor:start"
+         id="text79"
+         font-size="14.00"
+         y="-55.799999"
+         x="321.5">size</text>
+      <polygon
+         style="fill:#e0ffe0"
+         id="polygon81"
+         points="394.5,-70 394.5,-49 352.5,-49 352.5,-70 "
+         stroke="transparent" />
+      <polygon
+         style="fill:none;stroke:#000000"
+         id="polygon83"
+         points="394.5,-70 394.5,-49 352.5,-49 352.5,-70 " />
+      <text
+         style="font-size:14px;font-family:Times, serif;text-anchor:start"
+         id="text85"
+         font-size="14.00"
+         y="-55.799999"
+         x="357.5">type</text>
+      <polygon
+         style="fill:#e0ffe0"
+         id="polygon87"
+         points="428.5,-70 428.5,-49 394.5,-49 394.5,-70 "
+         stroke="transparent" />
+      <polygon
+         style="fill:none;stroke:#000000"
+         id="polygon89"
+         points="428.5,-70 428.5,-49 394.5,-49 394.5,-70 " />
+      <text
+         style="font-size:14px;font-family:Times, serif;text-anchor:start"
+         id="text91"
+         font-size="14.00"
+         y="-55.799999"
+         x="404.5">id</text>
+      <polygon
+         style="fill:none;stroke:#000000"
+         id="polygon93"
+         points="318.5,-49 318.5,-28 287.5,-28 287.5,-49 " />
+      <text
+         style="font-size:14px;font-family:Times, serif;text-anchor:start"
+         id="text95"
+         font-size="14.00"
+         y="-34.799999"
+         x="298">0</text>
+      <polygon
+         style="fill:none;stroke:#000000"
+         id="polygon97"
+         points="352.5,-49 352.5,-28 318.5,-28 318.5,-49 " />
+      <text
+         style="font-size:14px;font-family:Times, serif;text-anchor:start"
+         id="text99"
+         font-size="14.00"
+         y="-34.799999"
+         x="330.5">2</text>
+      <polygon
+         style="fill:none;stroke:#000000"
+         id="polygon101"
+         points="394.5,-49 394.5,-28 352.5,-28 352.5,-49 " />
+      <text
+         style="font-size:14px;font-family:Times, serif;text-anchor:start"
+         id="text103"
+         font-size="14.00"
+         y="-34.799999"
+         x="355.5">u2be</text>
+      <polygon
+         style="fill:none;stroke:#000000"
+         id="polygon105"
+         points="428.5,-49 428.5,-28 394.5,-28 394.5,-49 " />
+      <text
+         style="font-size:14px;font-family:Times, serif;text-anchor:start"
+         id="text107"
+         font-size="14.00"
+         y="-34.799999"
+         x="397.5">raw</text>
+    </g>
+    <!-- cell_voltages__seq&#45;&gt;voltage__seq -->
+    <g
+       class="edge"
+       id="edge1">
+      <title
+         id="title110">cell_voltages__seq:cells_type-&gt;voltage__seq</title>
+      <path
+         style="fill:none;stroke:#000000;stroke-width:2"
+         id="path112"
+         d="m 200.5,-51 c 22.08,0 45.91,0.2 68.15,0.48" />
+      <polygon
+         style="fill:#000000;stroke:#000000;stroke-width:2"
+         id="polygon114"
+         points="268.69,-47.02 268.79,-54.02 278.74,-50.39 " />
+    </g>
+    <!-- voltage__inst__volt -->
+    <g
+       class="node"
+       id="node3">
+      <title
+         id="title117">voltage__inst__volt</title>
+      <polygon
+         style="fill:#e0ffe0"
+         id="polygon119"
+         points="550.5,-70 550.5,-49 516.5,-49 516.5,-70 "
+         stroke="transparent" />
+      <polygon
+         style="fill:none;stroke:#000000"
+         id="polygon121"
+         points="550.5,-70 550.5,-49 516.5,-49 516.5,-70 " />
+      <text
+         style="font-size:14px;font-family:Times, serif;text-anchor:start"
+         id="text123"
+         font-size="14.00"
+         y="-55.799999"
+         x="526.5">id</text>
+      <polygon
+         style="fill:#e0ffe0"
+         id="polygon125"
+         points="641.5,-70 641.5,-49 550.5,-49 550.5,-70 "
+         stroke="transparent" />
+      <polygon
+         style="fill:none;stroke:#000000"
+         id="polygon127"
+         points="641.5,-70 641.5,-49 550.5,-49 550.5,-70 " />
+      <text
+         style="font-size:14px;font-family:Times, serif;text-anchor:start"
+         id="text129"
+         font-size="14.00"
+         y="-55.799999"
+         x="576.5">value</text>
+      <polygon
+         style="fill:none;stroke:#000000"
+         id="polygon131"
+         points="550.5,-49 550.5,-28 516.5,-28 516.5,-49 " />
+      <text
+         style="font-size:14px;font-family:Times, serif;text-anchor:start"
+         id="text133"
+         font-size="14.00"
+         y="-34.799999"
+         x="519.5">volt</text>
+      <polygon
+         style="fill:none;stroke:#000000"
+         id="polygon135"
+         points="641.5,-49 641.5,-28 550.5,-28 550.5,-49 " />
+      <text
+         style="font-size:14px;font-family:Times, serif;text-anchor:start"
+         id="text137"
+         font-size="14.00"
+         y="-34.799999"
+         x="553.5">(raw * 0.01)</text>
+    </g>
+    <!-- voltage__seq&#45;&gt;voltage__inst__volt -->
+    <g
+       class="edge"
+       id="edge2">
+      <title
+         id="title140">voltage__seq:raw_type-&gt;voltage__inst__volt</title>
+      <path
+         style="fill:none;stroke:#404040"
+         id="path142"
+         d="m 429.5,-38 c 22.23,0 46.29,-1.25 68.42,-2.91" />
+      <polygon
+         style="fill:#404040;stroke:#404040"
+         id="polygon144"
+         points="498.24,-37.42 497.69,-44.4 507.94,-41.69 " />
+    </g>
+  </g>
+  <g
+     id="page0,1_graph0-7"
+     class="graph"
+     transform="translate(731.01432,144.87589)">
+    <title
+       id="title961">%261</title>
+    <polygon
+       style="fill:#ffffff"
+       stroke="transparent"
+       points="246,-109 246,4 -4,4 -4,-109 "
+       id="polygon963" />
+    <g
+       id="clust1-7"
+       class="cluster">
+      <title
+         id="title965">cluster__hardware</title>
+      <polygon
+         style="fill:none;stroke:#000000;stroke-dasharray:1, 5"
+         points="234,-97 234,-8 8,-8 8,-97 "
+         id="polygon967" />
+      <text
+         style="font-size:14px;font-family:Times, serif;text-anchor:middle"
+         x="121"
+         y="-81.800003"
+         font-size="14.00"
+         id="text969">Hardware</text>
+    </g>
+    <!-- hardware__seq -->
+    <g
+       id="node1-1"
+       class="node">
+      <title
+         id="title972">hardware__seq</title>
+      <polygon
+         style="fill:#e0ffe0"
+         stroke="transparent"
+         points="55,-62 55,-41 24,-41 24,-62 "
+         id="polygon974" />
+      <polygon
+         style="fill:none;stroke:#000000"
+         points="55,-62 55,-41 24,-41 24,-62 "
+         id="polygon976" />
+      <text
+         style="font-size:14px;font-family:Times, serif;text-anchor:start"
+         x="27"
+         y="-47.799999"
+         font-size="14.00"
+         id="text978">pos</text>
+      <polygon
+         style="fill:#e0ffe0"
+         stroke="transparent"
+         points="89,-62 89,-41 55,-41 55,-62 "
+         id="polygon980" />
+      <polygon
+         style="fill:none;stroke:#000000"
+         points="89,-62 89,-41 55,-41 55,-62 "
+         id="polygon982" />
+      <text
+         style="font-size:14px;font-family:Times, serif;text-anchor:start"
+         x="58"
+         y="-47.799999"
+         font-size="14.00"
+         id="text984">size</text>
+      <polygon
+         style="fill:#e0ffe0"
+         stroke="transparent"
+         points="159,-62 159,-41 89,-41 89,-62 "
+         id="polygon986" />
+      <polygon
+         style="fill:none;stroke:#000000"
+         points="159,-62 159,-41 89,-41 89,-62 "
+         id="polygon988" />
+      <text
+         style="font-size:14px;font-family:Times, serif;text-anchor:start"
+         x="108"
+         y="-47.799999"
+         font-size="14.00"
+         id="text990">type</text>
+      <polygon
+         style="fill:#e0ffe0"
+         stroke="transparent"
+         points="218,-62 218,-41 159,-41 159,-62 "
+         id="polygon992" />
+      <polygon
+         style="fill:none;stroke:#000000"
+         points="218,-62 218,-41 159,-41 159,-62 "
+         id="polygon994" />
+      <text
+         style="font-size:14px;font-family:Times, serif;text-anchor:start"
+         x="181.5"
+         y="-47.799999"
+         font-size="14.00"
+         id="text996">id</text>
+      <polygon
+         style="fill:none;stroke:#000000"
+         points="55,-41 55,-20 24,-20 24,-41 "
+         id="polygon998" />
+      <text
+         style="font-size:14px;font-family:Times, serif;text-anchor:start"
+         x="34.5"
+         y="-26.799999"
+         font-size="14.00"
+         id="text1000">0</text>
+      <polygon
+         style="fill:none;stroke:#000000"
+         points="89,-41 89,-20 55,-20 55,-41 "
+         id="polygon1002" />
+      <text
+         style="font-size:14px;font-family:Times, serif;text-anchor:start"
+         x="65.5"
+         y="-26.799999"
+         font-size="14.00"
+         id="text1004">⇲</text>
+      <polygon
+         style="fill:none;stroke:#000000"
+         points="159,-41 159,-20 89,-20 89,-41 "
+         id="polygon1006" />
+      <text
+         style="font-size:14px;font-family:Times, serif;text-anchor:start"
+         x="92"
+         y="-26.799999"
+         font-size="14.00"
+         id="text1008">str(ascii)</text>
+      <polygon
+         style="fill:none;stroke:#000000"
+         points="218,-41 218,-20 159,-20 159,-41 "
+         id="polygon1010" />
+      <text
+         style="font-size:14px;font-family:Times, serif;text-anchor:start"
+         x="162"
+         y="-26.799999"
+         font-size="14.00"
+         id="text1012">version</text>
+    </g>
+  </g>
+</svg>
