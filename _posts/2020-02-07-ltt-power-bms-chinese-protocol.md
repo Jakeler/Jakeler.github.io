@@ -2,7 +2,7 @@
 layout: post
 title: "Decoding the Smart BMS Protocol"
 ---
-The smart (meaning with UART / Bluetooth) battery management systems are widely available from china now. Almost all of them use a generic protocol for the communication. They also provide a (Windows) PC Software and Android App, which works fine, but i like to add more features and make it open source. So i wrote the protocol definition in [Kaitai Struct](https://kaitai.io/), a specific parsing language with YAML syntax, which can be compiled to parsers in many different languages like Java, C++, Python etc...
+Smart (meaning with UART / Bluetooth interface) battery management systems are widely available from china now. Almost all of them use a generic protocol for the communication. They also provide a (Windows) PC Software and Android App, which works fine, but i like to add more features and make it open source. So i wrote the protocol definition in [Kaitai Struct](https://kaitai.io/), a specific parsing language with YAML syntax, which can be compiled to parsers in many different languages like Java, C++, Python etc...
 
 LTT Power manufactured the BMS i got and is nice enough to provide a spreadsheet with a rough description of the protocol on their [download page](https://www.lithiumbatterypcb.com/smart-bms-software-download/). Following is a introduction to the binary protocol, with graphs generated also from Kaitais Graphviz export.
 In addition i made Sigrok protocol decoder, to make it visible with from a logic analyser capture. Everything is on GitHub in [this repo](https://github.com/Jakeler/bms-parser).
