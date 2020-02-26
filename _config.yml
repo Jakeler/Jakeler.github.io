@@ -9,8 +9,13 @@ github_username:  Jakeler
 google_analytics: UA-115359281-1
 
 author: Jake
+avatar: assets/favicon.jpg
 
-theme: minima
+#remote_theme: alainpham/alainpham.github.io
+remote_theme: chrisrhymes/bulma-clean-theme
+
+paginate: 5
+paginate_path: "/page:num"
 
 # social links
 github_username:  Jakeler
@@ -20,3 +25,4 @@ plugins:
  - jekyll-feed
  - jekyll-seo-tag
  - jekyll-sitemap
+ - jekyll-paginate

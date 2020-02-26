@@ -246,7 +246,7 @@ PLATFORMS
 DEPENDENCIES
   github-pages
   jekyll-paginate
-  minima (= 2.5.0)
+  jekyll-remote-theme
 
 BUNDLED WITH
    2.1.4
