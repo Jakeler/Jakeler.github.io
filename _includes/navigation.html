@@ -12,7 +12,11 @@
         </div>
     </div>
     <nav class="site-nav">
-        {{ site.title }}
+        <div class="menu-extend"></div>
+        <div class="nav-content">
+            <a href="{{ '/' |  relative_url }}" id="title">{{ site.title }}</a>
+        </div>
+        
     
     </nav>
 </div>
