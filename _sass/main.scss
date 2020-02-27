@@ -1,0 +1,26 @@
+// @import "syntax"; pygments
+
+$linkColor: #0a59b0;
+$mobileLimitW: 768px;
+$navW: 20em;
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+img,
+embed,
+object,
+video {
+  max-width: 100%;
+}
+
+a {
+  color: rgb(0, 0, 0);
+  transition: color 0.3s;
+  &:hover {
+    color: $linkColor;
+  }
+}
