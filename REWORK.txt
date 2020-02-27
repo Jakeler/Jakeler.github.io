@@ -13,6 +13,8 @@ https://web.archive.org/web/20181212123732/http://www.docs.influxdata.com/influx
 blocks über volle breite
 https://thelehhman.com/texture/posts/coding-post/#
 
+TOC: https://github.com/allejo/jekyll-anchor-headings
+
 Dark + light theme
 
 Comments: https://utteranc.es/
