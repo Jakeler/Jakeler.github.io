@@ -1,0 +1,24 @@
+$textColor: #dddddd;
+$accentColor: rgb(255, 102, 0);
+$bgLight: #1a1a1a;
+$bg: #000;
+
+
+
+body {
+    color: $textColor;
+    background-color: $bg;
+}
+
+
+a {
+    color: $textColor;
+    transition: color 0.3s;
+    &:hover {
+      color: $accentColor;
+    }
+}
+
+.site-nav {
+    background: linear-gradient($bgLight 50%,  $accentColor 100%);
+}
