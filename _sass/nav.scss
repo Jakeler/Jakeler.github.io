@@ -1,6 +1,6 @@
 $mobileLimitW: 768px;
 $navW: 250px;
-$navH: 10px + 32px;
+$navH: 10px + 34px;
 
 .site-nav {
     position: fixed;
@@ -42,20 +42,24 @@ $navH: 10px + 32px;
     display: block;
     position: fixed;
     transition: left 0.5s ease;
-    top: 10px;
-    left: 10px;
+    top: 0;
+    left: 0;
     z-index: 10;
+    padding: 10px;
   }
   #navigation:target .menu-toggle {
-    left: $navW - 32px;
+    left: $navW - 50px;
+    padding-right: 0;
   }
   
   // Toggle link overlays
   .menu-toggle .open-nav, .menu-toggle .close-nav {
     display: none;
     position: absolute;
-    width: 32px;
-    height: 27px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
   
     opacity: 0;
     z-index: 2; /* and place it over the hamburger */
@@ -70,13 +74,10 @@ $navH: 10px + 32px;
   // Hamburger
   .menu-toggle span {
     display: block;
-    width: 32px;
+    width: 34px;
     height: 4px;
-    margin-bottom: 5px;
+    margin: 3px;
     position: relative;
-    
-    background: #cdcdcd;
-    
     z-index: 1;
     
     transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
@@ -86,7 +87,7 @@ $navH: 10px + 32px;
     transform-origin: 4px 0%;
   }
   .menu-toggle span:nth-child(3) {
-    transform-origin: 0% 100%;
+    transform-origin: 4px 100%;
   }
   
   // Hamburger transforms
