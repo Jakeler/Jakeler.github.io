@@ -1,5 +1,6 @@
 $mobileLimitW: 768px;
 $navW: 250px;
+$navH: 10px + 32px;
 
 .site-nav {
     position: fixed;
@@ -15,6 +16,22 @@ $navW: 250px;
   .page-content {
     // margin-left: $navW;
   }
+
+  .site-header {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: $navH;
+      text-align: center;
+      padding: 10px;
+      transition: top 0.5s ease;
+  }
+
+  #navigation:target .site-header {
+    top: -$navH;
+  }
+
   // Hide nav
   #navigation:not(:target) .site-nav {
     left: -$navW;
@@ -25,8 +42,8 @@ $navW: 250px;
     display: block;
     position: fixed;
     transition: left 0.5s ease;
-    top: 20px;
-    left: 20px;
+    top: 10px;
+    left: 10px;
     z-index: 10;
   }
   #navigation:target .menu-toggle {
