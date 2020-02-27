@@ -1,4 +1,4 @@
-$mobileLimitW: 768px;
+$mobileLimitW: 980px;
 $navW: 250px;
 $navH: 10px + 34px;
 
@@ -9,6 +9,7 @@ $navH: 10px + 34px;
     height: 100vh;
     width: $navW;
     text-align: center;
+    box-shadow: 10px 10px 32px 0px rgba(0,0,0,0.5);
     transition: left 0.5s ease;
   }
 
@@ -17,10 +18,6 @@ $navH: 10px + 34px;
     height: $navH;
   }
   
-  .page-content {
-    // margin-left: $navW;
-  }
-
   .site-header {
       position: fixed;
       left: 0;
@@ -29,18 +26,10 @@ $navH: 10px + 34px;
       height: $navH;
       text-align: center;
       padding: 10px;
+      box-shadow: 10px 10px 32px 0px rgba(0,0,0,0.5);
       transition: top 0.5s ease;
   }
 
-  #navigation:target .site-header {
-    top: -$navH;
-  }
-
-  // Hide nav
-  #navigation:not(:target) .site-nav {
-    left: -$navW;
-  }
-  
   // Toggle main
   .menu-toggle {
     display: block;
@@ -103,4 +92,29 @@ $navH: 10px + 34px;
   }
   #navigation:target .menu-toggle span:nth-child(3) {
     transform: rotate(-45deg) translate(0, -1px);
+  }
+
+  @media (max-width: $mobileLimitW) {
+    // Hide nav
+    #navigation:not(:target) .site-nav {
+      left: -$navW;
+    }
+
+    #navigation:target .site-header {
+      top: -$navH;
+    }
+  }
+
+
+  @media (min-width: $mobileLimitW) {
+    .page-content {
+      margin-left: $navW;
+    }
+
+    .site-header {
+      display: none;
+    }
+    .menu-toggle {
+      display: none;
+    }
   }
