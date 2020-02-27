@@ -1,0 +1,86 @@
+$mobileLimitW: 768px;
+$navW: 250px;
+
+.site-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: $navW;
+    text-align: center;
+    padding: 2em;
+    transition: left 0.5s ease;
+  }
+  
+  .page-content {
+    // margin-left: $navW;
+  }
+  // Hide nav
+  #navigation:not(:target) .site-nav {
+    left: -$navW;
+  }
+  
+  // Toggle main
+  .menu-toggle {
+    display: block;
+    position: fixed;
+    transition: left 0.5s ease;
+    top: 20px;
+    left: 20px;
+    z-index: 10;
+  }
+  #navigation:target .menu-toggle {
+    left: $navW - 32px;
+  }
+  
+  // Toggle link overlays
+  .menu-toggle .open-nav, .menu-toggle .close-nav {
+    display: none;
+    position: absolute;
+    width: 32px;
+    height: 27px;
+  
+    opacity: 0;
+    z-index: 2; /* and place it over the hamburger */
+  }
+  #navigation:not(:target) .open-nav {
+    display: block;
+  }
+  #navigation:target .close-nav {
+    display: block;
+  }
+  
+  // Hamburger
+  .menu-toggle span {
+    display: block;
+    width: 32px;
+    height: 4px;
+    margin-bottom: 5px;
+    position: relative;
+    
+    background: #cdcdcd;
+    
+    z-index: 1;
+    
+    transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+                opacity 0.55s ease;
+  }
+  .menu-toggle span:nth-child(1) {
+    transform-origin: 4px 0%;
+  }
+  .menu-toggle span:nth-child(3) {
+    transform-origin: 0% 100%;
+  }
+  
+  // Hamburger transforms
+  #navigation:target .menu-toggle span:nth-child(1) {
+    opacity: 1;
+    transform: rotate(45deg) translate(-2px, -1px);
+  }
+  #navigation:target .menu-toggle span:nth-child(2) {
+    opacity: 0;
+    transform: rotate(0deg) scale(0.2, 0.2);
+  }
+  #navigation:target .menu-toggle span:nth-child(3) {
+    transform: rotate(-45deg) translate(0, -1px);
+  }
