@@ -9,6 +9,7 @@ $navH: 10px + 34px;
     height: 100vh;
     width: $navW;
     text-align: center;
+    z-index: 5;
     box-shadow: 10px 10px 32px 0px rgba(0,0,0,0.5);
     transition: left 0.5s ease;
   }
@@ -26,6 +27,7 @@ $navH: 10px + 34px;
       height: $navH;
       text-align: center;
       padding: 10px;
+      z-index: 3;
       box-shadow: 10px 10px 32px 0px rgba(0,0,0,0.5);
       transition: top 0.5s ease;
   }

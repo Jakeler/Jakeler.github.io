@@ -1,7 +1,4 @@
-// @import "syntax"; pygments
 @import "nav";
-
-// $linkColor: #0a59b0;
 
 
 *,
@@ -15,6 +12,7 @@ embed,
 object,
 video {
   max-width: 100%;
+  margin-top: 1em;
 }
 
 body {
@@ -25,10 +23,17 @@ a {
   text-decoration: none;
 }
 
-article {
-  margin: auto;
-  padding: 2em;
+article > *:not(div) {
+  margin-left: 4rem;
+  margin-right: 4rem;
   max-width: 1000px;
+}
+
+article pre.highlight {
+  padding: 1em;
+  padding-left: 4rem;
+  margin: 0;
+  width: 100%;
 }
 
 
