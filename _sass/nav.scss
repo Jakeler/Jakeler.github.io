@@ -18,6 +18,10 @@ $navH: 10px + 34px;
       width: 100%;
       height: $navH;
     }
+
+    > * {
+      padding: 0; //Fix strange 40 padding
+    }
   }
 
   
@@ -100,11 +104,15 @@ $navH: 10px + 34px;
     }
     span:nth-child(3) {
       transform: rotate(-45deg) translate(0, -1px);
-    }
+    } 
 
   } 
 
   @media (max-width: $mobileLimitW) {
+    .post { // TODO fix header over titles
+      margin-top: $navH;
+    }
+
     // Hide nav
     #navigation:not(:target) .site-nav {
       left: -$navW;
@@ -117,7 +125,7 @@ $navH: 10px + 34px;
 
 
   @media (min-width: $mobileLimitW) {
-    .page-content {
+    .post {
       margin-left: $navW;
     }
 

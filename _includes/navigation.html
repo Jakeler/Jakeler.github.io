@@ -27,6 +27,19 @@
                 <a href="/">Tags</a>    
             </li>
         </ul>
+
+        {%- if include.toc -%}
+            <nav class="toc">
+                <span>Currently reading:</span>
+                <a href="#">
+                    <header>
+                        {{ include.title }}
+                    </header>
+                </a>
+                {{ include.toc }}
+            </nav>
+        {% endif %}
+
         <a href="/about/">About Me</a>
     </nav>
 </div>

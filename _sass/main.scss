@@ -35,19 +35,11 @@ a {
   text-decoration: none;
 }
 
-ul {
-  list-style-type: none;
-}
-
-article.post {
-  ul {
-    list-style-type: disc;
-  }
-
+article.post { // TDO media query for very small screen
   > *:not(div) {
     margin-left: 4rem;
     margin-right: 4rem;
-    max-width: 1000px;
+    max-width: 800px;
   }
   
   pre.highlight {
@@ -68,6 +60,10 @@ article.post {
   h1, h2, h3, h4, h5, h6 {
     margin-top: 2em;
   }
+
+  ul {
+    list-style-type: square;
+  }
 }
 
 .pagination-next {
@@ -84,12 +80,28 @@ article.post {
 }
 
 .nav-links {
-  padding: 0;
   border-top: thin solid grey;
   border-bottom: thin solid grey;
+  list-style: none;
 
   li  {
     margin: 0.5em;
   }
+}
 
+.toc {
+  text-align: left;
+  
+  header {
+    margin-top: 0.5em;
+    font-weight: bold;
+  }  
+  ul {
+    padding-left: 1em;
+    margin-top: 0;
+    list-style-type: square;
+  }
+  span {
+    font-style: italic;
+  }
 }
