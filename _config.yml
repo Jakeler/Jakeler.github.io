@@ -1,10 +1,9 @@
 # Site settings
 title: Jake's Blog
 email: blog-contact@ja-ke.tech
-desc: All about eletronics and software
+desc: All about electronics and software
 description: > # this means to ignore newlines until "baseurl:"
 url: "https://blog.ja-ke.tech" # the base hostname & protocol for your site
-github_username:  Jakeler
 
 google_analytics: UA-115359281-1
 
@@ -14,7 +13,8 @@ avatar: assets/favicon.jpg
 #remote_theme: alainpham/alainpham.github.io
 #remote_theme: chrisrhymes/bulma-clean-theme
 
-paginate: 5
+show_excerpts: false
+paginate: 15
 paginate_path: "/page:num"
 
 # social links

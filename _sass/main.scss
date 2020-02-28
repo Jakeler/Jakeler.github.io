@@ -22,6 +22,7 @@ embed,
 object,
 video {
   max-width: 100%;
+  max-height: 700px;
   margin-top: 1em;
 }
 
@@ -34,7 +35,15 @@ a {
   text-decoration: none;
 }
 
-article {
+ul {
+  list-style-type: none;
+}
+
+article.post {
+  ul {
+    list-style-type: disc;
+  }
+
   > *:not(div) {
     margin-left: 4rem;
     margin-right: 4rem;
@@ -61,13 +70,26 @@ article {
   }
 }
 
+.pagination-next {
+  // width: 1em;
+  // height: 1em;
+}
 
-.nav-content {
-  margin-top: 2em;
-  padding: 0.5em;
 
+.nav-title {
   #title {
     font-size: x-large;
     font-weight: bold;
   }
+}
+
+.nav-links {
+  padding: 0;
+  border-top: thin solid grey;
+  border-bottom: thin solid grey;
+
+  li  {
+    margin: 0.5em;
+  }
+
 }
