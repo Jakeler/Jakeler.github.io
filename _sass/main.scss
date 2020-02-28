@@ -1,5 +1,15 @@
 @import "nav";
 
+@font-face {
+  font-family: 'opensans';
+  font-weight: 400;
+  src: url('/assets/css/opensans.ttf')  format('truetype'),
+}
+@font-face {
+  font-family: 'opensans';
+  font-weight: 700;
+  src: url('/assets/css/opensans-bold.ttf')  format('truetype'),
+}
 
 *,
 *:before,
@@ -17,6 +27,7 @@ video {
 
 body {
   margin: 0;
+  font-family: opensans;
 }
 
 a {
@@ -35,7 +46,14 @@ article {
     padding-left: 4rem;
     margin: 0;
     width: 100%;
+    margin-bottom: 4px;
     overflow-x: auto;
+
+    background-image:url(/assets/pre-background.svg);
+    background-attachment:fixed;
+    background-repeat:no-repeat;
+    background-position:center center;
+    background-size:100%
   }
   
   h1, h2, h3, h4, h5, h6 {
