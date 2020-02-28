@@ -12,12 +12,13 @@ $navH: 10px + 34px;
     z-index: 5;
     box-shadow: 10px 10px 32px 0px rgba(0,0,0,0.5);
     transition: left 0.5s ease;
+
+    .menu-extend {
+      width: 100%;
+      height: $navH;
+    }
   }
 
-  .site-nav .menu-extend {
-    width: 100%;
-    height: $navH;
-  }
   
   .site-header {
       position: fixed;
@@ -32,8 +33,8 @@ $navH: 10px + 34px;
       transition: top 0.5s ease;
   }
 
-  // Toggle main
   .menu-toggle {
+    // Toggle main
     display: block;
     position: fixed;
     top: 0;
@@ -41,23 +42,24 @@ $navH: 10px + 34px;
     z-index: 10;
     padding: 10px;
     transition: all 0.5s ease;
-  }
+
+    // Toggle link overlays
+    .open-nav, .close-nav {
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      
+      opacity: 0;
+      z-index: 2; /* and place it over the hamburger */
+    }
+  }  
+
   #navigation:target .menu-toggle {
     left: $navW - 50px;
     padding-right: 0;
-  }
-  
-  // Toggle link overlays
-  .menu-toggle .open-nav, .menu-toggle .close-nav {
-    display: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  
-    opacity: 0;
-    z-index: 2; /* and place it over the hamburger */
   }
   #navigation:not(:target) .open-nav {
     display: block;
@@ -66,35 +68,40 @@ $navH: 10px + 34px;
     display: block;
   }
   
-  // Hamburger
-  .menu-toggle span {
-    display: block;
-    width: 34px;
-    height: 4px;
-    margin: 3px;
-    position: relative;
-    z-index: 1;
-    transition: all 0.5s ease;
-  }
-  .menu-toggle span:nth-child(1) {
-    transform-origin: 4px 0%;
-  }
-  .menu-toggle span:nth-child(3) {
-    transform-origin: 4px 100%;
-  }
+  // Hamburger spans
+  .menu-toggle {
+    span {
+      display: block;
+      width: 34px;
+      height: 4px;
+      margin: 3px;
+      position: relative;
+      z-index: 1;
+      transition: all 0.5s ease;
+    }
+    span:nth-child(1) {
+      transform-origin: 4px 0%;
+    }
+    span:nth-child(3) {
+      transform-origin: 4px 100%;
+    }
+  } 
   
   // Hamburger transforms
-  #navigation:target .menu-toggle span:nth-child(1) {
-    opacity: 1;
-    transform: rotate(45deg) translate(-2px, -1px);
-  }
-  #navigation:target .menu-toggle span:nth-child(2) {
-    opacity: 0;
-    transform: rotate(0deg) scale(0.2, 0.2);
-  }
-  #navigation:target .menu-toggle span:nth-child(3) {
-    transform: rotate(-45deg) translate(0, -1px);
-  }
+  #navigation:target .menu-toggle {
+    span:nth-child(1) {
+      opacity: 1;
+      transform: rotate(45deg) translate(-2px, -1px);
+    }
+    span:nth-child(2) {
+      opacity: 0;
+      transform: rotate(0deg) scale(0.2, 0.2);
+    }
+    span:nth-child(3) {
+      transform: rotate(-45deg) translate(0, -1px);
+    }
+
+  } 
 
   @media (max-width: $mobileLimitW) {
     // Hide nav

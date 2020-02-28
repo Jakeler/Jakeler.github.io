@@ -14,7 +14,7 @@ body {
 }
 
 
-a {
+a { //TODO fix post links vis
     color: $textColor;
     transition: color 0.3s;
     &:hover {
@@ -35,4 +35,8 @@ a {
 }
 .menu-toggle span {
     background: $bgLight;
+}
+
+.post-meta {
+    color: $accentColor;
 }

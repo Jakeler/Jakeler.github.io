@@ -23,26 +23,33 @@ a {
   text-decoration: none;
 }
 
-article > *:not(div) {
-  margin-left: 4rem;
-  margin-right: 4rem;
-  max-width: 1000px;
-}
-
-article pre.highlight {
-  padding: 1em;
-  padding-left: 4rem;
-  margin: 0;
-  width: 100%;
+article {
+  > *:not(div) {
+    margin-left: 4rem;
+    margin-right: 4rem;
+    max-width: 1000px;
+  }
+  
+  pre.highlight {
+    padding: 1em;
+    padding-left: 4rem;
+    margin: 0;
+    width: 100%;
+    overflow-x: auto;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    margin-top: 2em;
+  }
 }
 
 
 .nav-content {
   margin-top: 2em;
   padding: 0.5em;
-}
 
-.nav-content #title {
-  font-size: x-large;
-  font-weight: bold;
+  #title {
+    font-size: x-large;
+    font-weight: bold;
+  }
 }
