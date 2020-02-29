@@ -3,6 +3,20 @@
     padding-top: 1rem;
 }
 
+.post-list {
+    list-style-type: none;
+
+    li {
+        padding: 1em;
+    }
+    h3 {
+        // padding-top: 0;
+        margin-top: 0.5em;
+        margin-bottom: 0em;
+    }
+}
+
+
 
 .pagination {
     display: flex;
@@ -21,7 +35,7 @@
     min-width: 6em;
     
     &.disabled {
-        color: gray; 
+        color: gray;
     }
 }
 

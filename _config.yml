@@ -14,7 +14,7 @@ avatar: assets/favicon.jpg
 #remote_theme: chrisrhymes/bulma-clean-theme
 
 show_excerpts: false
-paginate: 15
+paginate: 10
 paginate_path: "/page:num"
 
 # social links

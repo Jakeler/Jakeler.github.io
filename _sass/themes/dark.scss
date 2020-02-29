@@ -1,5 +1,5 @@
 $textColor: #dddddd;
-$accentColor: rgb(0, 92, 12);
+$accentColor: rgb(0, 126, 17);
 // $accentColor: rgb(255, 102, 0);
 $bgDarkColor: #000;
 $bgLightColor: #222;
@@ -24,7 +24,6 @@ a { //TODO fix post links vis
 .site-nav {
     background: linear-gradient($bgDarkColor 0%,  $accentColor 100%);
 }
-
 .site-header {
     background: $bgDarkColor;
 }
@@ -45,11 +44,16 @@ a { //TODO fix post links vis
     border: thin solid $bgDarkColor;
 
     &:hover {
-        background-color: $accentColor;
         color: $bgLightColor;
+        background-color: $accentColor;
         transition: background-color 0.3s ease;
     }
 }
 .pagination-link.is-current {
     background: $accentColor;
+}
+
+.post-list li {
+    // background-color: $bgDarkColor;
+    border-bottom: thin solid $fgColor;
 }
