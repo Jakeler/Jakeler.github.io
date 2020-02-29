@@ -1,6 +1,7 @@
 $textColor: #dddddd;
-$accentColor: rgb(0, 126, 17);
-// $accentColor: rgb(255, 102, 0);
+// $accentColor: rgb(0, 126, 17);
+$accentColor: rgb(192, 77, 0);
+// $accentColor: rgb(0, 55, 144);
 $bgDarkColor: #000;
 $bgLightColor: #222;
 $fgColor: #444;
@@ -27,6 +28,10 @@ a { //TODO fix post links vis
 .site-header {
     background: $bgDarkColor;
 }
+.nav-links {
+    border-top: thin solid $textColor;
+    border-bottom: thin solid $textColor;
+}
 
 .menu-toggle {
     background: $accentColor;
@@ -36,7 +41,8 @@ a { //TODO fix post links vis
 }
 
 .post-meta {
-    color: $accentColor;
+    // color: $accentColor;
+    color: grey;
 }
 
 .pagination-item {
