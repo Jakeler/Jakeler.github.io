@@ -42,4 +42,14 @@ a { //TODO fix post links vis
 
 .pagination-item {
     background: $fgColor;
+    border: thin solid $bgDarkColor;
+
+    &:hover {
+        background-color: $accentColor;
+        color: $bgLightColor;
+        transition: background-color 0.3s ease;
+    }
+}
+.pagination-link.is-current {
+    background: $accentColor;
 }

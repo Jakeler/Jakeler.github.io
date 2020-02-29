@@ -6,9 +6,10 @@ layout: default
 
 <div class="home">
   {{ content }}
-
   
   {% assign posts = paginator.posts %}
+
+  {%- include pagination.html -%}
 
   {%- if posts.size > 0 -%}
     {%- if page.list_title -%}
