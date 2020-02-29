@@ -1,4 +1,5 @@
 @import "nav";
+@import "home";
 
 @font-face {
   font-family: 'opensans';
@@ -35,7 +36,11 @@ a {
   text-decoration: none;
 }
 
-article.post { // TDO media query for very small screen
+ul {
+  padding-left: 0;
+}
+
+article.post { // TODO media query for very small screen
   > *:not(div) {
     margin-left: 4rem;
     margin-right: 4rem;
@@ -66,12 +71,7 @@ article.post { // TDO media query for very small screen
   }
 }
 
-.pagination-next {
-  // width: 1em;
-  // height: 1em;
-}
-
-
+// Nav content
 .nav-title {
   #title {
     font-size: x-large;

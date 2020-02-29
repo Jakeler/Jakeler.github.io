@@ -109,7 +109,7 @@ $navH: 10px + 34px;
   } 
 
   @media (max-width: $mobileLimitW) {
-    .post { // TODO fix header over titles
+    .page-content { // TODO fix header over titles
       margin-top: $navH;
     }
 
@@ -125,7 +125,7 @@ $navH: 10px + 34px;
 
 
   @media (min-width: $mobileLimitW) {
-    .post {
+    .page-content {
       margin-left: $navW;
     }
 
