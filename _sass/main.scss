@@ -4,12 +4,12 @@
 @font-face {
   font-family: 'opensans';
   font-weight: 400;
-  src: url('/assets/css/opensans.ttf')  format('truetype'),
+  src: url('/static/fonts/opensans.ttf')  format('truetype'),
 }
 @font-face {
   font-family: 'opensans';
   font-weight: 700;
-  src: url('/assets/css/opensans-bold.ttf')  format('truetype'),
+  src: url('/static/fonts/opensans-bold.ttf')  format('truetype'),
 }
 
 *,
@@ -75,7 +75,7 @@ article.post { // TODO media query for very small screen
     margin-bottom: 4px;
     overflow-x: auto;
 
-    background-image:url(/assets/pre-background.svg);
+    background-image:url(/static/img//pre-background.svg);
     background-attachment:fixed;
     background-repeat:no-repeat;
     background-position:center center;
