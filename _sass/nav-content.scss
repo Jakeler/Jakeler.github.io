@@ -1,0 +1,59 @@
+.nav-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 100%;
+  }
+  
+  .nav-title {
+    #title {
+      font-size: x-large;
+      font-weight: bold;
+    }
+  }
+  
+  .nav-links {
+    list-style: none;
+    font-size: large;
+  
+    li  {
+      margin: 1rem;
+    }
+}
+
+.toc {
+    text-align: left;
+
+    header {
+        margin-top: 0.5em;
+        font-weight: bold;
+    }  
+    ul {
+        padding-left: 1em;
+        margin-top: 0;
+        list-style-type: square;
+    }
+    span {
+        font-style: italic;
+    }
+}
+
+.social {
+    list-style-type: none;
+    text-align: left;
+  
+    svg {
+      fill: white;
+      height: 1em;
+      width: 1em;
+    }
+  
+    li {
+      margin: 1em;
+    }
+  
+    img#feedlyFollow {
+      margin: 0;
+      width: 5em;
+    }
+}

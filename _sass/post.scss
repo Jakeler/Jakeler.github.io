@@ -1,0 +1,30 @@
+article.post { // TODO media query for very small screen
+    > *:not(div) {
+      margin-left: 4rem;
+      margin-right: 4rem;
+      max-width: 800px;
+    }
+    
+    pre.highlight {
+      padding: 1em;
+      padding-left: 4rem;
+      margin: 0;
+      width: 100%;
+      margin-bottom: 4px;
+      overflow-x: auto;
+  
+      background-image:url(/static/img//pre-background.svg);
+      background-attachment:fixed;
+      background-repeat:no-repeat;
+      background-position:center center;
+      background-size:100%
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 2em;
+    }
+  
+    ul {
+      list-style-type: square;
+    }
+  }
