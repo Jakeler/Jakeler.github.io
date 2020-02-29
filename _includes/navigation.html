@@ -12,34 +12,36 @@
         </div>
     </div>
     <nav class="site-nav">
-        <div class="menu-extend"></div>
-        <div class="nav-title">
-            <a href="{{ '/' |  relative_url }}" id="title">{{ site.title }}</a>
-        </div>
-        <ul class="nav-links">
-            <li>
-                <a href="/">Blog</a>        
-            </li>
-            <li>
-                <a href="/">Projects</a>
-            </li>
-            <li>
-                <a href="/">Tags</a>    
-            </li>
-        </ul>
-
-        {%- if include.toc -%}
-            <nav class="toc">
-                <span>Currently reading:</span>
-                <a href="#">
-                    <header>
-                        {{ include.title }}
-                    </header>
-                </a>
-                {{ include.toc }}
-            </nav>
-        {% endif %}
-
-        <a href="/about/">About Me</a>
+        <!-- <div class="menu-extend"></div> -->
+        <section class="nav-content">
+            <div class="nav-title">
+                <a href="{{ '/' |  relative_url }}" id="title">{{ site.title }}</a>
+            </div>
+            <ul class="nav-links">
+                <li>
+                    <a href="/">Blog</a>
+                </li>
+                <li>
+                    <a href="/">Projects</a>
+                </li>
+                <li>
+                    <a href="/">Tags</a>
+                </li>
+            </ul>
+    
+            {%- if include.toc -%}
+                <nav class="toc">
+                    <span>Currently reading:</span>
+                    <a href="#">
+                        <header>
+                            {{ include.title }}
+                        </header>
+                    </a>
+                    {{ include.toc }}
+                </nav>
+            {% endif %}
+    
+            <a href="/about/">About Me</a>
+        </section>
     </nav>
 </div>

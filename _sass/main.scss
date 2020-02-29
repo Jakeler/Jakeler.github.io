@@ -71,7 +71,13 @@ article.post { // TODO media query for very small screen
   }
 }
 
-// Nav content
+.nav-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 100%;
+}
+
 .nav-title {
   #title {
     font-size: x-large;
@@ -85,7 +91,7 @@ article.post { // TODO media query for very small screen
   list-style: none;
 
   li  {
-    margin: 0.5em;
+    margin: 1em;
   }
 }
 
