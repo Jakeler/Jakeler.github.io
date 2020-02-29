@@ -40,8 +40,10 @@
                     {{ include.toc }}
                 </nav>
             {% endif %}
-    
-            <a href="/about/">About Me</a>
+            <div class="about">
+                <a href="/about/">About Me</a>
+                {%- include social.html -%}
+            </div>
         </section>
     </nav>
 </div>

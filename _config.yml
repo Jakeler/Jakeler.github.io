@@ -20,6 +20,7 @@ paginate_path: "/page:num"
 # social links
 github_username:  Jakeler
 rss: rss
+mail: blog@ja-ke.tech
 
 plugins:
  - jekyll-feed

@@ -27,6 +27,26 @@ video {
   margin-top: 1em;
 }
 
+.social {
+  list-style-type: none;
+  text-align: left;
+
+  svg {
+    fill: white;
+    height: 1em;
+    width: 1em;
+  }
+
+  li {
+    margin: 1em;
+  }
+
+  img#feedlyFollow {
+    margin: 0;
+    width: 5em;
+  }
+}
+
 body {
   margin: 0;
   font-family: opensans;
