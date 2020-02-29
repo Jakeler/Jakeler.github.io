@@ -14,7 +14,7 @@ body {
 }
 
 
-a { //TODO fix post links vis
+a {
     color: $textColor;
     transition: color 0.3s;
     &:hover {
@@ -40,6 +40,19 @@ a { //TODO fix post links vis
     background: $bgDarkColor;
 }
 
+article.post {
+    a {
+        color: $accentColor;
+        &:hover {
+            color: $fgColor;
+        }
+    }
+
+    p > code {
+        background-color: black;
+        border: thin solid $fgColor;
+    }
+}
 .post-meta {
     // color: $accentColor;
     color: grey;
