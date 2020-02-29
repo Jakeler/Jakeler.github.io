@@ -31,7 +31,7 @@
 .pagination-previous, .pagination-next {
     // display: inline;
     text-align: center;
-    padding: 10px;
+    padding: 0.5em;
     min-width: 6em;
     
     &.disabled {
@@ -48,8 +48,12 @@
     li .pagination-link {
         display: block;
         text-align: center;
-        padding: 10px;
-        min-width: 3em;
+        padding: 0.5em;
+        min-width: 2.5em;
+    }
+
+    span {
+        padding: 0.5em;
     }
 
 }
