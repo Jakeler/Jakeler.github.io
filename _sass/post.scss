@@ -1,4 +1,4 @@
-article.post { // TODO media query for very small screen
+article.post {
     > *:not(div) {
       margin-left: 4rem;
       margin-right: 4rem;
@@ -33,4 +33,18 @@ article.post { // TODO media query for very small screen
     ul {
       list-style-type: square;
     }
-  }
+}
+
+// Smaller borders for very small screens
+@media (max-width: 768px) {
+    article.post {
+        > *:not(div) {
+          margin-left: 1rem;
+          margin-right: 1rem;
+        }
+        
+        pre.highlight {
+            padding-left: 1rem;
+        }
+    }
+}
