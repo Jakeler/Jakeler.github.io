@@ -111,9 +111,7 @@ $navH: 10px + 34px;
   }
   // Dirty header scroll fix
   .page-content :target::before {
-    display: block;
-    height: $navH;
-    content: "";
+    margin-top: $navH + 10px;
   }
 
   // Hide nav

@@ -33,6 +33,12 @@ article.post {
     ul {
       list-style-type: square;
     }
+
+    *:target::before {
+      display: inline-block;
+      margin-right: 0.5em;
+      content: "➔  ";
+    }
 }
 
 // Smaller borders for very small screens
@@ -52,10 +58,4 @@ article.post {
 section.tags a.label {
     padding: 0.333em 0.666em;
     border-radius: 2px;
-}
-
-section.tags-post-list {
-  h4:target {
-    text-decoration: underline;
-  }
 }
