@@ -36,17 +36,14 @@
     span {
         font-style: italic;
     }
+    a {
+      display: inline; // Workaround for wrong dot position
+    }
 }
 
 .social {
     list-style-type: none;
     text-align: left;
-  
-    svg {
-      fill: white;
-      height: 1em;
-      width: 1em;
-    }
   
     li {
       margin: 1em;

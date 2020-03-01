@@ -1,6 +1,6 @@
 $textColor: #dddddd;
-// $accentColor: rgb(0, 126, 17);
-$accentColor: rgb(192, 77, 0);
+$accentColor: rgb(0, 126, 17);
+// $accentColor: rgb(192, 77, 0);
 // $accentColor: rgb(0, 55, 144);
 $bgDarkColor: #000;
 $bgLightColor: #222;
@@ -12,14 +12,15 @@ body {
     color: $textColor;
     background-color: $bgLightColor;
 }
-
-
 a {
     color: $textColor;
     // transition: color 0.3s;
     &:hover {
       color: $accentColor;
     }
+}
+svg {
+    fill: $textColor;
 }
 
 .site-nav {
@@ -60,6 +61,11 @@ article.post {
     color: grey;
 }
 
+.tags a.label {
+    color: $textColor;
+    border: thin solid $fgColor;
+}
+
 .pagination-item {
     background: $fgColor;
     border: thin solid $bgDarkColor;
@@ -78,3 +84,4 @@ article.post {
     // background-color: $bgDarkColor;
     border-bottom: thin solid $fgColor;
 }
+
