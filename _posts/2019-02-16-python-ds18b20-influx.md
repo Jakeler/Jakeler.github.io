@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Save DS18B20 Measurements to InfluxDB with Python"
+tags: linux data influxdb python
 ---
 In [this post]({% post_url 2019-01-21-DS18B20-armbian %}) i showed the basic setup of the DS18B20 sensor on Linux. Now lets do something with the data!
 

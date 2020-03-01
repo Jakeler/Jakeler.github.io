@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "OpenWRT Traffic Monitor with collectd and InfluxDB"
+tags: openwrt linux router data collectd influxdb grafana
 ---
 This post shows how to log traffic (and other router health metrics) to a remote InfluxDB over the collectd protocol.
 
