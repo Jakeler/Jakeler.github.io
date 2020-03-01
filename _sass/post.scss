@@ -49,7 +49,13 @@ article.post {
     }
 }
 
-.tags a.label {
+section.tags a.label {
     padding: 0.333em 0.666em;
     border-radius: 2px;
+}
+
+section.tags-post-list {
+  h4:target {
+    text-decoration: underline;
+  }
 }
