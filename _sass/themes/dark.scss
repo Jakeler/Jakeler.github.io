@@ -16,7 +16,7 @@ body {
 
 a {
     color: $textColor;
-    transition: color 0.3s;
+    // transition: color 0.3s;
     &:hover {
       color: $accentColor;
     }
@@ -35,16 +35,18 @@ a {
 
 .menu-toggle {
     background: $accentColor;
-}
-.menu-toggle span {
-    background: $bgDarkColor;
+    span {
+        background: $bgDarkColor;
+    }
 }
 
 article.post {
     a {
         color: $accentColor;
         &:hover {
-            color: $fgColor;
+            // color: $fgColor;
+            background-color: $bgLightColor;
+            box-shadow: 2px 2px 20px 5px $bgLightColor;
         }
     }
 

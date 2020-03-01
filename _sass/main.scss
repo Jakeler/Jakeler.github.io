@@ -36,6 +36,14 @@ body {
 
 a {
   text-decoration: none;
+  display: inline-block;
+  
+  &:hover{
+    // font-size: x-large;
+    transition: all 0.3s;
+    transform: scale(1.2, 1.2);
+    transform-origin: left;
+  }
 }
 
 ul {
