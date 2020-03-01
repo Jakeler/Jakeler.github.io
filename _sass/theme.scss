@@ -1,11 +1,3 @@
-$textColor: #dddddd;
-$accentColor: rgb(0, 126, 17);
-// $accentColor: rgb(192, 77, 0);
-// $accentColor: rgb(0, 55, 144);
-$bgDarkColor: #000;
-$bgLightColor: #222;
-$fgColor: #444;
-
 @import "syntax-dark";
 
 body {
@@ -52,7 +44,7 @@ article.post {
     }
 
     p > code {
-        background-color: black;
+        background-color: $bgDarkColor;
         border: thin solid $fgColor;
     }
 }
@@ -67,8 +59,11 @@ article.post {
 }
 
 .pagination-item {
-    background: $fgColor;
-    border: thin solid $bgDarkColor;
+    // background: $fgColor;
+    // border: thin solid $bgDarkColor;
+    background: $bgDarkColor;
+    border: thin solid $fgColor;
+
 
     &:hover {
         color: $bgLightColor;
@@ -84,4 +79,3 @@ article.post {
     // background-color: $bgDarkColor;
     border-bottom: thin solid $fgColor;
 }
-

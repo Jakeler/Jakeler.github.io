@@ -11,7 +11,7 @@ $navH: 10px + 34px;
   text-align: center;
   padding: 2em;
   z-index: 5;
-  box-shadow: 10px 10px 32px 0px rgba(0,0,0,0.5);
+  box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.3);
   transition: left 0.5s ease;
   overflow-y: auto;
 
@@ -31,7 +31,7 @@ $navH: 10px + 34px;
     text-align: center;
     padding: 10px;
     z-index: 3;
-    box-shadow: 10px 10px 32px 0px rgba(0,0,0,0.5);
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.5);
     transition: top 0.5s ease;
 }
 
