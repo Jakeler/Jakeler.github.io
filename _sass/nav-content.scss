@@ -1,11 +1,15 @@
 .nav-content {
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
     height: 100%;
+    // Issue: https://stackoverflow.com/questions/33454533/cant-scroll-to-top-of-flex-item-that-is-overflowing-container
+    // justify-content: space-evenly;
   }
   
   .nav-title {
+    margin-top: auto;
+    margin-bottom: 1em;
+
     #title {
       font-size: x-large;
       font-weight: bold;
@@ -13,6 +17,8 @@
   }
   
   .nav-links {
+    margin: auto 0;
+
     list-style: none;
     font-size: large;
   
@@ -22,6 +28,9 @@
   }
 
 .toc {
+    margin: auto 0;
+    margin-top: 1em;
+
     text-align: left;
 
     header {
@@ -42,6 +51,7 @@
 }
 
 .social {
+    margin: auto;
     list-style-type: none;
     text-align: left;
   
