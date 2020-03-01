@@ -28,8 +28,11 @@ layout: default
                 <span class="p-author h-card" itemprop="name">{{ author }}</span></span>
                 {%- if forloop.last == false %}, {% endif -%}
             {% endfor %}
-          {%- endif -%}</p>
+            {%- endif -%}
+          </p>
+          {% include tags.html tags=page.tags%}
     </header>
 
     {{ content }}
+
 </article>

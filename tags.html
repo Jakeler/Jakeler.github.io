@@ -31,27 +31,19 @@ permalink: /tags/
   {% endif %}
 {% endfor %}
 
-<section class="tags">
-  {% for tag in tags %}
-  <a class="label" href="#{{ tag | slugify }}" >
-    <svg>
-      <use xlink:href="/static/fontawesome/solid.svg#tag"></use>
-    </svg>
-    {{ tag }}
-  </a>
+{% include tags.html tags=tags%}
+
+{% for tag in tags %}
+<h4 id="{{ tag | slugify }}">{{ tag }}</h4>
+<ul>
+  {% for post in site.posts %}
+  {% if post.tags contains tag %}
+  <li>
+      <a href="{{ post.url }}">
+        {{ post.title }}
+      </a>
+  </li>
+  {% endif %}
   {% endfor %}
-  {% for tag in tags %}
-  <h4 id="{{ tag | slugify }}">{{ tag }}</h4>
-  <ul>
-    {% for post in site.posts %}
-    {% if post.tags contains tag %}
-    <li>
-        <a href="{{ post.url }}">
-          {{ post.title }}
-        </a>
-    </li>
-    {% endif %}
-    {% endfor %}
-  </ul>
-  {% endfor %}
-</section>
+</ul>
+{% endfor %}

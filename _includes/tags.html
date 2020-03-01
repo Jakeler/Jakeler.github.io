@@ -1,0 +1,10 @@
+<section class="tags">
+    {% for tag in include.tags %}
+    <a class="label" href="/tags/#{{ tag | slugify }}" >
+      <svg>
+        <use xlink:href="/static/fontawesome/solid.svg#tag"></use>
+      </svg>
+      {{ tag }}
+    </a>
+    {% endfor %}
+  </section>
