@@ -8,7 +8,7 @@ url: "https://blog.ja-ke.tech" # the base hostname & protocol for your site
 google_analytics: UA-115359281-1
 
 author: Jake
-avatar: static/img/favicon.jpg
+avatar: /static/img/favicon.jpg
 
 #remote_theme: alainpham/alainpham.github.io
 #remote_theme: chrisrhymes/bulma-clean-theme

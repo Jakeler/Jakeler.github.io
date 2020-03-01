@@ -106,8 +106,14 @@ $navH: 10px + 34px;
 } 
 
 @media (max-width: $mobileLimitW) {
-  .page-content { // TODO fix header over titles
+  .page-content {
     margin-top: $navH;
+  }
+  // Dirty header scroll fix
+  .page-content :target::before {
+    display: block;
+    height: $navH;
+    content: "";
   }
 
   // Hide nav
