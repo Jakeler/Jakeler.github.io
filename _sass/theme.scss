@@ -1,7 +1,7 @@
 @import "syntax-dark";
 
 :root {
-    --accent-color: #{$accentColor};
+    --accent-color:#{$accentColor}; // Don't use whitespace here, otherwise it will be included!
 }
 
 body {
