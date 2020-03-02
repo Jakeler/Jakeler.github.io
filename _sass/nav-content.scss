@@ -66,9 +66,36 @@
 }
 
 .theme {
-  input.accent, button.reset {
+  input.accent, button {
     border: 0;
     background: unset;
     padding: unset;
+    cursor: pointer;
+  }
+
+  button.reset {
+    padding: 0.55em;
+  }
+
+  input.accent {
+    height: 3rem;
+    width: 2rem;
+    vertical-align: middle;
+    // margin: 0 1em;
+    font-size: 0;
+    margin-right: -5px;
+  }
+
+}
+div.themes {
+  display: inline-flex;
+  flex-direction: column;
+  vertical-align: middle;
+  justify-content: stretch;
+  height: 3rem;
+
+  button {
+    width: 4rem;
+    height: 2rem;
   }
 }

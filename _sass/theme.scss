@@ -37,6 +37,20 @@ svg {
     }
 }
 
+div.themes {
+    border: 1px solid $textColor;
+
+    button.dark {
+      background: #222;
+    }
+    button.bright {
+      background: #ddd;
+    }
+}
+.theme input.accent {
+    border: thin solid $textColor;
+}
+
 article.post {
     a {
         color: var(--accent-color);

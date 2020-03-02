@@ -44,13 +44,29 @@
     }
 
     // Restore stored state
-    selectStyle(localStorage.getItem('theme'))
-    setAccent(localStorage.getItem('accent'))
+    function restore() {
+      selectStyle(localStorage.getItem('theme'))
+      setAccent(localStorage.getItem('accent'))
+    }
+    function reset() {
+      localStorage.clear()
+      location.reload();
+    }
+
+    restore()
 
     window.addEventListener('DOMContentLoaded', _ => {
       const picker = document.querySelector('.theme input.accent')
-      picker.value = getAccent()
+      picker.value = getAccent() // TODO fix empty with white theme
       picker.onchange = e => setAccent(picker.value)
+
+      const darkBtn = document.querySelector('div.themes button.dark')
+      darkBtn.onclick = e => selectStyle('default/dark')
+      const brightBtn = document.querySelector('div.themes button.bright')
+      brightBtn.onclick = e => selectStyle('alt/bright')
+
+      const resetBtn = document.querySelector('.theme button.reset')
+      resetBtn.onclick = e => reset()
     })
     
 
