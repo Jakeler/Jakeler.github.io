@@ -5,10 +5,54 @@
   {%- seo -%}
   <link rel="shortcut icon" href="{{ site.avatar }}">
   <link rel="stylesheet" href="{{ "/static/css/style.css" | relative_url }}">
-  <link rel="stylesheet" href="{{ "/static/css/themes/dark.css" | relative_url }}" title="Default (dark)">
-  <link rel="alternate stylesheet" href="{{ "/static/css/themes/light.css" | relative_url }}" title="Bright">
+  <link rel="stylesheet" href="{{ "/static/css/themes/dark.css" | relative_url }}" title="default/dark">
+  <link rel="alternate stylesheet" href="{{ "/static/css/themes/light.css" | relative_url }}" title="alt/bright">
   {%- feed_meta -%}
   {%- if jekyll.environment == 'production' and site.google_analytics -%}
     {%- include google-analytics.html -%}
-  {%- endif -%}  
+  {%- endif -%}
+
+  <script>
+    // Theme accent color
+    function getAccent() {
+      const styles = window.getComputedStyle(document.documentElement)
+      return styles.getPropertyValue('--accent-color')
+    }
+    function setAccent(color) {
+      if(color == null)
+        return false
+      
+      document.documentElement.style.setProperty('--accent-color', color)
+      localStorage.setItem('accent', color)
+    }
+
+    // Alternate stylesheets
+    function selectStyle(title) {
+      if(title == null)
+        return false
+
+      const styleOffset = 1;
+      const sheets = Object.entries(document.styleSheets)
+      let found = false
+      for(const [i, s] of sheets) {
+        if(i >= styleOffset)
+          s.disabled = s.title != title
+          found = s.title === title? true : found
+      }
+      localStorage.setItem('theme', title)
+      return found
+    }
+
+    // Restore stored state
+    selectStyle(localStorage.getItem('theme'))
+    setAccent(localStorage.getItem('accent'))
+
+    window.addEventListener('DOMContentLoaded', _ => {
+      const picker = document.querySelector('.theme input.accent')
+      picker.value = getAccent()
+      picker.onchange = e => setAccent(picker.value)
+    })
+    
+
+  </script>
 </head>

@@ -64,3 +64,11 @@
       width: 5em;
     }
 }
+
+.theme {
+  input.accent, button.reset {
+    border: 0;
+    background: unset;
+    padding: unset;
+  }
+}
