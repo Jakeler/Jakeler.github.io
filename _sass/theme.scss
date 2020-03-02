@@ -1,5 +1,9 @@
 @import "syntax-dark";
 
+:root {
+    --accent-color: #{$accentColor};
+}
+
 body {
     color: $textColor;
     background-color: $bgLightColor;
@@ -8,7 +12,7 @@ a {
     color: $textColor;
     // transition: color 0.3s;
     &:hover {
-      color: $accentColor;
+      color: var(--accent-color);
     }
 }
 svg {
@@ -16,7 +20,7 @@ svg {
 }
 
 .site-nav {
-    background: linear-gradient($bgDarkColor 0%,  $accentColor 100%);
+    background: linear-gradient($bgDarkColor 0%,  var(--accent-color) 100%);
 }
 .site-header {
     background: $bgDarkColor;
@@ -27,7 +31,7 @@ svg {
 }
 
 .menu-toggle {
-    background: $accentColor;
+    background: var(--accent-color);
     span {
         background: $bgDarkColor;
     }
@@ -35,7 +39,7 @@ svg {
 
 article.post {
     a {
-        color: $accentColor;
+        color: var(--accent-color);
         &:hover {
             // color: $fgColor;
             background-color: $bgLightColor;
@@ -49,7 +53,7 @@ article.post {
     }
 }
 .post-meta {
-    // color: $accentColor;
+    // color: var(--accent-color);
     color: grey;
 }
 
@@ -67,12 +71,12 @@ article.post {
 
     &:hover {
         color: $bgLightColor;
-        background-color: $accentColor;
+        background-color: var(--accent-color);
         transition: background-color 0.3s ease;
     }
 }
 .pagination-link.is-current {
-    background: $accentColor;
+    background: var(--accent-color);
 }
 
 .post-list li {
