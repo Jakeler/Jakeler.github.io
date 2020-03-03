@@ -5,8 +5,8 @@
   {%- seo -%}
   <link rel="shortcut icon" href="{{ site.avatar }}">
   <link rel="stylesheet" href="{{ "/static/css/style.css" | relative_url }}">
-  <link rel="stylesheet" href="{{ "/static/css/themes/dark.css" | relative_url }}" title="default/dark">
-  <link rel="alternate stylesheet" href="{{ "/static/css/themes/light.css" | relative_url }}" title="alt/bright">
+  <link class="theme-style" rel="stylesheet" href="{{ "/static/css/themes/dark.css" | relative_url }}" title="default/dark">
+  <link class="theme-style" rel="stylesheet" href="{{ "/static/css/themes/light.css" | relative_url }}" title="alt/bright" disabled>
   {%- feed_meta -%}
   {%- if jekyll.environment == 'production' and site.google_analytics -%}
     {%- include google-analytics.html -%}
@@ -31,13 +31,11 @@
       if(title == null)
         return false
 
-      const styleOffset = 1;
-      const sheets = Object.entries(document.styleSheets)
+      const sheets = document.querySelectorAll('head link.theme-style')
       let found = false
-      for(const [i, s] of sheets) {
-        if(i >= styleOffset)
-          s.disabled = s.title != title
-          found = s.title === title? true : found
+      for(const s of sheets) {
+        s.disabled = s.title != title
+        found = s.title === title? true : found
       }
       localStorage.setItem('theme', title)
       return found
