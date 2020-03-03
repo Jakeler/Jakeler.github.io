@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "ESP32: FastLED vs. NeoPixelBus vs. NeoPixel Library"
+tags: performance benchmark embedded benchmark led
 --- 
 A performance comparison of the three most popular libraries for driving WS2812B addressable RGB LEDs. Everything was measured with a logic analyzer, to circumvent deviations in `millis()` (because some libraries disable interrupts).
 ## Introduction

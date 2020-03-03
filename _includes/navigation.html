@@ -1,0 +1,64 @@
+<div id="navigation">
+    <header class="site-header">
+        {{ site.title }}
+    </header>
+    <div id="menuToggle" class="menu-toggle">
+        <a href="#navigation" class="open-nav">
+        <a href="#" class="close-nav"></a>
+        <div>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+    <nav class="site-nav">
+        <!-- <div class="menu-extend"></div> -->
+        <section class="nav-content">
+            <div class="nav-title">
+                <a href="{{ '/' |  relative_url }}" id="title">{{ site.title }}</a>
+            </div>
+            <ul class="nav-links">
+                <li>
+                    <a href="/">Blog</a>
+                </li>
+                <li>
+                    <a href="/projects/">Projects</a>
+                </li>
+                <li>
+                    <a href="/tags/">Tags</a>
+                </li>
+            </ul>
+    
+            {%- if include.toc -%}
+                <nav class="toc">
+                    <span>Currently reading:</span>
+                    <a href="#">
+                        <header>
+                            {{ include.title }}
+                        </header>
+                    </a>
+                    {{ include.toc }}
+                </nav>
+            {% endif %}
+            <div class="about">
+                <a href="/about/">About Me</a>
+                {%- include social.html -%}
+            </div>
+            <section class="theme">
+                <header>Theme</header>
+                <div class="theme-selector">
+                    <input class="accent" type="color">
+                    <div class="themes">
+                        <button class="dark">dark</button>
+                        <button class="bright">bright</button>
+                    </div>
+                    <button class="reset">
+                        <svg>
+                            <use xlink:href="/static/fontawesome/solid.svg#redo"></use>
+                        </svg>
+                    </button>
+                </div>
+            </section>
+        </section>
+    </nav>
+</div>

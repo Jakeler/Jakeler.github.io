@@ -1,24 +1,15 @@
 <!DOCTYPE html>
 <html lang="{{ page.lang | default: site.lang | default: "en" }}">
 
-  {% include head.html %}
+  {%- include head.html -%}
 
   <body>
-    {% include header.html %}
 
-    <main class="page-content" aria-label="Content">
-      <div class="wrapper">
+    <main class="page-content">
         {{ content }}
-      </div>
     </main>
 
-    {% include footer.html %}
-
-    <!-- particles.js container -->
-    <div id="particles-js"></div>
-    <!-- scripts -->
-    <!-- <script src="/js/particles.js"></script> -->
-    <!-- <script src="/js/particle_config.js"></script> -->
+    {%- include footer.html -%}
 
   </body>
 

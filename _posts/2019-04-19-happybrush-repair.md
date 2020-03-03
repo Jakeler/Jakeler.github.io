@@ -1,6 +1,7 @@
 ---
 layout: post
 title: 'Happybrush Sonic Toothbrush Analysis and Repair'
+tags: electronics repair toothbrush
 ---
 Recently my electric toothbrush stopped working, it showed always the red battery empty indicator, even after leaving it charging overnight. This post shows how it can be opened and possibly fixed. For example a battery replacement is done in the same way.
 

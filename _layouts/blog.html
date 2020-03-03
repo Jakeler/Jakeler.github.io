@@ -1,0 +1,39 @@
+---
+layout: default
+---
+
+{%- include navigation.html -%}
+
+<div class="blog">
+  {{ content }}
+  
+  {% assign posts = paginator.posts %}
+
+  {%- include pagination.html -%}
+
+  {%- if posts.size > 0 -%}
+    {%- if page.list_title -%}
+      <h2 class="post-list-heading">{{ page.list_title }}</h2>
+    {%- endif -%}
+    <ul class="post-list">
+      {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
+      {%- for post in posts -%}
+      <li>
+        <a class="post-link" href="{{ post.url | relative_url }}">
+        <span class="post-meta">{{ post.date | date: date_format }}</span>
+        <h3>
+            {{ post.title | escape }}
+          </h3>
+          {%- if site.show_excerpts -%}
+          {{ post.excerpt }}
+          {%- endif -%}
+        </a>
+      </li>
+      {%- endfor -%}
+    </ul>
+
+    {%- include pagination.html -%}
+
+  {%- endif -%}
+
+</div>

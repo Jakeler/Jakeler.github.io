@@ -1,0 +1,101 @@
+@import "syntax-dark";
+
+:root {
+    --accent-color:#{$accentColor}; // Don't use whitespace here, otherwise it will be included!
+}
+
+body {
+    color: $textColor;
+    background-color: $bgLightColor;
+}
+a {
+    color: $textColor;
+    // transition: color 0.3s;
+    &:hover {
+      color: var(--accent-color);
+    }
+}
+svg {
+    fill: $textColor;
+}
+
+.site-nav {
+    background: linear-gradient($bgDarkColor 0%,  var(--accent-color) 100%);
+}
+.site-header {
+    background: $bgDarkColor;
+}
+.nav-links {
+    border-top: thin solid $textColor;
+    border-bottom: thin solid $textColor;
+}
+
+.menu-toggle {
+    background: var(--accent-color);
+    span {
+        background: $bgDarkColor;
+    }
+}
+
+div.themes {
+    border: thin solid $textColor;
+
+    button.dark {
+        color: #ddd;
+        background: #222;
+    }
+    button.bright {
+        color: #222;
+        background: #ddd;
+    }
+}
+div.theme-selector input.accent {
+    border: thin solid $textColor;
+}
+
+article.post {
+    a {
+        color: var(--accent-color);
+        &:hover {
+            // color: $fgColor;
+            background-color: $bgLightColor;
+            box-shadow: 2px 2px 20px 5px $bgLightColor;
+        }
+    }
+
+    p > code {
+        background-color: $bgDarkColor;
+        border: thin solid $fgColor;
+    }
+}
+.post-meta {
+    // color: var(--accent-color);
+    color: grey;
+}
+
+.tags a.label {
+    color: $textColor;
+    border: thin solid $fgColor;
+}
+
+.pagination-item {
+    // background: $fgColor;
+    // border: thin solid $bgDarkColor;
+    background: $bgDarkColor;
+    border: thin solid $fgColor;
+
+
+    &:hover {
+        color: $bgLightColor;
+        background-color: var(--accent-color);
+        transition: background-color 0.3s ease;
+    }
+}
+.pagination-link.is-current {
+    background: var(--accent-color);
+}
+
+.post-list li {
+    // background-color: $bgDarkColor;
+    border-bottom: thin solid $fgColor;
+}

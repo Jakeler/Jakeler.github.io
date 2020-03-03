@@ -1,0 +1,25 @@
+Sidebar mit social links/contact
+https://journal.jekyllthemes.io/blog/hitting-the-road
+farbverlauf orange - schwarz? als bg
+
+Seiten:
+    Blog/Latest
+    Tags
+    Project showcase
+    About
+
+Code Block parallax:
+https://web.archive.org/web/20181212123732/http://www.docs.influxdata.com/influxdb/v1.7/administration/backup_and_restore/
+blocks über volle breite
+https://thelehhman.com/texture/posts/coding-post/#
+
+TOC: https://github.com/allejo/jekyll-anchor-headings
+
+Dark + light theme
+
+Comments: https://utteranc.es/
+
+Gut ingesamt:
+https://eigenfoo.xyz/
+https://darekkay.com/projects/
+https://www.sean.sh/log/when-an-alias-should-actually-be-an-abbr/

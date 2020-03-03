@@ -1,0 +1,103 @@
+.nav-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    // Issue: https://stackoverflow.com/questions/33454533/cant-scroll-to-top-of-flex-item-that-is-overflowing-container
+    // justify-content: space-evenly;
+  }
+  
+  .nav-title {
+    margin-top: auto;
+    margin-bottom: 1em;
+
+    #title {
+      font-size: x-large;
+      font-weight: bold;
+    }
+  }
+  
+  .nav-links {
+    margin: auto 0;
+
+    list-style: none;
+    font-size: large;
+  
+    li  {
+      margin: 1rem;
+    }
+  }
+
+.toc {
+    margin: auto 0;
+    margin-top: 1em;
+
+    text-align: left;
+
+    header {
+        margin-top: 0.5em;
+        font-weight: bold;
+    }  
+    ul {
+        padding-left: 1em;
+        margin-top: 0;
+        list-style-type: square;
+    }
+    span {
+        font-style: italic;
+    }
+    a {
+      display: inline; // Workaround for wrong dot position
+    }
+}
+
+.social {
+    margin: auto;
+    list-style-type: none;
+    // text-align: left;
+  
+    li {
+      margin: 1em 0;
+    }
+  
+    img#feedlyFollow {
+      margin: 0;
+      width: 5em;
+    }
+}
+
+div.theme-selector {
+  margin-top: 0.5em;
+
+  input.accent, button {
+    border: 0;
+    background: unset;
+    padding: unset;
+    cursor: pointer;
+  }
+
+  button.reset {
+    padding: 1em;
+  }
+
+  input.accent {
+    height: 3rem;
+    width: 2rem;
+    vertical-align: middle;
+    // margin: 0 1em;
+    font-size: 0;
+    margin-right: -5px;
+  }
+
+}
+div.themes {
+  display: inline-flex;
+  flex-direction: column;
+  vertical-align: middle;
+  justify-content: stretch;
+  height: 3rem;
+
+  button {
+    width: 4rem;
+    height: 2rem;
+  }
+}

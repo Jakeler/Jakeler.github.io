@@ -3,10 +3,70 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   {%- seo -%}
-  <link rel="stylesheet" href="{{ "/assets/main.css" | relative_url }}">
+  <link rel="shortcut icon" href="{{ site.avatar }}">
+  <link rel="stylesheet" href="{{ "/static/css/style.css" | relative_url }}">
+  <link class="theme-style" rel="stylesheet" href="{{ "/static/css/themes/dark.css" | relative_url }}" title="default/dark">
+  <link class="theme-style" rel="stylesheet" href="{{ "/static/css/themes/light.css" | relative_url }}" title="alt/bright" disabled>
   {%- feed_meta -%}
   {%- if jekyll.environment == 'production' and site.google_analytics -%}
     {%- include google-analytics.html -%}
   {%- endif -%}
-  <link rel="shortcut icon" type="image/x-icon" href="{{ site.baseurl }}/assets/favicon.jpg" >
+
+  <script>
+    // Theme accent color
+    function getAccent() {
+      const styles = window.getComputedStyle(document.documentElement)
+      return styles.getPropertyValue('--accent-color')
+    }
+    function setAccent(color) {
+      if(color == null)
+        return false
+      
+      document.documentElement.style.setProperty('--accent-color', color)
+      localStorage.setItem('accent', color)
+    }
+
+    // Alternate stylesheets
+    function selectStyle(title) {
+      if(title == null)
+        return false
+
+      const sheets = document.querySelectorAll('head link.theme-style')
+      let found = false
+      for(const s of sheets) {
+        s.disabled = s.title != title
+        found = s.title === title? true : found
+      }
+      localStorage.setItem('theme', title)
+      return found
+    }
+
+    // Restore stored state
+    function restore() {
+      selectStyle(localStorage.getItem('theme'))
+      setAccent(localStorage.getItem('accent'))
+    }
+    function reset() {
+      localStorage.clear()
+      location.reload();
+    }
+
+    restore()
+
+    window.addEventListener('DOMContentLoaded', _ => {
+      const picker = document.querySelector('.theme input.accent')
+      picker.value = getAccent() // TODO fix empty with white theme
+      picker.onchange = e => setAccent(picker.value)
+
+      const darkBtn = document.querySelector('div.themes button.dark')
+      darkBtn.onclick = e => selectStyle('default/dark')
+      const brightBtn = document.querySelector('div.themes button.bright')
+      brightBtn.onclick = e => selectStyle('alt/bright')
+
+      const resetBtn = document.querySelector('.theme button.reset')
+      resetBtn.onclick = e => reset()
+    })
+    
+
+  </script>
 </head>

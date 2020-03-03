@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "NAS Performance: NFS vs. SMB vs. SSHFS"
+tags: performance benchmark storage nas linux
 ---
 This is a performance comparison of the the three most useful protocols for networks file shares on Linux with the latest software. I have run sequential and random benchmarks and tests with rsync. The main reason for this post is that i could not find a proper test that includes SSHFS.
 
