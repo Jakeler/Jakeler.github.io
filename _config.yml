@@ -13,7 +13,7 @@ avatar: /static/img/favicon.jpg
 #remote_theme: alainpham/alainpham.github.io
 #remote_theme: chrisrhymes/bulma-clean-theme
 
-show_excerpts: false
+# show_excerpts: true
 paginate: 10
 paginate_path: "/page:num"
 
