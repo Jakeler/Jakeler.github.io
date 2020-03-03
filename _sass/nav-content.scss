@@ -53,10 +53,10 @@
 .social {
     margin: auto;
     list-style-type: none;
-    text-align: left;
+    // text-align: left;
   
     li {
-      margin: 1em;
+      margin: 1em 0;
     }
   
     img#feedlyFollow {
@@ -65,7 +65,9 @@
     }
 }
 
-.theme {
+div.theme-selector {
+  margin-top: 0.5em;
+
   input.accent, button {
     border: 0;
     background: unset;
@@ -74,7 +76,7 @@
   }
 
   button.reset {
-    padding: 0.55em;
+    padding: 1em;
   }
 
   input.accent {

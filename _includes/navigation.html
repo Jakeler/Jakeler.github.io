@@ -44,19 +44,21 @@
                 <a href="/about/">About Me</a>
                 {%- include social.html -%}
             </div>
-            <div class="theme">
+            <section class="theme">
                 <header>Theme</header>
-                <input class="accent" type="color">
-                <div class="themes">
-                    <button class="dark">
-                    <button class="bright">
+                <div class="theme-selector">
+                    <input class="accent" type="color">
+                    <div class="themes">
+                        <button class="dark">dark</button>
+                        <button class="bright">bright</button>
+                    </div>
+                    <button class="reset">
+                        <svg>
+                            <use xlink:href="/static/fontawesome/solid.svg#redo"></use>
+                        </svg>
+                    </button>
                 </div>
-                <button class="reset">
-                    <svg>
-                        <use xlink:href="/static/fontawesome/solid.svg#redo"></use>
-                    </svg>
-                </button>
-            </div>
+            </section>
         </section>
     </nav>
 </div>
