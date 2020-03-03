@@ -48,12 +48,11 @@ body {
 a {
   text-decoration: none;
   display: inline-block;
-  transition: all 0.3s;
+  transition: color 0.3s, transform 0.3s;
   
   &:hover{
-    // font-size: x-large;
-    transform: scale(1.2, 1.2);
-    transform-origin: left;
+    transform: scale(1.125) skewX(-10deg);
+    // transform-origin: left;
   }
 }
 

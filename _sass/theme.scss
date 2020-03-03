@@ -38,16 +38,18 @@ svg {
 }
 
 div.themes {
-    border: 1px solid $textColor;
+    border: thin solid $textColor;
 
     button.dark {
-      background: #222;
+        color: #ddd;
+        background: #222;
     }
     button.bright {
-      background: #ddd;
+        color: #222;
+        background: #ddd;
     }
 }
-.theme input.accent {
+div.theme-selector input.accent {
     border: thin solid $textColor;
 }
 
