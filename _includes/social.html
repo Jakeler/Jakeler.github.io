@@ -1,26 +1,32 @@
 <ul class="social">
     {% if site.mail %}
     <li>
-        <svg>
-            <use xlink:href="/static/fontawesome/regular.svg#envelope"></use>
-        </svg>
-        <a href="mailto:{{ site.mail }}">{{ site.mail }}</a> 
+        <a href="mailto:{{ site.mail }}">
+            <svg>
+                <use xlink:href="/static/fontawesome/regular.svg#envelope"></use>
+            </svg>
+            {{ site.mail }}
+        </a>
     </li>
     {% endif %}
     {% if site.github_username %}
     <li>
-        <svg>
-            <use xlink:href="/static/fontawesome/brands.svg#github"></use>
-        </svg>
-        <a href="https://github.com/{{ site.github_username }}">{{ site.github_username }}</a> 
+        <a href="https://github.com/{{ site.github_username }}">
+            <svg>
+                <use xlink:href="/static/fontawesome/brands.svg#github"></use>
+            </svg>
+            {{ site.github_username }}
+        </a> 
     </li>
     {% endif %}
     {% if site.rss %}
     <li>
-        <svg>
-            <use xlink:href="/static/fontawesome/solid.svg#rss"></use>
-        </svg>
-        <a href="/feed.xml">RSS</a>
+        <a href="/feed.xml">
+            <svg>
+                <use xlink:href="/static/fontawesome/solid.svg#rss"></use>
+            </svg>
+            RSS
+        </a>
     </li>
     <li>
         <a href="https://feedly.com/i/subscription/feed%2Fhttps%3A%2F%2Fblog.ja-ke.tech%2Ffeed.xml" target="blank">
