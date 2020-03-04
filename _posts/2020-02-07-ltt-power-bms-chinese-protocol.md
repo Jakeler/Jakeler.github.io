@@ -2,6 +2,7 @@
 layout: post
 title: "Decoding the Smart BMS Protocol"
 tags: software bms uart bluetooth battery protocol mobility
+# last_modified_at: 2018-05-12
 ---
 Smart (meaning with UART / Bluetooth interface) battery management systems are widely available from china now. Almost all of them use a generic protocol for the communication. They also provide a (Windows) PC Software and Android App, which works fine, but i like to add more features and make it open source. So i wrote the protocol definition in [Kaitai Struct](https://kaitai.io/), a specific parsing language with YAML syntax, which can be compiled to parsers in many different languages like Java, C++, Python etc...
 
