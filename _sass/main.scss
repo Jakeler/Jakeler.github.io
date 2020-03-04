@@ -14,6 +14,10 @@
   src: url('/static/fonts/opensans-bold.ttf')  format('truetype'),
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 *,
 *:before,
 *:after {
