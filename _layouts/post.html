@@ -35,6 +35,21 @@ layout: default
 
     {{ content }}
     
+    
     {% include comments.html %}
 
+    <nav class="suggestions">
+      {% if page.previous.url or page.next.url%}
+      <header>You might be interested in the previous/next posts:</header>        
+      {% endif %}
+      <div>
+        {% if page.previous.url %}
+          <a class="prev" href="{{page.previous.url}}">&laquo; {{page.previous.title}}</a>
+        {% endif %}
+        {% if page.next.url %}
+          <a class="next" href="{{page.next.url}}">{{page.next.title}} &raquo;</a>
+        {% endif %}
+      </div>
+    </nav>
+    
 </article>

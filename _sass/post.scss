@@ -57,22 +57,23 @@ article.post {
 
 section.tags a.label {
     padding: 0.333em 0.666em;
-    border-radius: 2px;
+    border-radius: 3px;
 }
 
 p.comments {
   position: relative;
+  min-height: 10em;
   margin: 2em 0;
 
   div.utterances {
-    position: absolute;
     max-width: 100%;
-    top: 0;
   }
   
   svg.loading {
     display: block;
-    min-height: 10em;
+    position: absolute;
+    top: 5em;
+    left: 50%;
     margin: auto;
     z-index: -1;
     animation: spin infinite 1s;
@@ -81,5 +82,26 @@ p.comments {
   @keyframes spin {
     from {transform:rotate(0deg);}
     to {transform:rotate(360deg);}
+  }
+}
+
+nav.suggestions {
+  margin: 1em 0;
+
+  header {
+    padding-bottom: 0.5em;
+    margin-bottom: 0.5em;
+  }
+  a {
+    max-width: 50%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    // padding: 10px;
+    // background-color: black;
+    // border-radius: 3px;
+  }
+  a.next {
+    float: right;
   }
 }
