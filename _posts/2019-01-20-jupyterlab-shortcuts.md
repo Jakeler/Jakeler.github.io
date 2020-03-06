@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "JupyterLab Keyboard Shortcut Cheat Sheet"
-tags: jupyterlab shortcut cheatsheet python nodejs
+tags: jupyterlab shortcut cheatsheet python nodejs release
 last_modified_at: 2020-03-03
 ---
 A complete overview of the current JupyterLab keyboard shortcuts:<br>
