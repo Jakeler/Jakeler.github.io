@@ -2,6 +2,7 @@
 layout: post
 title: "Setting RD DPS power supply with Node-RED Modbus"
 categories: modbus dps
+tags: electronics protocol modbus psu nodejs
 ---
 In [this post]({% post_url 2018-05-19-nodered-modbus-read-dps %}) i showed how how it is possible to read from the DPS power supplys with the Node-RED modbus module. Now also to setting/writing the parameters.
 

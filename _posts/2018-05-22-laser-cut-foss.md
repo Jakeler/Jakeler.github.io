@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Laser Cutting: Inkscape -> CNCjs -> GRBL"
+tags: software oss laser
 ---
 For DIY laser cutters exists good open source software, this posts shows my workflow from Inscape, to creating the GCODE and finally streaming it to the machine.
 

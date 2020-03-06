@@ -2,12 +2,13 @@
 layout: post
 title: "Let's Encrypt Wildcard Certificates with Certbot manual mode"
 categories: certbot tls wildcard
+tags: web tls dns
 ---
 This post shall describe how to obtain a free wildcard TLS cert for your domain from Let's Encrypt with the recommended `certbot` python based utility. Of course there are few [other clients](https://letsencrypt.org/docs/client-options/#acme-v2-compatible-clients) that already support the ACME v2 protocol, which is required for wildcards, i will only show certbot command here, but the procedure with other clients should be pretty similar.
 
 So let's get started. Certbot version 0.22.0 or higher is required. Look at the [instructions](https://certbot.eff.org/) and make sure it is properly installed on the server. Wildcard certificates can only be issued with the DNS challenge, so you must be able to add a TXT record to the domain, the typical `http-01`(port 80) or `tls-sni-01`(port 443) challenge will **not** do it.
 
-There are plugins for some DNS providers availible that automate the adding of the TXT record. For example Cloudflare, Google Cloud DNS, AWS Route 53, and more are supported so far, look [here](https://certbot.eff.org/docs/using.html#dns-plugins). I use Namecheap though, which unfortunatly provides API access only to bigger customers... so i use the manual method (this works with all DNS providers):
+There are plugins for some DNS providers available that automate the adding of the TXT record. For example Cloudflare, Google Cloud DNS, AWS Route 53, and more are supported so far, look [here](https://certbot.eff.org/docs/using.html#dns-plugins). I use Namecheap though, which unfortunately provides API access only to bigger customers... so i use the manual method (this works with all DNS providers):
 ```bash
 certbot certonly --manual -d "*.yourdomain.tld" --preferred-challenges dns-01 --server https://acme-v02.api.letsencrypt.org/directory
 ```

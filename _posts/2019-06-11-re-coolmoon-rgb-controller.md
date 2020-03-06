@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Custom Controller for Coolmoon RGB Fans"
-tags: electronics led rgb modding
+tags: electronics led rgb mod
 ---
 Recently i bought some really cheap (about 7€ per piece!) RGB fans:
 ![fans running in the dark](/assets/coolmoon-rgb-controller/fans.jpg)

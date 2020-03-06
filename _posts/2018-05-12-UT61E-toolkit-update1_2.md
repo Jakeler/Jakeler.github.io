@@ -2,6 +2,7 @@
 layout: post
 title: "UT61E Toolkit: Update 1.2"
 categories: ut61e android
+tags: software android multimeter protocol bluetooth
 --- 
 Now quickly follows the [1.2 release](https://github.com/Jakeler/UT61E-Toolkit/releases/tag/v1.2) of my Android app for multimeter logging over bluetooth.
 It includes a few optional features, that can be enabled in the settings. 

@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Trying to Engrave PLA with a 3W Laser"
+tags: experiment laser plastic engrave
 ---
 A few months ago i bought a diy laser cutter/engraver kit, including a 3W laser module, which works good for wood, foam, arcyl, etc... You might have already read my previous post about the software i use for it.
 This post is about the idea to also engrave 3D printed PLA parts. In short: it doesn't work properly. Following my tests and the longer explanation.

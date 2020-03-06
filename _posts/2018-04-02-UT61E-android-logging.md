@@ -3,6 +3,7 @@ layout: post
 title: "UT61E Bluetooth: my Android App"
 categories: ut61e android
 last_modified_at: 2018-05-12
+tags: software android multimeter protocol bluetooth
 ---
 In [this previous post]({% post_url 2018-03-09-UT61E-ble %}) i showed a hardware mod that adds Bluetooth low energy connectivity to the Uni-T UT61E multimeter. Then i wrote some python scripts to receive and decode the data on Linux, more on that [here]({% post_url 2018-03-11-linux-ble %}). 
 

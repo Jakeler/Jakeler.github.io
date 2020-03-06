@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "A look into the DScope USB oscilloscope"
+tags: electronics oscilloscope teardown
 --- 
 The DScope from Dreamsourcelabs is a 2 channel oscilloscope with 50 MHz analag bandwidth and up to 200 MSPS (100 MSPS dual channel) for about 100$ now. The reason i bought it was that the DSView software is open source and runs on Linux (C++/QT5 based), unfortunately the development and the company seems pretty much dead now. It started with a kickstarter campain in 2013/2014 and the DSLogic 400 MHz Logic analyzer, this device is also based on that. Following a quick hardware overview.
 

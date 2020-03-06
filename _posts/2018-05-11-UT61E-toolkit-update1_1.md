@@ -2,6 +2,7 @@
 layout: post
 title: "UT61E Toolkit: Update 1.1"
 categories: ut61e android
+tags: software android multimeter protocol bluetooth data
 --- 
 Today i have published the [1.1 release](https://github.com/Jakeler/UT61E-Toolkit/releases/tag/v1.1) of my Android app for multimeter logging over bluetooth. It finally includes the feature to view alredy recorded log CSV files directly.
 

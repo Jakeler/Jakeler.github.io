@@ -2,6 +2,7 @@
 layout: post
 title:  "Grafana 5.0 with Volkszaehler MySQL data source"
 categories: Grafana visualization
+tags: grafana data
 ---
 ### Add the MySQL datasource
 Grafana supports in the standard installation already MySQL so just go to `Configuration - Data Sources - Add data source` and fill in the login information.
