@@ -155,6 +155,6 @@ function selectCommentsStyle(theme) {
   }
 ```
 
-The checks for null are [required because it runs while the might be still loading](https://github.com/utterance/utterances/issues/170), to restore the theme settings.
+The checks for null are required [because it runs while the comments might be still loading](https://github.com/utterance/utterances/issues/170), to restore the theme settings.
 
 This wraps it up, let me know what you think in the comments!
