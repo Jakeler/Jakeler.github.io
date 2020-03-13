@@ -2,7 +2,7 @@
 layout: post
 title: "KeePassXC-Browser with beta/snapshot browser versions"
 categories: kepassxc browser
-tags: kepass browser webextension
+tags: keepass browser webextension
 ---
 This is just just a quick tipp about the relatively new KeePassXC-Browser extension that (as the name implies) allows to connect to the KeePassXC programm from various browsers.
 
