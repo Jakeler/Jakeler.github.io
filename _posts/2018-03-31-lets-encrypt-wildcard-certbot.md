@@ -2,7 +2,7 @@
 layout: post
 title: "Let's Encrypt Wildcard Certificates with Certbot manual mode"
 categories: certbot tls wildcard
-tags: web tls dns
+tags: web encryption dns
 ---
 This post shall describe how to obtain a free wildcard TLS cert for your domain from Let's Encrypt with the recommended `certbot` python based utility. Of course there are few [other clients](https://letsencrypt.org/docs/client-options/#acme-v2-compatible-clients) that already support the ACME v2 protocol, which is required for wildcards, i will only show certbot command here, but the procedure with other clients should be pretty similar.
 
