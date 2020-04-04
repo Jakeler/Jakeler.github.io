@@ -3,8 +3,8 @@ title: "LUKS2 Encrypted Container on Android"
 layout: post
 tags: android linux software encryption
 ---
+This post describes how dm-crypt / LUKS container files can be mounted on Android, completely with the standard command line open source tools. Root permissions are required.
 
-## Why?
 
 ## Setup
 ```sh
@@ -110,6 +110,8 @@ done
 
 Android Security Internals:
 <https://books.google.de/books?id=y11NBQAAQBAJ&pg=PA108&lpg=PA108&dq=zygote+namespace&source=bl&ots=nV_zzQvX3z&sig=ACfU3U0rBLpGYslPzvwECRr1rPu4nOgVzw&hl=en&sa=X&ved=2ahUKEwjZ8sPKm5joAhXYRBUIHRWuD1QQ6AEwBXoECAoQAQ#v=onepage&q=namespace&f=false>
+
+<https://nelenkov.blogspot.com/2015/06/decrypting-android-m-adopted-storage.html>
 
 ## Further reading
 Mount namespaces and shared subtrees
