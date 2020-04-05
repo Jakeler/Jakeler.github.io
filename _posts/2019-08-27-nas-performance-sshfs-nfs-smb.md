@@ -2,17 +2,18 @@
 layout: post
 title: "NAS Performance: NFS vs. SMB vs. SSHFS"
 tags: performance benchmark storage nas linux
+last_modified_at: 2020-04-02
 ---
 This is a performance comparison of the the three most useful protocols for networks file shares on Linux with the latest software. I have run sequential and random benchmarks and tests with rsync. The main reason for this post is that i could not find a proper test that includes SSHFS.
 
 ## NAS Setup
-The hardware side of the server is based on an Dell mainboard wit a Intel i3-3220, so a fairly old 2 core / 4 threads CPU. It also does NOT support the AES-NI extensions (which would increase the AES performance [noticeably](https://turecki.net/content/getting-most-out-ssh-hardware-acceleration-tuning-aes-ni)) the encryption happens completely in software instead.
+The hardware side of the server is based on an Dell mainboard with an Intel i3-3220, so a fairly old 2 core / 4 threads CPU. It also does **not** support the AES-NI extensions (which would increase the AES performance [noticeably](https://turecki.net/content/getting-most-out-ssh-hardware-acceleration-tuning-aes-ni)) the encryption happens completely in software.
 
 As storage two HDDs in BTRFS RAID1 were used, it does not make a difference though, because the tests are staged to hit almost always the cache on the server, so only the protocol performance counts.
 
-Everything was tested over a local Gigabit Network.
-
 I installed Fedora 30 Server on it and updated it to the latest software versions.
+
+Everything was tested over a local Gigabit Ethernet Network. The client is a quadcore desktop machine running Arch Linux, so this should not be a bottleneck.
 
 ### SSHFS (also known as SFTP)
 Relevant package/version: OpenSSH_8.0p1, OpenSSL 1.1.1c, sshfs 3.5.2
@@ -76,7 +77,7 @@ Most are maxing out the network, the only one falling behind in the read test is
 
 NFS handles the compute intensive encryption better with multiple threads, but using almost 200% CPU and getting a bit weaker on the write test.
 
-SSHFS provides a surprisingly good performance with both encryption options, almost the same as NFS or SMB in plaintext! It seems lighter on the CPU, with up to 75% for the ssh process and 15% for sftp.
+SSHFS provides a surprisingly good performance with both encryption options, almost the same as NFS or SMB in plaintext! It also put less stress on the CPU, with up to 75% for the ssh process and 15% for sftp.
 
 ### Random
 ![4K random read diagram](/assets/nas-perf/4Kread.svg)
@@ -98,9 +99,9 @@ This test consists of transfering a folder with rsync from/to the mounted share 
 ![mixed read diagram](/assets/nas-perf/RsyncRead.svg)
 ![mixed write diagram](/assets/nas-perf/RsyncWrite.svg)
 
-No big surprises here, NFS fastest in plaintext, SSHFS fastest in encryption. SMB always slightly behind NFS.
+After all no big surprises here, NFS fastest in plaintext, SSHFS fastest in encryption. SMB always somewhat behind NFS.
 
 ## Conclusion
-In trusted home networks NFS without encryption is the best choice on Linux. If you want encryption i would switch to SSHFS, it is a way simpler setup, more cpu efficient and often not much slower than plaintext NFS. Samba/SMB is also not far behind, but only really makes sense in a mixed (Windows/Linux) environment.
+In trusted home networks NFS without encryption is the best choice on Linux for maximum performance. If you want encryption i would recommend SSHFS, it is a much simpler setup (compared to Kerberos), more cpu efficient and often only slightly slower than plaintext NFS. Samba/SMB is also not too far behind, but only really makes sense in a mixed (Windows/Linux) environment.
 
 Thanks for reading, i hope it was helpful.
