@@ -30,7 +30,7 @@ cryptsetup luksFormat --type luks2 test.img
 Filesystem support depends on the device kernel and can differ, use `cat /proc/filesystems` to check what is in the list. ExFAT and Ext4 should be available on almost any device though. 
 
 Native Linux filesystems (like ext4) make it a bit more complicated, because they support unix permissions on individual files and they are set by the Android system.
-Use exFAT if you want easy access to files created from other apps. This is more convenient, but if you like more security from possibly malicious apps you can use ext4 to get some sort scoped storage (from Android 11), where apps can only access files they created themselves.
+Use exFAT if you want easy access to files created from other apps. This is more convenient, but if you prefer more security from possibly malicious apps you can use ext4 to get some sort scoped storage (from Android 11), where apps can only access files they created themselves.
 
 #### Simple: ExFAT (recommended)
 First step is to open the container with your passphrase, then simply create the fs:
@@ -77,7 +77,7 @@ fi
 ```
 
 ### Mounting
-Because of the Android architecture a few additional steps are required to get it properly mounted. Every app has its own mount namespace, that means mount from other apps are not visible, so it would be per default only available to Termux or whatever Terminal you use and that is no good. A fix is to enter the root namespace and do it there, then the mount propagates to all child app namespaces:
+Because of the Android architecture a few additional steps are required to get it properly mounted. Every app has its own mount namespace, that means mounts from other apps are not visible, so it would be per default only available to Termux or whatever Terminal you use and that is no good. A fix is to enter the root namespace and do it there, then the mount propagates to all child app namespaces:
 ```sh
 echo "Entering namespace of init process"
 SH_PATH=$(dirname "$0")
@@ -87,7 +87,7 @@ Here `-t` specifies the target namespace, use simply PID 1, which is the init pr
 
 Following commands go all into the `mounts.sh` script (must be run inside the init namespace).
 
-Another Android specialty are the different storage views: default, read and write. They were added with Android 6 (Marshmallow) to be able to change permissions on runtime, through bind mounting the needed view into the specific app namespaces. Therefore the location is `/mnt/runtime/VIEW` and we have to mount there to make it available to the apps with correct permissions. It is enough to mount into the write view, because with the "simplified" permission model apps that got storage access granted see always this view. So to mount on the internal storage to `luks`:
+Another Android specialty are the different storage views: default, read and write. They were added with Android 6 (Marshmallow) to be able to change permissions on runtime, through bind mounting the needed view into the specific app namespaces. Therefore the location is `/mnt/runtime/VIEW` and we have to mount there to make it available to the apps with correct permissions. It is enough to mount into the write view, because with the "simplified" permission model apps that got storage access granted see always this view. So to mount on the internal storage to `luks/` start with:
 ```sh
 MOUNT=/mnt/runtime/write/emulated/0/luks
 echo "Mounting to: $MOUNT"
@@ -99,10 +99,10 @@ Then finally mount it like that:
 ```sh
 mount -t exfat -o context=u:object_r:sdcardfs:s0,uid=0,gid=9997,fmask=0117,dmask=0006 /dev/mapper/luks $MOUNT
 ```
-ExFAT does not save unix permissions or the SELinux context, so it is important to specify suitable values at mount. GID 9997 equals group `everybody`, this makes it usable with all apps.
+ExFAT does not save unix permissions or the SELinux context, so it is important to specify suitable values for mounting. GID 9997 equals group `everybody`, this makes it usable with all apps.
 
 #### EXT4
-Ext4 requires similar values, but this time it can not be specified as mount option, instead it must be set on the mount point and sub directories:
+Ext4 requires similar values, but this time it can not be specified as mount option, instead it must be set on the mount point afterwards:
 ```sh
 mount /dev/mapper/luks $MOUNT
 
@@ -110,7 +110,7 @@ chcon -R u:object_r:sdcardfs:s0 $MOUNT
 chgrp -R everybody $MOUNT
 chmod -R 771 $MOUNT
 ```
-Now you should be able to create files and folders from a file manager and other apps inside the mountpoint. As already mentioned, these will be app specific (in this case for appID 256):
+Now you should be able to create files and folders from a file manager and other apps inside the mountpoint. As already mentioned, these will be app specific (in this case for appID 256) and don't allow access for others:
 ```sh
 ls -laZ /sdcard/luks
 total 26
@@ -120,7 +120,7 @@ drwxrwx--x 26 root    sdcard_rw u:object_r:sdcardfs:s0                    4096 2
 drwx------  2 u0_a256 u0_a256   u:object_r:sdcardfs:s0:c0,c257,c512,c768  1024 2020-04-04 21:26 gg
 drwx------  2 root    everybody u:object_r:sdcardfs:s0                   12288 2020-04-04 21:15 lost+found
 ```
-To make them "public" to other apps run the `chgrp`/`chmod` commands from above on the whole mountpoint again or on a specific subdirectory.
+To make them "public" to other apps run the `chgrp`/`chmod` commands from above on the whole mountpoint again or just on a specific subdirectory.
 
 
 #### Bind default folders
