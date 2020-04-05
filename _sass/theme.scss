@@ -4,13 +4,17 @@
     --accent-color:#{$accentColor}; // Don't use whitespace here, otherwise it will be included!
 }
 
+::selection {
+    // color: $bgLightColor;
+    background: $fgColor;
+}
+
 body {
     color: $textColor;
     background-color: $bgLightColor;
 }
 a {
     color: $textColor;
-    // transition: color 0.3s;
     &:hover {
       color: var(--accent-color);
     }
@@ -70,7 +74,9 @@ article.post {
 }
 .post-meta {
     // color: var(--accent-color);
-    color: grey;
+    color: gray;
+    // text-decoration: dotted underline overline $fgColor;
+    // text-underline-offset: 5px;
 }
 
 .tags a.label {
