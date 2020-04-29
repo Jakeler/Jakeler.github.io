@@ -1,7 +1,7 @@
 ---
 title: "LUKS2 Encrypted Container on Android"
 layout: post
-tags: android root linux software encryption
+tags: android root linux scripting software encryption
 ---
 This post describes how dm-crypt / LUKS container files can be mounted on Android, completely with the standard command line open source tools. It is written for Android 10, but should also work on older versions. Root permissions are required.
 
