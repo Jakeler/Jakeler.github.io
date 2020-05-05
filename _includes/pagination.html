@@ -1,8 +1,10 @@
 <nav class="pagination is-centered">
     {% if paginator.previous_page %}
-    <a href="{{ site.baseurl }}{{ paginator.previous_page_path }}" class="pagination-item pagination-previous is-info">Previous</a>
-    {% else %}
-    <div class="pagination-item pagination-previous disabled">Previous</div>
+    <a href="{{ site.baseurl }}{{ paginator.previous_page_path }}" class="pagination-item pagination-previous">
+        <svg>
+            <use xlink:href="/static/fontawesome/solid.svg#angle-left"></use>
+        </svg>
+    </a>
     {% endif %}
 
     <ul class="pagination-list">
@@ -19,8 +21,10 @@
     </ul>
 
     {% if paginator.next_page %}
-    <a href="{{ site.baseurl }}{{ paginator.next_page_path }}" class="pagination-item pagination-next is-info">Next</a>
-    {% else %}
-    <div class="pagination-item pagination-next disabled">Next</div>
+    <a href="{{ site.baseurl }}{{ paginator.next_page_path }}" class="pagination-item pagination-next">
+        <svg>
+            <use xlink:href="/static/fontawesome/solid.svg#angle-right"></use>
+        </svg>
+    </a>
     {% endif %}
 </nav>

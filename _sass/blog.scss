@@ -36,16 +36,15 @@
     // width: 100%;
     margin: 0 1rem;
     
-
+    .pagination-item {
+        padding: .5em;
+        border-radius: 3px;
+        box-shadow: 2px 2px 5px 0px #0000001f;
+        transform: unset;
+    }
     .pagination-previous, .pagination-next {
-        // display: inline;
-        text-align: center;
-        padding: 0.5em;
-        min-width: 5em;
-        
-        &.disabled {
-            color: gray;
-        }
+        line-height: 0;
+        padding: 0.667em;
     }
     .pagination-list {
         display: flex;
@@ -56,7 +55,6 @@
         li .pagination-link {
             display: block;
             text-align: center;
-            padding: 0.5em;
             min-width: 2.5em;
         }
     
@@ -65,12 +63,7 @@
             flex-shrink: 1;
             text-overflow: ellipsis;
         }
-    
     }
-    .pagination-item {
-        border-radius: 3px;
-        box-shadow: 2px 2px 5px 0px #0000001f;
-        transform: unset;
-    }
+
 }
 
