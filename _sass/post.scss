@@ -39,6 +39,10 @@ article.post {
       margin-right: 0.5em;
       content: "➔  ";
     }
+
+    p a {
+      word-wrap: break-word;
+    }
 }
 
 // Smaller borders for very small screens
