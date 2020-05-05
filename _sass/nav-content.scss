@@ -50,8 +50,15 @@
     }
 }
 
+div.border-placeholder {
+  border-bottom: 1px solid;
+}
+
+div.about {
+  padding-top: 0.5em;
+  margin: auto 0;
+}
 .social {
-    margin: auto;
     list-style-type: none;
     // text-align: left;
   
@@ -65,6 +72,10 @@
     }
 }
 
+
+section.theme {
+  margin-top: auto;
+}
 div.theme-selector {
   margin: 0.5em 0;
 
