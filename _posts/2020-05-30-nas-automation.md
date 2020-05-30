@@ -1,18 +1,22 @@
 ---
 layout: post
 title: "NAS with Autosuspend, WakeOnLAN and SSHFS Automount"
-tags: linux storage nas
+tags: linux storage nas software scripting
 ---
+This post describes the setup of some convenient features that I deployed for the NAS, to automatically save power, make it wake up and mount it on the client only when needed.
 
 ### Autosuspend
-`/etc/autosuspend.conf`
+Autosuspend is a nice tool to let a server suspend if it is idle (with configurable conditions).
+For Fedora there is no official package available, so I installed it from source:
 ```sh
 git clone https://github.com/languitar/autosuspend.git; cd autosuspend
 python3 setup.py install --prefix=/usr
 mv /usr/local/lib/python3.7/site-packages/autosuspend-3.0.0.dev0-py3.7.egg/etc/* /etc
 mv /usr/local/lib/python3.7/site-packages/autosuspend-3.0.0.dev0-py3.7.egg/lib/systemd/system/* /usr/local/lib/systemd/system/
 ```
+Starting with usual git clone and python module install, unfortunately the setup does not install the config and service files, so I had to move them manually afterwards.
 
+Based on the default config this is resulting the `/etc/autosuspend.conf`:
 ```ini
 [general]
 interval = 30
@@ -45,7 +49,9 @@ interfaces = eno1
 threshold_send = 200
 threshold_receive = 400
 ```
-After starting and enabling with `systemctl enable --now autosuspend.service` check the status, it should look like this:
+Three checks are enabled here, RemoteUser checks is someone is currently logged in over ssh, the ActiveConnection check on port 22 will reliably detect SSHFS connections. Also if there are other services causing some bandwidth usage it will detect it and not suspend with the last check. 
+
+After starting/enabling with `systemctl enable --now autosuspend.service` it should look like this in `systemctl status autosuspend.service`:
 ```
 ● autosuspend.service - A daemon to suspend your server in case of inactivity
    Loaded: loaded (/etc/systemd/system/autosuspend.service; disabled; vendor preset: disabled)
@@ -61,7 +67,7 @@ May 15 20:50:50 nas-server autosuspend[1348]: 2020-05-15 20:50:50,740 - autosusp
 May 15 20:50:50 nas-server autosuspend[1348]: 2020-05-15 20:50:50,752 - autosuspend.Processor - INFO - Check SSH matched. Reason: Ports [22] are connected
 May 15 20:50:50 nas-server autosuspend[1348]: 2020-05-15 20:50:50,753 - autosuspend.Processor - INFO - System is active. Resetting state
 ```
-Here we see that it correctly detects the SSH connection and does not suspend when I am logged in.
+Here we see that it currently detects the SSH connection and does not suspend when I am logged in.
 
 ### Wake On LAN
 First make sure WOL is set up on the server and works from the client with `wol xx:xx:xx:xx:xx:xx` using the MAC address of the server. This usually has to be enabled in the BIOS and might also need some software, read more [here](https://wiki.archlinux.org/index.php/Wake-on-LAN).
@@ -84,9 +90,9 @@ Environment=MAC=xx:xx:xx:xx:xx:xx
 ExecStartPre=/bin/sh -c 'for n in `seq 1 6`; do nc -z ${HOST} ${PORT} && break || wol $MAC && sleep 10; done'
 ExecStart=/bin/sh -c 'while :; do (nc -z -w 1s ${HOST} ${PORT} && echo "Host is up!" && sleep 30) || break; done'
 ```
-In the [Unit] section it is defined as PartOf `mnt.mount` (which we will create in the next section), this makes systemd propagate  start/stop commands from the mount to this unit. The [Service] contains 2 small shell scripts. Pre start it runs a maximum of 6 times a loop where it checks with `nc -z` (netcat zero IO) if the target is up, otherwise it sends the WOL packet and waits 10 secs. Then the main script just check every 30 secs if the target is still online and logs it. Per default this runs indefinite, but as described above it does get stopped if `mnt.mount` gets inactive.
+In the [Unit] section it is defined as PartOf `mnt.mount` (which we will create in the next section), this makes systemd propagate  start/stop commands from the mount to this unit. The [Service] contains 2 small shell scripts. Pre start runs a maximum of 6 times a loop where it checks with `nc -z` (netcat zero IO) if the target is up, otherwise it sends the WOL packet and waits 10 secs. Then the main script just check every 30 secs if the target is still online and logs it. Per default this runs indefinitely, but as described above it does get stopped if `mnt.mount` gets inactive.
 
-Test it with `systemctl stop nas-online.service; systemctl stop nas-online.service` and `systemctl status nas-online.service`:
+Test it with `systemctl start nas-online.service`, `systemctl stop nas-online.service` and `systemctl status nas-online.service`:
 ```
 * nas-online.service - Continuously check if host is up, otherwise try WOL on start
      Loaded: loaded (/etc/systemd/system/nas-online.service; static; vendor preset: disabled)
@@ -109,14 +115,14 @@ May 30 16:06:16 pc-arch systemd[1]: Stopped Continuously check if host is up, ot
 ### Automount
 The Systemd automount feature can automatically mount it when an access to the mountpoint is detected and unmount if it was idle for a specified time.
 
-First it is important to login as root with SSH and accept the fingerprint for this host, otherwise it will not work because it is not in the known hosts list (like describe [here](https://wiki.archlinux.org/index.php/SSHFS)):
+First it is important to login as root with SSH and accept the fingerprint for the server, otherwise it will not work because it is not in the known hosts list (like describe [here](https://wiki.archlinux.org/index.php/SSHFS)):
 ```sh
 sudo -i
 ssh -p 2222 jk@nas-server
 ```
 Also it is of course not possible to enter a password, so make sure pubkey authentication is properly configured on the server.
 
-Then an entry in `/etc/fstab` can be added:
+Then an mount entry in `/etc/fstab` can be added:
 ```
 jk@nas-server:/mnt   /mnt    fuse.sshfs  noauto,x-systemd.requires=nas-online.service,identityfile=/home/jk/.ssh/nas_ed25519,user,allow_other,default_permissions  0 0
 ```
@@ -131,18 +137,18 @@ Here we need a few options:
 The `systemd-fstab-generator` will automatically produce an unit for the mountpoint, in this case `mnt.mount`. 
 
 
-Now we need another another unit: `mnt.automount` with the content:
+Now we need another unit: `mnt.automount` with the simple content:
 
 ```ini
 [Automount]
 Where=/mnt
 TimeoutIdleSec=60
 ```
-`Where` just specifies the mountpoint, also the unit must match the mount unit filename, that is based on the path. `TimeoutIdleSec` enables the automatic unmount, if it was idle for at least 60s in this case, you might want to set this higher.
+`Where` just specifies the mountpoint, also the filename must match the mount unit filename, which is based on the path. `TimeoutIdleSec` enables the automatic unmount, if it was idle for at least 60 secs in this case, you might want to set this higher.
 
 Note: With the _x-systemd.automount_ fstab option the generator could also create the automount.service, but then the requires is applied to the automount and that would wake up the NAS always at the boot. We want to have it on the mount, because that wakes up the NAS only if it is actually mounted/used.
 
-Finally start and enable it with `systemctl enable --now mnt.automount.service`. On any access to `/mnt` the automount will trigger the mount. 
+Finally start and enable it with `systemctl enable --now mnt.automount`. On any access to `/mnt` the automount will trigger the mount. 
 
 You can see if it triggered with `systemctl status mnt.automount`:
 ```
