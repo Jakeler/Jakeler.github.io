@@ -1,5 +1,7 @@
 @import "syntax-dark";
 
+$varAccent: var(--accent-color);
+
 :root {
     --accent-color:#{$accentColor}; // Don't use whitespace here, otherwise it will be included!
 }
@@ -16,7 +18,7 @@ body {
 a {
     color: $textColor;
     &:hover {
-      color: var(--accent-color);
+      color: $varAccent;
     }
 }
 svg {
@@ -24,7 +26,7 @@ svg {
 }
 
 .site-nav {
-    background: linear-gradient($bgDarkColor 0%,  var(--accent-color) 100%);
+    background: linear-gradient($bgDarkColor 0%,  $varAccent 100%);
 }
 .site-header {
     background: $bgDarkColor;
@@ -35,7 +37,7 @@ svg {
 }
 
 .menu-toggle {
-    background: var(--accent-color);
+    background: $varAccent;
     span {
         background: $bgDarkColor;
     }
@@ -59,7 +61,7 @@ div.theme-selector input.accent {
 
 article.post {
     a {
-        color: var(--accent-color);
+        color: $varAccent;
         &:hover {
             // color: $fgColor;
             background-color: $bgLightColor;
@@ -82,7 +84,7 @@ article.post {
     }
 }
 .post-meta {
-    // color: var(--accent-color);
+    // color: $varAccent;
     color: gray;
     // text-decoration: dotted underline overline $fgColor;
     // text-underline-offset: 5px;
@@ -112,12 +114,12 @@ nav.suggestions header {
 
     &:hover {
         color: $bgLightColor;
-        background-color: var(--accent-color);
+        background-color: $varAccent;
         transition: background-color 0.3s ease;
     }
 }
 .pagination-link.is-current {
-    background: var(--accent-color);
+    background: $varAccent;
 }
 
 .post-list li {
