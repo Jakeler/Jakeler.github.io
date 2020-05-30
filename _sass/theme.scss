@@ -71,6 +71,15 @@ article.post {
         background-color: $bgDarkColor;
         border: thin solid $fgColor;
     }
+
+    table {
+        td, th {
+            border: thin solid $fgColor;
+        }
+        th {
+            background-color: $bgDarkColor
+        }
+    }
 }
 .post-meta {
     // color: var(--accent-color);
