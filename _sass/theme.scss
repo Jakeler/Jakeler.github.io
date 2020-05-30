@@ -79,9 +79,15 @@ article.post {
     // text-underline-offset: 5px;
 }
 
-.tags a.label {
-    color: $textColor;
-    border: thin solid $fgColor;
+footer{
+    border-top: thin solid $fgColor;
+    // border-bottom: thin solid $fgColor;
+
+
+    section.tags a.label {
+        color: $textColor;
+        border: thin solid $fgColor;
+    }
 }
 
 nav.suggestions header {
