@@ -64,77 +64,87 @@ May 15 20:50:50 nas-server autosuspend[1348]: 2020-05-15 20:50:50,753 - autosusp
 Here we see that it correctly detects the SSH connection and does not suspend when I am logged in.
 
 ### Wake On LAN
-First make sure WOL is set up on the server and works with `wol MAC`.
-```ini
-[Socket]
-ListenStream=127.0.0.1:2222
-Accept=true
+First make sure WOL is set up on the server and works from the client with `wol xx:xx:xx:xx:xx:xx` using the MAC address of the server. This usually has to be enabled in the BIOS and might also need some software, read more [here](https://wiki.archlinux.org/index.php/Wake-on-LAN).
 
-[Install]
-WantedBy=sockets.target
-```
+Now we want the client to wake up the server automatically. I searched for some guidance and found [this blog post](https://rolandtapken.de/blog/2017-02/how-wake-lan-remote-host-demand-using-systemds-sockets), he used a custom socket that triggers WOL on connection. It works, but I observed reduced performance with this approach: instead of >900 Mbit/s it delivered only about 300 Mbit/s, because all data must go through netcat and the local socket.
 
+So I came up with a solution where the data does not get intercepted and therefore does not impact the performance. For that an extra systemd service is running to check if the server is already up and if not sends the WOL packet. 
+For example on ArchLinux custom services should be placed into `/etc/systemd/system`, I created there a `nas-online.service`:
 ```ini
 [Unit]
-Description=Forwards request to another host. Sends WOL if not reachable.
-Wants=network-online.target
+Description=Continuously check if the host is up, otherwise try WOL on start
 After=network.target network-online.target
+PartOf=mnt.mount
 
 [Service]
-# Replace with hostname or IP
 Environment=HOST=nas-server
 Environment=PORT=22
 Environment=MAC=xx:xx:xx:xx:xx:xx
 
-ExecStartPre=/bin/sh -c 'for n in `seq 1 6`; do nc -z ${HOST} ${PORT} && break || (wol $MAC >&2 && sleep 10); done'
-ExecStart=/bin/nc -w 1s ${HOST} ${PORT}
-
-StandardInput=socket
-StandardOutput=socket
+ExecStartPre=/bin/sh -c 'for n in `seq 1 6`; do nc -z ${HOST} ${PORT} && break || wol $MAC && sleep 10; done'
+ExecStart=/bin/sh -c 'while :; do (nc -z -w 1s ${HOST} ${PORT} && echo "Host is up!" && sleep 30) || break; done'
 ```
-Enable...
-```
-● forward-ssh.socket
-     Loaded: loaded (/etc/systemd/system/forward-ssh.socket; disabled; vendor preset: disabled)
-     Active: active (listening) since Fri 2020-05-15 17:00:09 CEST; 3h 48min ago
-   Triggers: ● forward-ssh@24-127.0.0.1:2222-127.0.0.1:38106.service
-     Listen: 127.0.0.1:2222 (Stream)
-   Accepted: 25; Connected: 1;
-      Tasks: 0 (limit: 19042)
-     Memory: 160.0K
-     CGroup: /system.slice/forward-ssh.socket
+In the [Unit] section it is defined as PartOf `mnt.mount` (which we will create in the next section), this makes systemd propagate  start/stop commands from the mount to this unit. The [Service] contains 2 small shell scripts. Pre start it runs a maximum of 6 times a loop where it checks with `nc -z` (netcat zero IO) if the target is up, otherwise it sends the WOL packet and waits 10 secs. Then the main script just check every 30 secs if the target is still online and logs it. Per default this runs indefinite, but as described above it does get stopped if `mnt.mount` gets inactive.
 
-Mai 15 17:00:09 pc-arch systemd[1]: Listening on forward-ssh.socket.
+Test it with `systemctl stop nas-online.service; systemctl stop nas-online.service` and `systemctl status nas-online.service`:
 ```
-It shows that currently one connection is open. The "Triggers" line contains the full name of the started forwarding service, check the status there if you experience connection problems.
+* nas-online.service - Continuously check if host is up, otherwise try WOL on start
+     Loaded: loaded (/etc/systemd/system/nas-online.service; static; vendor preset: disabled)
+     Active: inactive (dead) since Sat 2020-05-30 16:06:16 CEST; 4min 3s ago
+    Process: 3589 ExecStartPre=/bin/sh -c for n in `seq 1 6`; do nc -z ${HOST} ${PORT} && break || wol $MAC && sleep 10; done (code=exited, status=0/SUCCESS)
+    Process: 3768 ExecStart=/bin/sh -c while :; do (nc -z -w 1s ${HOST} ${PORT} && echo "Host is up!" && sleep 30) || break; done (code=killed, signal=TERM)
+   Main PID: 3768 (code=killed, signal=TERM)
 
+May 30 16:05:01 pc-arch systemd[1]: Starting Continuously check if host is up, otherwise try WOL on start...
+May 30 16:05:04 pc-arch sh[3617]: Waking up xx:xx:xx:xx:xx:xx...
+May 30 16:05:14 pc-arch systemd[1]: Started Continuously check if host is up, otherwise try WOL on start.
+May 30 16:05:14 pc-arch sh[3774]: Host is up!
+May 30 16:05:44 pc-arch sh[4140]: Host is up!
+May 30 16:06:15 pc-arch sh[4198]: Host is up!
+May 30 16:06:16 pc-arch systemd[1]: Stopping Continuously check if host is up, otherwise try WOL on start...
+May 30 16:06:16 pc-arch systemd[1]: nas-online.service: Succeeded.
+May 30 16:06:16 pc-arch systemd[1]: Stopped Continuously check if host is up, otherwise try WOL on start.
+```
 
 ### Automount
-Is is important to login as root with SSH now and accept the the fingerprint for localhost, otherwise it will not work because it is not in the known hosts list:
+The Systemd automount feature can automatically mount it when an access to the mountpoint is detected and unmount if it was idle for a specified time.
+
+First it is important to login as root with SSH and accept the fingerprint for this host, otherwise it will not work because it is not in the known hosts list (like describe [here](https://wiki.archlinux.org/index.php/SSHFS)):
 ```sh
 sudo -i
-ssh -p 2222 jk@localhost
+ssh -p 2222 jk@nas-server
 ```
-Also it is of course not possible to enter a password, so make sure pubkey authentication is properly configured.
+Also it is of course not possible to enter a password, so make sure pubkey authentication is properly configured on the server.
 
 Then an entry in `/etc/fstab` can be added:
 ```
-jk@localhost:/mnt   /mnt    fuse.sshfs  noauto,x-systemd.automount,x-systemd.idle-timeout=60,port=2222,identityfile=/home/jk/.ssh/nas_ed25519,user,allow_other,default_permissions  0 0
+jk@nas-server:/mnt   /mnt    fuse.sshfs  noauto,x-systemd.requires=nas-online.service,identityfile=/home/jk/.ssh/nas_ed25519,user,allow_other,default_permissions  0 0
 ```
 Here we need a few options:
-* _noauto:_ disable mount on boot
-* _x-systemd.automount:_ let systemd mount if required 
-* _x-systemd.idle-timeout=60:_ unmount after 60s of inactivity
-* _port=2222:_ target port
-* _identityfile=/home/jk/.ssh/nas_ed25519:_ specify the keys, ssh will run as root and does not read the user ssh config
-* _user:_ allow user to mount/unmount
-* _allow_other:_ allow other users (than root) to access
-* _default_permissions:_ use permissions from the server
+* _noauto:_ Disable direct mount on boot
+* _x-systemd.requires=:_ Require online check/WOL to start
+* _identityfile=:_ Specify the SSH keys, it will run as root and does not read the user ssh config
+* _user:_ Allow user to mount/unmount
+* _allow_other:_ Allow other users (than root) to access
+* _default_permissions:_ Use permissions from the server
+
+The `systemd-fstab-generator` will automatically produce an unit for the mountpoint, in this case `mnt.mount`. 
 
 
-The `systemd-fstab-generator` will automatically produce two units from the mountpoint, in this case: `mnt.automount` and `mnt.mount`. On any access to `/mnt` the automount will trigger the mount. 
+Now we need another another unit: `mnt.automount` with the content:
 
-You can see if it triggered with `systemctl status`:
+```ini
+[Automount]
+Where=/mnt
+TimeoutIdleSec=60
+```
+`Where` just specifies the mountpoint, also the unit must match the mount unit filename, that is based on the path. `TimeoutIdleSec` enables the automatic unmount, if it was idle for at least 60s in this case, you might want to set this higher.
+
+Note: With the _x-systemd.automount_ fstab option the generator could also create the automount.service, but then the requires is applied to the automount and that would wake up the NAS always at the boot. We want to have it on the mount, because that wakes up the NAS only if it is actually mounted/used.
+
+Finally start and enable it with `systemctl enable --now mnt.automount.service`. On any access to `/mnt` the automount will trigger the mount. 
+
+You can see if it triggered with `systemctl status mnt.automount`:
 ```
 ● mnt.automount
      Loaded: loaded (/etc/fstab; generated)
@@ -148,6 +158,7 @@ Mai 15 19:49:22 pc-arch systemd[1]: Set up automount mnt.automount.
 Mai 15 19:49:27 pc-arch systemd[1]: mnt.automount: Got automount request for /mnt, triggered by 55768 (dolphin)
 Mai 15 20:02:14 pc-arch systemd[1]: mnt.automount: Got automount request for /mnt, triggered by 59368 (nvim)
 ```
+and `systemctl status mnt.mount`:
 ```
 ● mnt.mount - /mnt
      Loaded: loaded (/etc/fstab; generated)
@@ -167,7 +178,4 @@ Mai 15 20:30:40 pc-arch systemd[1]: Mounting /mnt...
 Mai 15 20:30:41 pc-arch systemd[1]: Mounted /mnt.
 ```
 
-### Sources
-<https://wiki.archlinux.org/index.php/SSHFS>
-
-<https://rolandtapken.de/blog/2017-02/how-wake-lan-remote-host-demand-using-systemds-sockets>
+I hope it was helpful, let me know if it worked in the comments!
