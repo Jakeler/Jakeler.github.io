@@ -1,5 +1,7 @@
 <section class="tags">
-  <label>Tags: </label>
+    {% if include.title %}
+      <label>{{ include.title }} </label>
+    {% endif %}
     {% for tag in include.tags %}
     <a class="label" href="/tags/#{{ tag | slugify }}" >
       <svg>
@@ -8,4 +10,4 @@
       {{ tag }}
     </a>
     {% endfor %}
-  </section>
+</section>
