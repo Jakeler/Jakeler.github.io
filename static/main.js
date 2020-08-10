@@ -11,12 +11,22 @@ function setAccent(color) {
   localStorage.setItem('accent', color)
 }
 
+function updatePicker() {
+  const picker = document.querySelector('.theme input.accent')
+  const color = getAccent()
+  if (picker) {
+    picker.value = color
+    console.log('Updated picker', color)
+  }
+  return picker
+}
+
 // Alternate stylesheets
 function selectStyle(title) {
-  console.log('Set css theme')
+  console.log('=> Set css theme', title)
   if(title == null)
     return false
-
+  
   const sheets = document.querySelectorAll('head link.theme-style')
   let found = false
   for(const s of sheets) {
@@ -24,18 +34,20 @@ function selectStyle(title) {
     found = s.title === title? true : found
   }
   selectCommentsStyle(title)
+  updatePicker()
 
   localStorage.setItem('theme', title)
   return found
 }
 function selectCommentsStyle(theme) {
-  console.log('Set comments theme')
   const commentsTrans = {
     "default/dark": 'github-dark',
     "alt/bright": 'github-light',
   }
   if(!(theme in commentsTrans))
-    return false
+    return false  
+
+  console.log('Setting comments', commentsTrans[theme])
 
   const message = {
     type: 'set-theme',
@@ -68,8 +80,7 @@ restore()
 
 window.addEventListener('DOMContentLoaded', _ => {
 
-  const picker = document.querySelector('.theme input.accent')
-  picker.value = getAccent() // TODO fix empty with white theme
+  const picker = updatePicker()
   picker.onchange = e => setAccent(picker.value)
 
   const darkBtn = document.querySelector('div.themes button.dark')
