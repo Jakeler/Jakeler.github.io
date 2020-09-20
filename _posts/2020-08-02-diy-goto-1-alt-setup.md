@@ -13,7 +13,7 @@ I used Onshape to create a custom 3D model of the pulley. First I measured the l
 ![cad-alt-pulley](/assets/goto-telescope/cad-alt-pulley-sketch.png)
 Because of the slightly smaller than 200x200 mm effective build area from my old Prusa i3 printer it was not possible to make the whole pulley in one piece, so I split it into four pieces and added holes to join them with screws afterwards.
 
-The rail length is only 200 mm, but to allow the offset edges to fit into the circle it has of course a bigger diameter. I need the diameter to calculate the correct teeth spacing to fit the GT2 belt, which has 2 mm pitch, so I got a FeatureScript plugin that can measure parts and create variables. From that the tooth angle and count are calculated for the next sketch. To get a close to integer count (of 86 teeth per quarter circle) I adjusted the base width to 203 mm. 
+The rail length is only 200 mm, but to allow the edges to fit into the circle, it has of course a bigger diameter. I need the diameter to calculate the correct teeth spacing to fit the GT2 belt, which has 2 mm pitch, so I installed a FeatureScript plugin that can measure parts and create variables. From that the tooth angle and count are calculated for the next sketch. To get a close to integer count (of 86 teeth per quarter circle) I adjusted the base width to 203 mm. 
 ![cad-alt-teeth](/assets/goto-telescope/cad-alt-teeth-calc.png)
 
 I made the profile loosely based on the GT2 belt definition, adding 0.1 mm tolerance where I saw fit:
@@ -60,13 +60,20 @@ In the end I put the tubus back on the original wooden base:
 Then cut of a piece of belt and connected the end with a cable tie (just like on 3d printers).
 ![alt-pulley-ass3](/assets/goto-telescope/alt-pulley-ass3.jpg)
 
+I pre drilled four holes with a 2 mm drill (3.5 mm screws) for the motor mount:
+![alt-pulley-ass3](/assets/goto-telescope/alt-motor-drill.jpg)
+![alt-pulley-ass3](/assets/goto-telescope/alt-motor-holes.jpg)
+
+And secured it with wood screws. Now it is possible to put tension on the belt:
+![alt-pulley-ass3](/assets/goto-telescope/alt-motor-ass.jpg)
+
 ## Learnings
 After all I want to shortly write about things that I learned and will do differently in the future projects. 
 ### Model everything in CAD first
-It would have saved a lot of time and also some material, if I would have taken the time to model the whole telescope (including this mounting rail) in CAD first and then assembled it virtually. Without a full model I overlooked some pieces that collide and had to edit the pulley geometry again.
+It would have saved a lot of time and also some material, if I would have taken the time to model the whole telescope (including this mounting rail) in CAD first and then assembled it virtually. Without a full model I overlooked some pieces that would collide and had to edit the pulley geometry again.
 
 ### Support tolerances
-The Z axis height for parts on the print bed is very accurate and usually doesn't need any tolerance. But on supports some tolerance is absolutely required (at least with PrusaSlicers), 0.5 mm would have been suitable in this case.
+The Z axis height for parts on the print bed is very accurate and usually doesn't need any tolerance. But on supports some tolerance is absolutely required (at least with PrusaSlicer support), 0.5 mm would have been suitable in this case.
 
 ### Avoid thin and sharp edges
 Under normal circumstances this 3D printer does not cause noticeable corner bulging. But with very fine and sharp edges it is a problem. This could have been prevented already in the design, with placing a "valley" on the profile edge, instead of a (half) tooth.
