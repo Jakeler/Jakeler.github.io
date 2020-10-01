@@ -5,8 +5,9 @@ tags: telescope astronomy hardware oss
 ---
 This is the introduction to a multi part series about building a GoTo system for a Dobson style telescope mount. It should be computer controlled and be able to move to a selected target and also automatically track it. I want to use popular and inexpensive parts known from 3D printing for the mechanical setup, mostly leftovers from upgrade of my Prusa i3 printer.
 
-### Links
-(coming soon)
+### Links to other Parts
+- [DIY GoTo Telescope Mount [1] = Altitude Axis]({% post_url 2020-08-02-diy-goto-1-alt-setup %})
+- [DIY GoTo Telescope Mount [2] = Azimuth Axis]({% post_url 2020-09-21-diy-goto-2-az-setup %})
 
 ### Starting Point
 My telescope for this project is a Bresser Messier DOB 150/750, this is a Newtonian reflector with a 150 mm (6 inch) parabolic mirror and 750 mm focal length:
