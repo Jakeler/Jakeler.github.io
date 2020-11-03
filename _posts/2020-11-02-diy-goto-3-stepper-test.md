@@ -31,7 +31,7 @@ Here is everything in one picture:
 ![electronics setup overview](/assets/goto-telescope/e-test-setup.jpg)
 
 # Arduino Code
-Controlling the stepper drivers is really simple, no library required. Basically there a DIR pin, which must be pulled high or low depending on the direction. Then just switch the STEP pin to execute a (micro)step, with some delays. I made this function to do one full rotation, taking the 8x microstepping into account:
+Controlling the stepper drivers is really simple, no library required. Basically there is a DIR pin, which must be pulled high or low depending on the direction. Then just switch the STEP pin to execute a (micro)step, with some delays. I made this function to do one full rotation, taking the 8x microstepping into account:
 ```cpp
 // microsecond timing
 int pulse = 1;

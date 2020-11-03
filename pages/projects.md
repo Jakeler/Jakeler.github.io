@@ -11,6 +11,8 @@ Dobson style telescope mount mod, with mostly 3D printed parts.
 Posts: <br>
 - <https://blog.ja-ke.tech/2020/07/09/diy-goto-0-intro.html>
 - <https://blog.ja-ke.tech/2020/08/02/diy-goto-1-alt-setup.html>
+- <https://blog.ja-ke.tech/2020/09/21/diy-goto-2-az-setup.html>
+- <https://blog.ja-ke.tech/2020/11/02/diy-goto-3-stepper-test.html>
 - (more soon)
 
 ### UT61E Toolkit

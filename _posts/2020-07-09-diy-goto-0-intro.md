@@ -8,6 +8,7 @@ This is the introduction to a multi part series about building a GoTo system for
 ### Links to other Parts
 - [DIY GoTo Telescope Mount [1] = Altitude Axis]({% post_url 2020-08-02-diy-goto-1-alt-setup %})
 - [DIY GoTo Telescope Mount [2] = Azimuth Axis]({% post_url 2020-09-21-diy-goto-2-az-setup %})
+- [DIY GoTo Telescope Mount [3] = Electronics for first Stepper Test]({% post_url 2020-11-02-diy-goto-3-stepper-test %})
 
 ### Starting Point
 My telescope for this project is a Bresser Messier DOB 150/750, this is a Newtonian reflector with a 150 mm (6 inch) parabolic mirror and 750 mm focal length:
