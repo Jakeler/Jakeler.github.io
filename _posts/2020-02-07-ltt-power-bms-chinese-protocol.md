@@ -4,10 +4,10 @@ title: "Decoding the Smart BMS Protocol"
 tags: software bms uart bluetooth battery protocol release
 # last_modified_at: 2018-05-12
 ---
-Smart (meaning with UART / Bluetooth interface) battery management systems are widely available from china now. Almost all of them use a generic protocol for the communication. They also provide a (Windows) PC Software and Android App, which works fine, but i like to add more features and make it open source. So i wrote the protocol definition in [Kaitai Struct](https://kaitai.io/), a specific parsing language with YAML syntax, which can be compiled to parsers in many different languages like Java, C++, Python etc...
+Smart (meaning with UART / Bluetooth interface) battery management systems are widely available from china now. Almost all of them use a generic protocol for the communication. They also provide a (Windows) PC Software and Android App, which works fine, but I like to add more features and make it open source. So I wrote the protocol definition in [Kaitai Struct](https://kaitai.io/), a specific parsing language with YAML syntax, which can be compiled to parsers in many different languages like Java, C++, Python etc...
 
-LTT Power manufactured the BMS i got and is nice enough to provide a spreadsheet with a rough description of the protocol on their [download page](https://www.lithiumbatterypcb.com/smart-bms-software-download/). Following is a introduction to the binary protocol, with graphs generated also from Kaitais Graphviz export.
-In addition i made Sigrok protocol decoder, to make it visible with from a logic analyser capture. Everything is on GitHub in [this repo](https://github.com/Jakeler/bms-parser).
+LTT Power manufactured the BMS I got and is nice enough to provide a spreadsheet with a rough description of the protocol on their [download page](https://www.lithiumbatterypcb.com/smart-bms-software-download/). Following is a introduction to the binary protocol, with graphs generated also from Kaitais Graphviz export.
+In addition I made Sigrok protocol decoder, to make it visible with from a logic analyser capture. Everything is on GitHub in [this repo](https://github.com/Jakeler/bms-parser).
 
 ### Protocol Intro
 In gerneral every packet has a start byte `DD` and end byte `77` (all in hex). After that comes a command code, there are a few special values: 165 = `A5` is a request to read and 90 = `5A` a write request. Then ID of the field/type and maybe some body data. Size numbers in the graphs are (unless otherwise specified) in byte.
@@ -20,9 +20,9 @@ Besides the simple hardware request are the IDs `04` for reading the individual 
 ![cells graph](/assets/bms-protocol-parser/cell_voltages-hardware.dot.svg)
 
 Probably the most import is `03` basic info. It contains the total pack voltages, actual current, remaining and typical capacity, this time in 10 mV/mA/mAh units, so multiply with 0.01 to get standard SI units. 4 byte are reserved for balancing flags, size 1b means one bit per cell. If the bit is set the cell is currently balancing. ProtList contains various error conditions where the protection kicked in, should usually be all zero. FetBits show if the charge and discharge FET is currently enabled. At the end a variable number of temperature sensors (NTCs), the raw value is here tenths of Kelvin.
-![basic info graph](/assets/bms-protocol-parser/basic_info.dot.large.svg)
+![basic info graph](/assets/bms-protocol-parser/basic_info.dot.svg)
 
-These were the standard IDs, but for configuration are many higher values included (read+write). They are not implemented is this parser, but i might add it in the future. In the Battery Monitor project (scripts to log BMS data on Linux) they started to [document them](https://github.com/simat/BatteryMonitor/blob/master/BMSdecoded.pdf).
+These were the standard IDs, but for configuration are many higher values included (read+write). They are not implemented is this parser, but I might add it in the future. In the Battery Monitor project (scripts to log BMS data on Linux) they started to [document them](https://github.com/simat/BatteryMonitor/blob/master/BMSdecoded.pdf).
 
 #### Checksum calculation
 It is basically a sum over every relevant byte and then subtract that from 2^16 (65536), the result should match the checksum in the packet.
@@ -44,7 +44,7 @@ Here `data` contains all bytes that go into the checksum calculation.
 It returns True if the checksums match and are therefore correct.
 
 ### Sigrok Protocol Decoder
-As announced in the beginning i made a sigrok BMS protocol decoder, which can be used in PulseView or DSView and a wide range of logic analyzer hardware. This is a Python module based of the compilation from my Kaitai Struct. It is in the [repo](https://github.com/Jakeler/bms-parser) under `decoder/bms/` to install it for a single user move it into `~/.local/share/libsigrokdecode/decoders` (or libsigrokdecode4DSL respectively).
+As announced in the beginning I made a sigrok BMS protocol decoder, which can be used in PulseView or DSView and a wide range of logic analyzer hardware. This is a Python module based of the compilation from my Kaitai Struct. It is in the [repo](https://github.com/Jakeler/bms-parser) under `decoder/bms/` to install it for a single user move it into `~/.local/share/libsigrokdecode/decoders` (or libsigrokdecode4DSL respectively).
 
 Basic Info looks like this in DSView, showing the most important properties:
 ![basic info dsview screenshot](/assets/bms-protocol-parser/basic_dsview.png)
