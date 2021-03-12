@@ -81,4 +81,4 @@ You can download the whole code [here](/assets/goto-telescope/test_code.cpp). In
 Further it could be improved utilizing the UART interface on these drivers, it allows to configure the current, microstepping, etc. through software, like in this [TMCStepper example](https://github.com/teemuatlut/TMCStepper/blob/master/examples/Simple/Simple.ino). But for now it legacy (also called standalone) is fine for testing.
 
 # Video Demo
-<iframe width="90%" height="500" src="https://www.youtube.com/embed/nFY8TDP12cU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% include yt-video.html url='https://www.youtube.com/embed/nFY8TDP12cU' %}

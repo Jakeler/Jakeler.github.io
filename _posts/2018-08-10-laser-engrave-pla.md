@@ -17,6 +17,6 @@ So i increased the speed to 3000 mm/min (50 mm/s) an it just melted the surface.
 The main problem lies in the low melting point of PLA, it gets already soft at 60°C. Before the material has a chance to burn or evaporate it melts and therfore spreads the energy over a larger area.
 
 But it is possible to successfully do it of course, shown for example in this video:
-<iframe width="700" height="400" src="https://www.youtube-nocookie.com/embed/CcFxMpR1gF4" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+{% include yt-video.html url='https://www.youtube-nocookie.com/embed/CcFxMpR1gF4' %}
 
 The difference is that he uses a much more powerful laser, i guess at least 50W. Combined with high speeds (500 mm/s according to the description!) the PLA evaporates immediately, instead of melting.

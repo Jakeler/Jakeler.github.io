@@ -52,6 +52,20 @@ article.post {
         padding: 0.2em 1em;
       }
     }
+
+    figure > div.video-container {
+      position: relative;
+      height: 0;
+      padding-top: 55%; // trick for aspect ratio
+
+      iframe.yt-video {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+      }
+    }
 }
 
 // Smaller borders for very small screens
