@@ -3,6 +3,15 @@ layout: post
 title: "Battery Protection Chip of a Oneplus Smartphone Battery"
 ---
 
+# Hardware Dismantling
+![battery wrap removed](/assets/i2c-phone-battery/disass.jpg)
+![battery pcb front](/assets/i2c-phone-battery/pcb-front.jpg)
+![battery pcb back](/assets/i2c-phone-battery/pcb-back.jpg)
+
+
+# Chip Investigation
+I could not read chip markings
+
 Searched for for "oneplus battery i2c site:forums.oneplus.com"
 Found kernel log
 ```
@@ -163,3 +172,6 @@ POWER_SUPPLY_MANUFACTURER=Texas Instruments
 orangepipc2:jk:# cat /sys/class/power_supply/bq27541-0/voltage_now                 
 3942000
 ```
+
+# Further Ideas
+Used with a lithium battery step up module to power the Orange Pi (or other SBCs with Linux).
