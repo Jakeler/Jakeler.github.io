@@ -1,13 +1,14 @@
 ---
 layout: post
 title: "I2C Communication Protocol of a Smartphone Battery"
+tags: battery teardown armbian linux embedded protocol
 ---
-In this post I investigate how a typical Oneplus smartphone battery communicates the current state of charge etc. to the main device.
+In this post I investigate how a typical Oneplus smartphone battery communicates the current voltage, state of charge etc. to the main device.
 This can be also useful for repurposing these batteries on a Raspberry or Orange Pi, to power portable projects.
 
 # Hardware Dismantling
 I had the battery already removed from the Oneplus One (and replaced with a new third party part). 
-First the outer wrap has to removed, I want to see the bare cell and protection PCB. It reveals another (paper?) wrap at the top and a small temperature probe sticking out:
+First the outer wrap has to be removed, I need to see the bare cell and protection PCB. It reveals another (paper?) wrap at the top and a small temperature probe sticking out:
 ![battery wrap removed](/assets/i2c-phone-battery/disass.jpg)
 
 After removing that as well the board is finally visible. Between the big battery taps is most likely a shunt resistor to measure the current. 
@@ -31,16 +32,16 @@ Then searching for "battery" in the log found these messages:
 [    4.792738] bq27541-battery 1-0055: DEVICE_TYPE is 0x541, FIRMWARE_VERSION is 0x200
 [    4.792950] bq27541-battery 1-0055: Complete bq27541 configuration 0x601B
 ```
-This a kernel driver for "bq27541", so I searched for that and got indeed a [datasheet from Texas Instruments](https://www.ti.com/lit/ds/symlink/bq27541.pdf). The description fits well, it is a "Single Cell Li-Ion Battery Fuel Gauge" and "provides information such as remaining battery capacity(mAh), state-of-charge (%), run-time to empty (min.), battery voltage (mV), and temperature (°C)." over an I2C interface.
+This is a kernel driver for "bq27541", so I searched for that and got indeed a [datasheet from Texas Instruments](https://www.ti.com/lit/ds/symlink/bq27541.pdf). The description fits well, it is a "Single Cell Li-Ion Battery Fuel Gauge" and "provides information such as remaining battery capacity(mAh), state-of-charge (%), run-time to empty (min.), battery voltage (mV), and temperature (°C)" over an I2C interface.
 
 The protocol description is detailed, important information for the start is on page 32:
-- address 01010101 = 0x55
+- device address 01010101 = 0x55
 - support for normal I2C read or incremental read (multi byte)
 
-A exerpt from the standard 2 byte registers/commands (page 9):
-- TEMP `0x06` + `0x07`
-- VOLT `0x08` + `0x09`
-- SOC `0x2c` + `0x2d`
+Abd a excerpt from the standard 2 byte registers/commands (page 9):
+- TEMP (temperature) `0x06` + `0x07`
+- VOLT (voltage) `0x08` + `0x09`
+- SOC (state of charge) `0x2c` + `0x2d`
 
 
 To confirm that it speaks this protocol I hooked up my DSLogic Plus, connected the battery back to the phone and rebooted it, the capture looks like this:
@@ -50,11 +51,11 @@ The 7 bit long address is `0x55` as expected, after that comes 1 bit indicating 
 I2C is a bus designed with a master (here: phone) and slave (here: battery).
 The master controls the bus, it sends again the first start with device address, but now with read bit appended. Now the bus gets released from the master, indicating that the slave `0x55` is allowed to send now. It responds shortly after with the actual data:
 ![logic analyzer i2c voltage readout](/assets/i2c-phone-battery/dslogic-read-voltage2.png)
-First comes the low byte, high byte is second (little endian), that means `0x0e95 = 3733 mV`.
+First comes the low byte, high byte is second (practically little endian), that means `0x0e95 = 3733 mV`.
 
 
 # Orange Pi Setup
-As already promised in the introduction this is also useful for usage with other Linux computers. I had a Orange Pi PC2 with Armbian laying around, so I used that, it has many GPIOs:
+As already noted in the introduction this is also useful for usage with other Linux computers. I had a Orange Pi PC2 with Armbian laying around, so I used that, it has many GPIOs:
 ![Orange Pi PC2 pinout](/assets/i2c-phone-battery/opi-pinout-dark.jpg)
 Most importantly, support for I2C. Bus 0 is on PA11 and PA12, highlighted in light blue. On modern kernels the so called device trees (DT) are used to define the hardware. For Armbian the configuration file which gets read by the bootloader is `/boot/armbianEnv.txt`. To enable I2C bus 0 is must contain `overlays=i2c0`. 
 
@@ -81,7 +82,8 @@ It indeed detects the battery with address `0x55`, very nice!
 
 ## Command Line Readout
 With the included `i2cdump` and `i2cget` tools it is possible to read data out from a shell.
-The dump reads a range of bytes, here again with `-y` to disable interactive confirmation, range `0x02-0x2d` for the standard registers, bus 0, address `0x55` and `W` for 16 bit words, because the chip returns directly 2 bytes, no need to send another request for every single address.
+The dump reads a range of bytes, here again with `-y` to disable interactive confirmation, range `0x02-0x2d` for the standard registers, bus 0 and address `0x55`.
+`W` for 16 bit words, because the chip returns directly 2 bytes, no need to send request for every single address.
 ```sh
 orangepipc2:~:# i2cdump -y -r 0x02-0x2d 0 0x55 W
      0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f    0123456789abcdef
@@ -100,7 +102,7 @@ Here I read out voltage `0x0f66 = 3942 mV` and `0x3e = 62 %` state of charge (so
 
 
 ## Python Readout
-Another good option to get the data programmatically is python. A popular library exists for SMBus, which is based on the I2C protocol. It provides also the low level methods required here. On my Ubuntu 20.04 based Armbian it can be simply installed through `apt`:
+Another good option to get the data programmatically is Python. A popular library exists for SMBus, which is based on the I2C protocol. It provides also the low level methods required here. On my Ubuntu 20.04 based Armbian it can be simply installed through `apt`:
 ```
 orangepipc2:~:# apt search smbus
 ...
@@ -131,7 +133,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 Again reading words (2 byte) here, in addition to the voltage and soc now also `0x06` = temperature. The result is in 1/10 Kelvin, so it needs the 273.1 offset to get degrees celsius.
 
 ## Kernel Driver
-Okay, enough of the manual playing around. From the the previous look at the Android log it clear that there exists full kernel drivers already. Actually they are in the mainline kernel! This makes installation easier, but just loading the kernel module does not do it, trust me I have tried it.
+Okay, enough of the manual playing around. From the the previous look at the Android log it clear that there exists full kernel drivers already. Actually they are in the mainline kernel! This makes installation easier, but just loading the kernel module does not do it. Trust me, I have tried it.
 
 ### Device Tree Overlays
 Like on the basic I2C setup a device tree entry is required, but there is no ready-made overlay included for this driver, so it is necessary to make it yourself. Armbian has [documentation](https://docs.armbian.com/User-Guide_Armbian_overlays/) and [examples](https://github.com/armbian/sunxi-DT-overlays/tree/master/examples) that helps to do this.
@@ -139,7 +141,7 @@ Like on the basic I2C setup a device tree entry is required, but there is no rea
 A more detailed description of the syntax is available at [elinux.org (embedded Linux wiki)](https://elinux.org/Device_Tree_Usage).
 
 Last but not least in the kernel repo is [documentation](https://elixir.bootlin.com/linux/v5.10.23/source/Documentation/devicetree/overlay-notes.rst) on how to write overlays for the current version. The Armbian sunxi examples are bit outdated, now it is not needed (or recommended) anymore to wrap the definition with `fragment@0`,`__overlay__`, etc.
-Also I have read the [battery node](https://elixir.bootlin.com/linux/v5.10.23/source/Documentation/devicetree/bindings/power/supply/battery.yaml) and [BQ27xxx driver documentation](https://elixir.bootlin.com/linux/v5.10.23/source/Documentation/devicetree/bindings/power/supply/bq27xxx.yaml
+Also I have read the [battery node](https://elixir.bootlin.com/linux/v5.10.23/source/Documentation/devicetree/bindings/power/supply/battery.yaml) and [TI BQ27xxx driver documentation](https://elixir.bootlin.com/linux/v5.10.23/source/Documentation/devicetree/bindings/power/supply/bq27xxx.yaml
 ).
 
 It includes a example DT snippet, I adjusted and saved it in `i2c-bq27541.dts` (.dts = DT source), that is the result:
@@ -165,7 +167,7 @@ It includes a example DT snippet, I adjusted and saved it in `i2c-bq27541.dts` (
 };
 ```
 
-Installation was done with `armbian-add-overlay`, which is just a shell script. It calls `dtc`(Device Tree Compiler) first and then copies the result to `/boot/overlay-user/i2c-bq27541.dtbo` (.dtbo = DT binary/blob overlay) and enables it in `/boot/armbianEnv.txt`. This is pretty convenient, but can be also done manually of course. 
+Installation was done with `armbian-add-overlay`, which is just a shell script. It calls `dtc` (Device Tree Compiler) first and then copies the result to `/boot/overlay-user/i2c-bq27541.dtbo` (.dtbo = DT binary/blob overlay) and enables it in `/boot/armbianEnv.txt`. This is pretty convenient, but can be also done manually of course. 
 
 Now `armbianEnv.txt` should contain another line with `user_overlays=i2c-bq27541`. A reboot is required to actually load it.
 
@@ -191,7 +193,7 @@ POWER_SUPPLY_POWER_AVG=0
 POWER_SUPPLY_HEALTH=Good
 POWER_SUPPLY_MANUFACTURER=Texas Instruments
 ```
-Especially interesting is the cycle count and degraded capacity to just 2058 mAh from over 3000 mAh of a new battery, that info was not accessible through standard Android APIs.
+Especially interesting is the cycle count of 960 and degraded capacity to just 2058 mAh from over 3000 mAh of a new battery, that info was not accessible through standard Android APIs.
 
 Of course it is also possible to get single values through the other files in this directory, for example just voltage:
 ```sh
