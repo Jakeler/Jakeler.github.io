@@ -66,6 +66,12 @@ article.post {
         height: 100%;
       }
     }
+
+    section.tags svg {
+      height: 1em;
+      width: 1em;
+      vertical-align: middle;
+    }
 }
 
 // Smaller borders for very small screens
@@ -99,6 +105,8 @@ p.comments {
   svg.loading {
     display: block;
     position: absolute;
+    height: 2em;
+    width: 2em;
     top: 5em;
     left: 50%;
     margin: auto;
@@ -136,9 +144,4 @@ nav.suggestions {
 footer {
   padding: 1em 0;
   margin-top: 3em;
-
-  section.tags label {
-    font-weight: bold;
-    margin-right: .5em;
-  }
 }

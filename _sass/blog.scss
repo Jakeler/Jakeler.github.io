@@ -45,6 +45,12 @@
     .pagination-previous, .pagination-next {
         line-height: 0;
         padding: 0.667em;
+
+        svg {
+            height: 1em;
+            width: 1em;
+            vertical-align: middle;
+        }
     }
     .pagination-list {
         display: flex;

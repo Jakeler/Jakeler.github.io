@@ -4,6 +4,12 @@
     height: 100%;
     // Issue: https://stackoverflow.com/questions/33454533/cant-scroll-to-top-of-flex-item-that-is-overflowing-container
     // justify-content: space-evenly;
+
+    svg {
+      height: 1em;
+      width: 1em;
+      vertical-align: middle;
+    }
   }
   
   .nav-title {
