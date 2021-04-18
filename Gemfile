@@ -1,5 +1,9 @@
 source "https://rubygems.org"
 
-gem "jekyll-remote-theme"
+gem "jekyll", ">=4.0"
+gem "webrick", "~> 1.7"
+
+gem "jekyll-feed"
+gem "jekyll-seo-tag"
+gem "jekyll-sitemap"
 gem "jekyll-paginate"
-gem 'github-pages', ">=200", group: :jekyll_plugins
