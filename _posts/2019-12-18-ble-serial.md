@@ -2,11 +2,13 @@
 layout: post
 title: "BLE Serial: Binding Bluetooth 4.0 modules to virtual serial ports"
 tags: bluetooth uart python software linux release
-last_modified_at: 2020-03-30
+last_modified_at: 2021-04-26
 ---
 
 The Bluetooth 4+ (low energy) to UART modules are getting increasingly popular, but there was still no proper tool to use them with normal Linux e.g. desktop or RaspberryPi, like `rfcomm bind` on the old 2.0 bluetooth.
-So i finally wrote [BLE Serial](https://github.com/Jakeler/ble-serial) and this post is a introduction. I will go over the installation, usage and slightly into to differences from the newer Bluetooth protocol.
+So I finally wrote [BLE Serial](https://github.com/Jakeler/ble-serial) and this post is a introduction. I will go over the installation, usage and slightly into to differences from the newer Bluetooth protocol.
+
+Update 2021: The following instructions are a bit outdated after the 2.0 update, check out the [update post]({% post_url 2021-04-22-ble-serial-2 %}) as well or just go to the [readme in the repo](https://github.com/Jakeler/ble-serial).
 
 ### Installation
 The software is written completely in Python and packaged as module, so it can be easily installed with pip:
