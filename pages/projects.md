@@ -23,16 +23,19 @@ Posts: <br>
 - <https://blog.ja-ke.tech/ut61e/android/2018/04/02/UT61E-android-logging.html>
 - <https://blog.ja-ke.tech/ut61e/android/2018/05/11/UT61E-toolkit-update1_1.html>
 - <https://blog.ja-ke.tech/ut61e/android/2018/05/12/UT61E-toolkit-update1_2.html>
+- <https://blog.ja-ke.tech/ut61e/android/2021/03/11/UT61E-toolkit-update-1_3.html>
+- <https://blog.ja-ke.tech/ut61e/android/2021/03/12/UT61E-toolkit-update-1_4.html>
 
 Repo: <br>
 - <https://github.com/Jakeler/UT61E-Toolkit>
 
 
 ### BLE Serial
-"RFCOMM for BLE" a UART over Bluetooth low energy (4.0+) bridge for Linux, written in python.
+"RFCOMM for BLE" a UART over Bluetooth low energy (4.0+) bridge for Linux and Windows, written in Python.
 
 Posts: <br>
 - <https://blog.ja-ke.tech/2019/12/18/ble-serial.html>
+- <https://blog.ja-ke.tech/2021/04/22/ble-serial-2.html>
 
 Repo: <br>
 - <https://github.com/Jakeler/ble-serial>
