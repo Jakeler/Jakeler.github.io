@@ -61,3 +61,16 @@ x =  \frac{1-k}{k}y \\
 \frac{1-0,48}{0,48} \cdot 15 \,\Omega = 16.25 \,\Omega
 \end{array}
 ```
+
+```latex
+\begin{array}{c}
+I_{caliper} \approx 10 \mu A \\
+C = 2\,F = 2 \frac{A \cdot s}{V} \\
+U_{\Delta/h} = \frac{10 \cdot 10^{-6} A \cdot 3600s}{2\,F} = 0.18 \,V \\
+U_{real\, \Delta/h} \approx 0.05 V
+\end{array}
+```
+
+![super cap charge oscilloscope screenshot](/assets/caliper-cap/cap-charge.png)
+
+{% include assets/caliper-cap/dsc.html %}
