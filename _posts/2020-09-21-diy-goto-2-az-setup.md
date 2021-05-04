@@ -51,5 +51,11 @@ I drilled again four 2 mm holes and screwed it onto the plate.
 The printed profile is currently only attached by some double side tape. This is enough, because the belt clamps it as well, but I will nevertheless replace it with a more solid glue soon.
 ![az axis drive assembly side](/assets/goto-telescope/az-motor-ass.jpg)
 
+## Download
+As already mentioned I used the online CAD tool Onshape, so if you want to print it yourself you can [download it here](https://cad.onshape.com/documents/d96f6b52fcedf27c1cb9d178/w/9f35ae8134da83f73b0b2555/e/a3e62897b58af1effd0b9960) 
+(see the tabs on the bottom for all other parts).
+
+They support export as STL and many other CAD formats. 
+It should be also possible to copy the project there (needs an account) and adjust all the variables, like diameter, belt size, sections, tolerances... or make other modifications.
 ## Outlook
 In the next post I will finally show it in action! With the basic electronics and controller code that I have so far, to test the mechanical setup.

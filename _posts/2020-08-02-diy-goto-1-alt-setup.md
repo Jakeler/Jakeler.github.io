@@ -67,6 +67,13 @@ I pre drilled four holes with a 2 mm drill (3.5 mm screws) for the motor mount:
 And secured it with wood screws. Now it is possible to put tension on the belt:
 ![alt-pulley-ass3](/assets/goto-telescope/alt-motor-ass.jpg)
 
+## Download
+As already mentioned I used the online CAD tool Onshape, so if you want to print it yourself you can [download it here](https://cad.onshape.com/documents/d96f6b52fcedf27c1cb9d178/w/9f35ae8134da83f73b0b2555/e/7b7728c036d3f17930a13f46) 
+(see the tabs on the bottom for all other parts).
+
+They support export as STL and many other CAD formats. 
+It should be also possible to copy the project there (needs an account) and adjust all the variables, like diameter, belt size, sections, tolerance... or make other modifications. 
+
 ## Learnings
 After all I want to shortly write about things that I learned and will do differently in the future projects. 
 ### Model everything in CAD first
