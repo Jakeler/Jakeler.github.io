@@ -2,6 +2,7 @@
 layout: post
 title: "Custom Controller for Coolmoon RGB Fans"
 tags: electronics led rgb mod
+last_modified_at: 2022-03-19
 ---
 Recently i bought some really cheap (about 7€ per piece!) RGB fans:
 ![fans running in the dark](/assets/coolmoon-rgb-controller/fans.jpg)
@@ -35,3 +36,4 @@ To reduce the fan speed/noise i use a DC-DC converter set to 7V.
 
 Each fan has 16 RGB LEDs, so for 5 fans that is already 80. In the PC sits a Arduino Pro Micro, the program is based on rawHID + FastLED and is therefore able to push a smooth 60Hz refresh rate. On the PC runs [hyperion.ng](https://github.com/hyperion-project/hyperion.ng), it provides a web interface to control the whole setup and Python scripts for effects.
 
+Edit 2022: In the meantime I bought a new mainboard with suitable ARGB headers, so the Arduino is not needed anymore. Also I switched to the awesome OpenRGB software for control, read more in [this post]({% post_url 2022-03-19-openrgb-fans %}).
