@@ -89,5 +89,6 @@ It is normal that nothing happens first, each effect has to be started with the 
 
 # Conclusion and Video
 Overall I am very pleased with result. I like especially the music visualization effects (VU meter), but see for yourself:
-
-(Video coming soon)
+<a href="https://www.youtube.com/watch?v=c1xfLDjJs_k">
+![OpenRGB audio effects](/assets/openrgb/vid-thumbnail.png)
+</a>
