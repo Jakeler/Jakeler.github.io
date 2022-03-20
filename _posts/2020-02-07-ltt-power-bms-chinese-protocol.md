@@ -2,7 +2,7 @@
 layout: post
 title: "Decoding the Smart BMS Protocol"
 tags: software bms uart bluetooth battery protocol release
-# last_modified_at: 2018-05-12
+last_modified_at: 2022-03-19
 ---
 Smart (meaning with UART / Bluetooth interface) battery management systems are widely available from china now. Almost all of them use a generic protocol for the communication. They also provide a (Windows) PC Software and Android App, which works fine, but I like to add more features and make it open source. So I wrote the protocol definition in [Kaitai Struct](https://kaitai.io/), a specific parsing language with YAML syntax, which can be compiled to parsers in many different languages like Java, C++, Python etc...
 
@@ -57,3 +57,10 @@ Higher IDs (here `14`) will not be parsed further and the data block displayed j
 
 ### Reuse
 If someone wants to make a own application with the parser you can compile it in any of the supported target languages from the Kaitai definition. `ksy` files are in the repo under `kaitai/`. I am planning to build a Android App to log the power usage and battery status, especially for electric vehicles.
+
+#### Development 2022
+Mainly I added an Python based CLI tool to read out basic info and cell voltages, it has also the option to log into an Mongo DB. To run it got to [\py](https://github.com/Jakeler/bms-parser/tree/master/py) and run `python main.py /dev/ttyXXX` (+ other parameters).
+
+The best overview for live data provides the terminal UI:
+![settings bytes dsview screenshot](/assets/bms-protocol-parser/tui.gif)
+See the main repo [readme](https://github.com/Jakeler/bms-parser) for more details.
