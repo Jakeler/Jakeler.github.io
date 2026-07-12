@@ -1,4 +1,7 @@
-.highlight pre { background-color: #333; color: #ddd;}
+/* Chroma wraps highlighted fences in `.highlight`; plain (no-language) fences
+   render as a bare `<pre>`. Rouge used to wrap both in `.highlight`, so match
+   both here to keep the dark code background regardless of highlighting. */
+.highlight pre, article.post pre { background-color: #333; color: #ddd;}
 .highlight .hll { background-color: #333333 }
 .highlight .c { color: #008800; font-style: italic; background-color: #0f140f } /* Comment */
 .highlight .err { color: #ffffff } /* Error */

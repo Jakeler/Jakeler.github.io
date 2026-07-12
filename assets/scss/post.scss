@@ -6,19 +6,30 @@ article.post {
       line-height: 1.6;
     }
     
-    pre.highlight {
+    // Hugo/chroma emits `<div class="highlight"><pre class="chroma">` for
+    // highlighted fences and a bare `<pre>` for plain ones; the old Jekyll
+    // markup was `<pre class="highlight">`. Target both so every code block
+    // keeps the same padding and gutter background as before.
+    pre {
       padding: 1em;
       padding-left: 4rem;
       margin: 0;
       width: 100%;
       margin-bottom: 4px;
       overflow-x: auto;
-  
+
       background-image:url(/static/img//pre-background.svg);
       background-attachment:fixed;
       background-repeat: repeat-y;
       background-position:center center;
-      background-size:100%
+      background-size:100%;
+
+      // chroma wraps each source line in `<span class="line"><span class="cl">`;
+      // token rules in syntax-dark.scss set per-token background-colors that
+      // would otherwise show up as stripes/gaps behind the line wrappers.
+      span.line, span.cl {
+        background-color: transparent;
+      }
     }
 
     p > code {
@@ -82,7 +93,7 @@ article.post {
           margin-right: 1rem;
         }
         
-        pre.highlight {
+        pre {
             padding-left: 1rem;
         }
     }
