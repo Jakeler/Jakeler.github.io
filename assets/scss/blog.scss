@@ -1,13 +1,8 @@
 .blog {
-    padding: 3rem;
+    // scales with the viewport instead of jumping at a breakpoint
+    padding: clamp(1rem, 3vw, 3rem);
     padding-top: 1rem;
     max-width: 1200px;
-}
-
-@media (max-width: 768px) {
-    .blog {
-        padding: 1rem;
-    }
 }
 
 .post-list {

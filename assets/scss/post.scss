@@ -1,9 +1,12 @@
+// side space scales with the viewport instead of jumping at a breakpoint
+$contentSpace: clamp(1rem, 3vw, 4rem);
+
 article.post {
     // pre is excluded like div: plain fences are a bare <pre> child (chroma
     // only wraps highlighted ones in div.highlight) and must span full width
     > *:not(div):not(pre) {
-      margin-left: 4rem;
-      margin-right: 4rem;
+      margin-left: $contentSpace;
+      margin-right: $contentSpace;
       max-width: 900px;
       line-height: 1.6;
     }
@@ -14,7 +17,7 @@ article.post {
     // keeps the same padding and gutter background as before.
     pre {
       padding: 1em;
-      padding-left: 4rem;
+      padding-left: $contentSpace;
       margin: 0;
       width: 100%;
       margin-bottom: 4px;
@@ -84,20 +87,6 @@ article.post {
       height: 1em;
       width: 1em;
       vertical-align: middle;
-    }
-}
-
-// Smaller borders for very small screens
-@media (max-width: 768px) {
-    article.post {
-        > *:not(div) {
-          margin-left: 1rem;
-          margin-right: 1rem;
-        }
-        
-        pre {
-            padding-left: 1rem;
-        }
     }
 }
 
