@@ -1,5 +1,7 @@
 article.post {
-    > *:not(div) {
+    // pre is excluded like div: plain fences are a bare <pre> child (chroma
+    // only wraps highlighted ones in div.highlight) and must span full width
+    > *:not(div):not(pre) {
       margin-left: 4rem;
       margin-right: 4rem;
       max-width: 900px;
