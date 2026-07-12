@@ -1,0 +1,41 @@
+{{ define "main" }}
+{{- partial "navigation.html" (dict "page" . "toc" .TableOfContents "title" .Title) -}}
+
+<article class="post">
+    <header class="post-header">
+        <h1 class="post-title p-name" itemprop="name headline">{{ .Title }}</h1>
+        <p class="post-meta">
+          <time class="dt-published" datetime="{{ .Date.Format "2006-01-02T15:04:05-07:00" }}" itemprop="datePublished">
+            {{ .Date.Format "Jan 2, 2006" }}
+          </time>
+          {{- if and (not .Lastmod.IsZero) (ne .Lastmod .Date) }}
+            ~ updated:
+            <time class="dt-modified" datetime="{{ .Lastmod.Format "2006-01-02T15:04:05-07:00" }}" itemprop="dateModified">
+              {{ .Lastmod.Format "Jan 2, 2006" }}
+            </time>
+          {{- end }}
+        </p>
+    </header>
+
+    {{ .Content }}
+
+    <footer>
+      {{ partial "tags.html" (dict "tags" .Params.tags "title" "Tags:") }}
+    </footer>
+    {{ partial "comments.html" . }}
+
+    <nav class="suggestions">
+      {{ if or .NextInSection .PrevInSection }}
+      <header>You might be interested in the previous/next posts:</header>
+      {{ end }}
+      <div>
+        {{ with .PrevInSection }}
+          <a class="prev" href="{{ .RelPermalink }}">&laquo; {{ .Title }}</a>
+        {{ end }}
+        {{ with .NextInSection }}
+          <a class="next" href="{{ .RelPermalink }}">{{ .Title }} &raquo;</a>
+        {{ end }}
+      </div>
+    </nav>
+</article>
+{{ end }}

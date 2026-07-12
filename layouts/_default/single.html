@@ -1,0 +1,11 @@
+{{ define "main" }}
+{{- partial "navigation.html" (dict "page" . "toc" .TableOfContents "title" .Title) -}}
+
+<article class="post">
+    <header class="post-header">
+        <h1 class="post-title p-name">{{ .Title }}</h1>
+    </header>
+
+    {{ .Content }}
+</article>
+{{ end }}

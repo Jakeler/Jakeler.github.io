@@ -1,0 +1,27 @@
+{{ define "main" }}
+{{- partial "navigation.html" (dict "page" .) -}}
+
+<div class="blog">
+  {{ .Content }}
+
+  {{ $paginator := .Paginate (where site.RegularPages "Section" "posts") }}
+
+  {{- partial "pagination.html" . -}}
+
+  <ul class="post-list">
+    {{- range $paginator.Pages }}
+    <li>
+      <a class="post-link" href="{{ .RelPermalink }}">
+      <span class="post-meta">{{ .Date.Format "Jan 2, 2006" }}</span>
+      <h3>
+          {{ .Title }}
+        </h3>
+      </a>
+    </li>
+    {{- end }}
+  </ul>
+
+  {{- partial "pagination.html" . -}}
+
+</div>
+{{ end }}

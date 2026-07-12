@@ -1,0 +1,13 @@
+<section class="tags">
+    {{ with .title }}
+      <label>{{ . }} </label>
+    {{ end }}
+    {{ range .tags }}
+    <a class="label" href="/tags/#{{ . | urlize }}" >
+      <svg>
+        <use href="/static/fontawesome/solid.svg#tag"></use>
+      </svg>
+      {{ . }}
+    </a>
+    {{ end }}
+</section>

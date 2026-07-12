@@ -1,0 +1,29 @@
+{{- $p := .Paginator -}}
+<nav class="pagination is-centered">
+    {{ if $p.HasPrev }}
+    <a href="{{ $p.Prev.URL }}" class="pagination-item pagination-previous">
+        <svg>
+            <use href="/static/fontawesome/solid.svg#angle-left"></use>
+        </svg>
+    </a>
+    {{ end }}
+
+    <ul class="pagination-list">
+        <span>page = </span>
+        {{ range $p.Pagers }}
+        {{ if eq .PageNumber $p.PageNumber }}
+        <li><a class="pagination-item pagination-link is-current">{{ .PageNumber }}</a></li>
+        {{ else }}
+        <li><a href="{{ .URL }}" class="pagination-item pagination-link">{{ .PageNumber }}</a></li>
+        {{ end }}
+        {{ end }}
+    </ul>
+
+    {{ if $p.HasNext }}
+    <a href="{{ $p.Next.URL }}" class="pagination-item pagination-next">
+        <svg>
+            <use href="/static/fontawesome/solid.svg#angle-right"></use>
+        </svg>
+    </a>
+    {{ end }}
+</nav>

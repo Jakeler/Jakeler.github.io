@@ -1,0 +1,53 @@
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} | {{ site.Title }}{{ end }}</title>
+  <meta name="description" content="{{ .Description | default site.Params.description }}">
+  <link rel="canonical" href="{{ .Permalink }}">
+  {{ template "_internal/opengraph.html" . }}
+  {{ template "_internal/twitter_cards.html" . }}
+  {{ template "_internal/schema.html" . }}
+
+  <link rel="shortcut icon" href="{{ site.Params.avatar }}">
+
+  {{- $sassOpts := dict "transpiler" "dartsass" "targetPath" "static/css/style.css" }}
+  {{- with resources.Get "scss/style.scss" | css.Sass $sassOpts }}
+  <link rel="stylesheet" href="{{ .RelPermalink }}">
+  {{- end }}
+  {{- $darkOpts := dict "transpiler" "dartsass" "targetPath" "static/css/themes/dark.css" }}
+  {{- with resources.Get "scss/themes/dark.scss" | css.Sass $darkOpts }}
+  <link class="theme-style" rel="stylesheet" href="{{ .RelPermalink }}" title="default/dark">
+  {{- end }}
+  {{- $lightOpts := dict "transpiler" "dartsass" "targetPath" "static/css/themes/light.css" }}
+  {{- with resources.Get "scss/themes/light.scss" | css.Sass $lightOpts }}
+  <link class="theme-style" rel="stylesheet" href="{{ .RelPermalink }}" title="alt/bright" disabled>
+  {{- end }}
+
+  {{/* Restore chosen theme/accent before first paint; default follows the OS preference */}}
+  <script>
+    (() => {
+      const theme = localStorage.getItem('theme') ??
+        (matchMedia('(prefers-color-scheme: light)').matches ? 'alt/bright' : 'default/dark')
+      for (const s of document.querySelectorAll('head link.theme-style'))
+        s.disabled = s.title !== theme
+      const accent = localStorage.getItem('accent')
+      if (accent) document.documentElement.style.setProperty('--accent-color', accent)
+    })()
+  </script>
+
+  <link rel="alternate" type="application/rss+xml" title="{{ site.Title }}" href="/feed.xml">
+
+  {{- if and hugo.IsProduction site.Params.goatcounter }}
+  <script data-goatcounter="https://{{ site.Params.goatcounter }}.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
+  {{- end }}
+
+  {{- if .Params.math }}
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+  {{- end }}
+
+  <script src="/static/js/main.js" defer></script>
+</head>
