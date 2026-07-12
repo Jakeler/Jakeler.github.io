@@ -2,6 +2,15 @@ $mobileLimitW: 980px;
 $navW: 250px;
 $navH: 10px + 34px;
 
+// Hamburger dimensions
+$barW: 34px;
+$barH: 4px;
+$barGap: 3px; // margin around each bar
+// distance between bar centers: the sibling margins collapse into one
+$barStep: $barH + $barGap;
+$togglePad: 10px;
+$toggleW: $barW + 2 * $barGap + 2 * $togglePad;
+
 .site-nav {
   position: fixed;
   top: 0;
@@ -42,7 +51,7 @@ $navH: 10px + 34px;
   top: 0;
   left: 0;
   z-index: 10;
-  padding: 10px;
+  padding: $togglePad;
   transition: all 0.5s ease;
 
   // Toggle link overlays
@@ -59,9 +68,10 @@ $navH: 10px + 34px;
   }
 }  
 
+// flush with the right edge of the open nav, padding kept symmetric
+// so the X stays centered on the toggle background
 #navigation:target .menu-toggle {
-  left: $navW - 50px;
-  padding-right: 0;
+  left: $navW - $toggleW;
 }
 #navigation:not(:target) .open-nav {
   display: block;
@@ -74,36 +84,30 @@ $navH: 10px + 34px;
 .menu-toggle {
   span {
     display: block;
-    width: 34px;
-    height: 4px;
-    margin: 3px;
+    width: $barW;
+    height: $barH;
+    margin: $barGap;
     position: relative;
     z-index: 1;
     transition: all 0.5s ease;
   }
-  span:nth-child(1) {
-    transform-origin: 5px 0%;
-  }
-  span:nth-child(3) {
-    transform-origin: 4px 100%;
-  }
 }
 
-// Hamburger transforms
+// Hamburger transforms: fold into a symmetric X by moving the outer bars
+// onto the middle one and rotating them about their own centers, while the
+// middle bar shrinks away.
 #navigation:target .menu-toggle {
   span:nth-child(1) {
-    opacity: 1;
-    transform: rotate(45deg) translate(-2px, -1px);
+    transform: translateY($barStep) rotate(45deg);
   }
   span:nth-child(2) {
     opacity: 0;
-    transform: rotate(0deg) scale(0.2, 0.2);
+    transform: scale(0.2);
   }
   span:nth-child(3) {
-    transform: rotate(-45deg) translate(0, -1px);
-  } 
-
-} 
+    transform: translateY(-$barStep) rotate(-45deg);
+  }
+}
 
 @media (max-width: $mobileLimitW) {
   .page-content {
