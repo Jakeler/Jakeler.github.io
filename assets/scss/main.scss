@@ -6,12 +6,16 @@
 @font-face {
   font-family: 'opensans';
   font-weight: 400;
-  src: url('/static/fonts/opensans.ttf')  format('truetype'),
+  font-display: swap;
+  src: url('/static/fonts/opensans.woff2') format('woff2'),
+       url('/static/fonts/opensans.ttf') format('truetype');
 }
 @font-face {
   font-family: 'opensans';
   font-weight: 700;
-  src: url('/static/fonts/opensans-bold.ttf')  format('truetype'),
+  font-display: swap;
+  src: url('/static/fonts/opensans-bold.woff2') format('woff2'),
+       url('/static/fonts/opensans-bold.ttf') format('truetype');
 }
 
 html {
