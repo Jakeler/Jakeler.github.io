@@ -2,12 +2,12 @@
 # Dark theme definition
 ---
 
-$textColor: #dddddd;
-// $accentColor: rgb(0, 128, 17);
-$accentColor: rgb(197, 62, 0);
-// $accentColor: rgb(0, 55, 144);
-$bgDarkColor: #000;
-$bgLightColor: #222;
-$fgColor: #555555;
-
-@import "theme";
+@use "theme" with (
+  $textColor: #dddddd,
+  // $accentColor: rgb(0, 128, 17),
+  $accentColor: rgb(197, 62, 0),
+  // $accentColor: rgb(0, 55, 144),
+  $bgDarkColor: #000,
+  $bgLightColor: #222,
+  $fgColor: #555555
+);

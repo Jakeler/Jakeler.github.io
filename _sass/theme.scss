@@ -1,4 +1,11 @@
-@import "syntax-dark";
+@use "syntax-dark";
+
+// Configurable from the theme entry points via `@use "theme" with (...)`
+$textColor: #dddddd !default;
+$accentColor: rgb(197, 62, 0) !default;
+$bgDarkColor: #000 !default;
+$bgLightColor: #222 !default;
+$fgColor: #555555 !default;
 
 $varAccent: var(--accent-color);
 

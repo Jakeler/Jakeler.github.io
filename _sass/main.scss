@@ -1,7 +1,7 @@
-@import "nav";
-@import "nav-content";
-@import "blog";
-@import "post";
+@use "nav";
+@use "nav-content";
+@use "blog";
+@use "post";
 
 @font-face {
   font-family: 'opensans';
