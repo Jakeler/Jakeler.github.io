@@ -1,7 +1,14 @@
+# Hugo
+public/
+resources/
+.hugo_build.lock
+
+# Jekyll leftovers (delete the dirs when convenient)
 _site
 .sass-cache
 .jekyll-metadata
 .jekyll-cache
-
-vendor/
 .bundle/
+vendor/
+
+.ipynb_checkpoints/
