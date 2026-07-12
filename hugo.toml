@@ -1,0 +1,58 @@
+baseURL = "https://blog.jklr.org/"
+title = "Jake's Blog"
+locale = "en"
+
+# Preserve the exact URL scheme of the old Jekyll site:
+# /2022/03/19/openrgb-fans.html (case-sensitive, .html suffix)
+uglyURLs = true
+disablePathToLower = true
+
+# the old site had no /posts/ section listing; keep "term" enabled so
+# site.Taxonomies.tags populates for the single /tags/ page (the extra
+# /tags/<term>.html files are harmless and unlinked)
+disableKinds = ["section"]
+
+[permalinks]
+  posts = "/:year/:month/:day/:slug"
+
+# Take date (and slug) from the 2018-03-07-title.md filenames
+[frontmatter]
+  date = [":filename", "date"]
+  lastmod = ["last_modified_at", "lastmod"]
+
+[taxonomies]
+  tag = "tags"
+
+[pagination]
+  pagerSize = 10
+
+[params]
+  description = "All about electronics and software"
+  author = "Jake"
+  avatar = "/static/img/favicon.jpg"
+  github_username = "Jakeler"
+  mail = "blog@ja-ke.tech"
+  # GoatCounter site code (the CODE in https://CODE.goatcounter.com) — set after registering
+  goatcounter = "jklr"
+
+[markup.goldmark.renderer]
+  # allow raw HTML in markdown, like kramdown did
+  unsafe = true
+
+[markup.highlight]
+  # class-based highlighting, styled by the existing syntax-dark.scss
+  noClasses = false
+
+[markup.tableOfContents]
+  startLevel = 1
+  endLevel = 4
+
+# RSS at /feed.xml like jekyll-feed, only for the home page
+[outputFormats.RSS]
+  baseName = "feed"
+
+[outputs]
+  home = ["html", "rss"]
+  section = ["html"]
+  taxonomy = ["html"]
+  term = []
