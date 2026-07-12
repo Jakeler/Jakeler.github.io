@@ -1,8 +1,4 @@
----
-# Dark theme definition
----
-
-@use "theme" with (
+@use "../theme" with (
   $textColor: #dddddd,
   // $accentColor: rgb(0, 128, 17),
   $accentColor: rgb(197, 62, 0),
