@@ -48,6 +48,15 @@
         margin-top: 0;
         list-style-type: square;
     }
+    // Hugo's TOC wraps posts that skip heading levels (e.g. start at ###)
+    // in empty list items; hide their markers and indentation
+    li:not(:has(> a)) {
+        list-style-type: none;
+
+        > ul {
+            padding-left: 0;
+        }
+    }
     span {
         font-style: italic;
     }
