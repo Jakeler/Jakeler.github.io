@@ -6,11 +6,14 @@ $accentColor: rgb(197, 62, 0) !default;
 $bgDarkColor: #000 !default;
 $bgLightColor: #222 !default;
 $fgColor: #555555 !default;
+$colorScheme: dark !default;
 
 $varAccent: var(--accent-color);
 
 :root {
     --accent-color:#{$accentColor}; // Don't use whitespace here, otherwise it will be included!
+    // native form controls, scrollbars etc. match the active theme
+    color-scheme: #{$colorScheme};
 }
 
 ::selection {

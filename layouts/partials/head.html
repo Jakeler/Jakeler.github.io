@@ -1,6 +1,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  {{/* the site ships its own dark/light themes; tell Dark Reader not to
+       invert (its filters clash with the always-dark code blocks) */}}
+  <meta name="darkreader-lock">
 
   <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} | {{ site.Title }}{{ end }}</title>
   <meta name="description" content="{{ .Description | default site.Params.description }}">
