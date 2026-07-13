@@ -1,7 +1,8 @@
 # blog-mail worker
 
 Mints tracking email aliases (`blog-xxxx@jklr.org`) for the contact link,
-see `src/index.js`. Deploy:
+see `src/index.js`. Runs on mail.blog.jklr.org (custom domain, DNS record
+is created automatically). Deploy:
 
 ```sh
 wrangler kv namespace create MAIL_KV   # put the returned id into wrangler.toml

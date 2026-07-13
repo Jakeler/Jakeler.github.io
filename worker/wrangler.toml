@@ -2,10 +2,10 @@ name = "blog-mail"
 main = "src/index.js"
 compatibility_date = "2026-07-01"
 
-# requires blog.jklr.org to be proxied (orange cloud) through Cloudflare;
-# otherwise deploy on a workers.dev/custom domain and set SITE for CORS
+# own subdomain so blog.jklr.org can stay DNS-only to GitHub Pages;
+# deploying auto-creates the DNS record and certificate
 routes = [
-  { pattern = "blog.jklr.org/api/*", zone_name = "jklr.org" }
+  { pattern = "mail.blog.jklr.org", custom_domain = true }
 ]
 
 [[kv_namespaces]]

@@ -32,7 +32,7 @@ disableKinds = ["section"]
   avatar = "/static/img/favicon.jpg"
   github_username = "Jakeler"
   # contact aliases are minted per click by the Cloudflare worker (see worker/)
-  mailApi = "/api"
+  mailApi = "https://mail.blog.jklr.org/api"
   # GoatCounter site code (the CODE in https://CODE.goatcounter.com) — set after registering
   goatcounter = "jklr"
 
