@@ -6,6 +6,7 @@ import { GalaxyScene } from './galaxy.js'
 import { SolarSystemScene } from './solar-system.js'
 import { Transitions } from './transitions.js'
 import { ThemeWatcher } from './theme.js'
+import { DragOrbit } from './controls.js'
 
 const article = document.querySelector('article.galaxy-page')
 const container = document.getElementById('galaxy-container')
@@ -64,6 +65,12 @@ function init() {
   new ResizeObserver(resize).observe(container)
   window.addEventListener('resize', resize)
   resize()
+
+  new DragOrbit(canvas, {
+    camera: () => active().camera,
+    enabled: () => !transitions.active,
+    onChange: () => { needsRender = true },
+  })
 
   function applyTheme({ accent, background }) {
     galaxy.setAccent(accent)
