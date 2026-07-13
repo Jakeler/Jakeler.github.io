@@ -10,4 +10,4 @@ routes = [
 
 [[kv_namespaces]]
 binding = "MAIL_KV"
-id = "<run: wrangler kv namespace create MAIL_KV>"
+id = "874ef5039df64874baf0bb1078e6b18b"
