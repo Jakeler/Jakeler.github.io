@@ -43,8 +43,10 @@ function init() {
   let running = true, pageVisible = true, canvasVisible = true
   let needsRender = true
 
-  const active = () => state === 'system' || state === 'zooming-in'
-    ? system : galaxy
+  // the rendered scene; swapped by the transitions at the fade peak,
+  // not when the state machine starts moving
+  let current = galaxy
+  const active = () => current
 
   function resize() {
     const w = container.clientWidth, h = container.clientHeight
@@ -183,10 +185,11 @@ function init() {
     system.show(star.userData.project)
     showInfo(star.userData.project)
     await transitions.zoomIn(galaxy, star, system, () => {
-      state = 'system'
-      setHudState()
+      current = system
       needsRender = true
     })
+    state = 'system'
+    setHudState()
   }
 
   async function exitSystem() {
@@ -194,12 +197,13 @@ function init() {
     state = 'zooming-out'
     setHudState()
     await transitions.zoomOut(system, galaxy, activeStar, () => {
-      state = 'galaxy'
-      setHudState()
-      system.dispose()
-      activeStar = null
+      current = galaxy
       needsRender = true
     })
+    state = 'galaxy'
+    setHudState()
+    system.dispose()
+    activeStar = null
   }
 
   hud.back.addEventListener('click', () => history.back())
@@ -222,6 +226,7 @@ function init() {
   if (initial) {
     activeStar = initial
     state = 'system'
+    current = system
     system.show(initial.userData.project)
     showInfo(initial.userData.project)
     // keep a galaxy entry below, so Back zooms out instead of leaving

@@ -42,10 +42,11 @@ export class Transitions {
     const starPos = star.getWorldPosition(new THREE.Vector3())
     const to = starPos.clone().add(new THREE.Vector3(0, 2.5, 7))
     const look = new THREE.Vector3()
-    await this.#tween(1.4, t => {
+    await this.#tween(1.5, t => {
       galaxy.camera.position.lerpVectors(from, to, t)
       galaxy.camera.lookAt(look.lerpVectors(fromLook, starPos, t))
-      this.fade.style.opacity = Math.max(0, (t - 0.6) / 0.4)
+      // fade only at the very end, most of the flight stays visible
+      this.fade.style.opacity = Math.max(0, (t - 0.9) / 0.1)
     })
     onSwap()
     const sysFrom = system.cameraHome.clone().add(new THREE.Vector3(0, 3, 8))
@@ -53,7 +54,7 @@ export class Transitions {
     await this.#tween(0.7, t => {
       system.camera.position.lerpVectors(sysFrom, sysTo, t)
       system.camera.lookAt(0, 0, 0)
-      this.fade.style.opacity = 1 - t
+      this.fade.style.opacity = Math.max(0, 1 - t / 0.15)
     })
   }
 
@@ -64,20 +65,21 @@ export class Transitions {
     }
     const sysFrom = system.camera.position.clone()
     const sysTo = system.cameraHome.clone().add(new THREE.Vector3(0, 3, 8))
-    await this.#tween(0.6, t => {
+    await this.#tween(0.5, t => {
       system.camera.position.lerpVectors(sysFrom, sysTo, t)
       system.camera.lookAt(0, 0, 0)
-      this.fade.style.opacity = t
+      // pull back visibly first, black only at the very end
+      this.fade.style.opacity = Math.max(0, (t - 0.8) / 0.2)
     })
     onSwap()
     const starPos = star.getWorldPosition(new THREE.Vector3())
     const from = starPos.clone().add(new THREE.Vector3(0, 2.5, 7))
     const to = galaxy.cameraHome
     const look = new THREE.Vector3()
-    await this.#tween(1.2, t => {
+    await this.#tween(1.3, t => {
       galaxy.camera.position.lerpVectors(from, to, t)
       galaxy.camera.lookAt(look.lerpVectors(starPos, new THREE.Vector3(0, 0, 0), t))
-      this.fade.style.opacity = Math.max(0, 1 - t / 0.4)
+      this.fade.style.opacity = Math.max(0, 1 - t / 0.15)
     })
   }
 }
