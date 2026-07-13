@@ -3,9 +3,10 @@ main = "src/index.js"
 compatibility_date = "2026-07-01"
 
 # own subdomain so blog.jklr.org can stay DNS-only to GitHub Pages;
-# deploying auto-creates the DNS record and certificate
+# deploying auto-creates the DNS record. Must be a single-level subdomain:
+# the free Universal SSL wildcard doesn't cover e.g. mail.blog.jklr.org
 routes = [
-  { pattern = "mail.blog.jklr.org", custom_domain = true }
+  { pattern = "mail-blog.jklr.org", custom_domain = true }
 ]
 
 [[kv_namespaces]]
