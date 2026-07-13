@@ -1,0 +1,91 @@
+# Single source of truth for the /projects/ page (galaxy view + fallback list).
+# posts are content paths under content/posts/, resolved to permalinks/titles
+# at build time; a typo fails the build.
+projects:
+  - id: diy-goto
+    name: DIY GoTo Telescope
+    description: Dobson style telescope mount mod, with mostly 3D printed parts.
+    posts:
+      - /posts/2020-07-09-diy-goto-0-intro
+      - /posts/2020-08-02-diy-goto-1-alt-setup
+      - /posts/2020-09-21-diy-goto-2-az-setup
+      - /posts/2020-11-02-diy-goto-3-stepper-test
+      # 4-software and 5-electrical-finish are still drafts
+
+  - id: ut61e-toolkit
+    name: UT61E Toolkit
+    description: Bluetooth mod for the UT61E multimeter, with Android App.
+    repo: https://github.com/Jakeler/UT61E-Toolkit
+    posts:
+      - /posts/2018-03-09-UT61E-ble
+      - /posts/2018-04-02-UT61E-android-logging
+      - /posts/2018-05-11-UT61E-toolkit-update1_1
+      - /posts/2018-05-12-UT61E-toolkit-update1_2
+      - /posts/2021-03-11-UT61E-toolkit-update-1_3
+      - /posts/2021-03-12-UT61E-toolkit-update-1_4
+
+  - id: ble-serial
+    name: BLE Serial
+    description: >-
+      "RFCOMM for BLE" a UART over Bluetooth low energy (4.0+) bridge
+      for Linux and Windows, written in Python.
+    repo: https://github.com/Jakeler/ble-serial
+    posts:
+      - /posts/2019-12-18-ble-serial
+      - /posts/2021-04-22-ble-serial-2
+
+  - id: adb-root
+    name: ADB root
+    description: Alternative way (piping into `dd`) to transfer file to rooted Android devices.
+    repo: https://github.com/Jakeler/adb-root
+    posts:
+      - /posts/2018-09-20-adb-root
+
+  - id: bms-interface
+    name: BMS Interface
+    description: Parsing the typical BatteryManagementSystem protocol with kaitai.
+    repo: https://github.com/Jakeler/bms-parser
+    posts:
+      - /posts/2020-02-07-ltt-power-bms-chinese-protocol
+
+  - id: nas-build
+    name: NAS Build
+    description: Protocol performance test and power efficient configuration.
+    posts:
+      - /posts/2019-08-27-nas-performance-sshfs-nfs-smb
+      - /posts/2020-05-30-nas-automation
+
+  - id: esp32-bitcoin
+    name: ESP32 Bitcoin Miner
+    description: Bitcoin mining implemented on the ESP32 microcontroller.
+    repo: https://github.com/Jakeler/ESP32-Bitcoin
+    featured:
+      - https://hackaday.com/2019/03/19/mining-bitcoin-on-the-esp32-for-fun-definitely-not-profit/
+    posts:
+      - /posts/2019-03-16-esp32-bitcoin
+
+  - id: model-n-firmware
+    name: Model-N Firmware
+    description: Basic alternative Firmware for radiator thermostats, written in C for STM8.
+    repo: https://github.com/Jakeler/Model-N-Thermostat
+    posts: []
+
+  - id: led-cc
+    name: LED CC
+    description: PCB design for a Arduino based constant current supply, with 1602 display control.
+    repo: https://github.com/Jakeler/LED-CC-Firmware
+    posts: []
+
+  - id: jupyterlab-shortcuts
+    name: JupyterLab Shortcuts
+    description: NodeJS based generator for a html overview from the config file.
+    repo: https://github.com/Jakeler/jupyter-shortcuts
+    posts:
+      - /posts/2019-01-20-jupyterlab-shortcuts
+
+  - id: jakes-blog
+    name: Jake's Blog
+    description: My self made website design.
+    repo: https://github.com/Jakeler/Jakeler.github.io
+    posts:
+      - /posts/2020-03-11-blog-redesign
