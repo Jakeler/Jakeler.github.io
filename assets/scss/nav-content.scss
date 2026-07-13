@@ -20,6 +20,13 @@
       font-size: x-large;
       font-weight: bold;
     }
+
+    #subtitle {
+      display: block;
+      margin-top: 0.25em;
+      font-style: italic; // 1rem like the other nav entries
+      color: gray; // matches .post-meta
+    }
   }
   
   .nav-links {

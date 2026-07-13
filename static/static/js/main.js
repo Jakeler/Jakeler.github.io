@@ -70,7 +70,41 @@ function reset() {
   location.reload();
 }
 
+// jklr backronyms: "Ja-Ke" + L-word + R-word, one per page load
+const subtitles = [
+  'jake loves reading',
+  'jake likes root access',
+  'jake loves reverse engineering',
+  'jake likes running',
+  'jake likes rolling releases',
+  'jake loves rust',
+  'jake likes reflow soldering',
+  'jake loves RGB control',
+  'jake loves RSS',
+  'jake likes refactoring',
+  'jake loves recursion',
+  'jake likes reproducible builds',
+  'jake likes rebasing',
+  'jake loves register maps',
+  'jake likes reverse proxies',
+  'jake logs responsibly',
+]
+
 window.addEventListener('DOMContentLoaded', _ => {
+  const subtitle = document.querySelector('#subtitle')
+  if (subtitle) {
+    const pick = subtitles[Math.floor(Math.random() * subtitles.length)]
+    // embolden the acronym: the first j, k, l, r appearing in that order
+    let next = 0
+    subtitle.innerHTML = [...pick].map(ch => {
+      if (ch.toLowerCase() === 'jklr'[next]) {
+        next++
+        return `<b>${ch}</b>`
+      }
+      return ch
+    }).join('')
+  }
+
   // sync the comments iframe with the active theme once it finished loading
   window.onmessage = evt => {
     if (evt.origin === 'https://utteranc.es') {
