@@ -16,7 +16,6 @@ const hud = {
   back: document.getElementById('galaxy-back'),
   info: document.getElementById('galaxy-info'),
   hint: document.getElementById('galaxy-hint'),
-  fade: document.getElementById('galaxy-fade'),
 }
 
 const { projects } = JSON.parse(document.getElementById('projects-data').textContent)
@@ -36,7 +35,7 @@ function init() {
   const theme = themes.read()
   const galaxy = new GalaxyScene({ projects, accent: theme.accent, reducedMotion })
   const system = new SolarSystemScene({ accent: theme.accent, reducedMotion })
-  const transitions = new Transitions(hud.fade, reducedMotion)
+  const transitions = new Transitions(reducedMotion)
   renderer.setClearColor(theme.background)
 
   let state = 'galaxy' // galaxy | zooming-in | system | zooming-out
@@ -94,8 +93,16 @@ function init() {
       needsRender = true
     }
     if (needsRender) {
-      const scene = active()
-      renderer.render(scene.scene, scene.camera)
+      if (transitions.overlap) {
+        // crossfade: both scenes composite into the same frame
+        renderer.render(galaxy.scene, galaxy.camera)
+        renderer.autoClear = false
+        renderer.render(system.scene, system.camera)
+        renderer.autoClear = true
+      } else {
+        const scene = active()
+        renderer.render(scene.scene, scene.camera)
+      }
       needsRender = false
     }
   }

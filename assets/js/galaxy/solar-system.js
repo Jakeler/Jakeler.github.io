@@ -115,6 +115,17 @@ export class SolarSystemScene {
     if (this.built) this.show(this.built) // rebuild with new tint
   }
 
+  // whole-scene fade, used while both scenes render during a transition
+  setOpacity(v) {
+    this.scene.traverse(obj => {
+      const material = obj.material
+      if (!material) return
+      material.userData.baseOpacity ??= material.opacity
+      material.transparent = true
+      material.opacity = material.userData.baseOpacity * v
+    })
+  }
+
   dispose() {
     for (const obj of [...this.scene.children]) {
       this.scene.remove(obj)

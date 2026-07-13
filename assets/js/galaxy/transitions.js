@@ -1,14 +1,21 @@
-// Camera fly + fullscreen fade between the galaxy and a solar system.
-// No dual-scene rendering: the fade covers the scene swap.
+// Continuous camera fly between the galaxy and a solar system: while
+// `overlap` is set both scenes render into the same frame (additive stars
+// on a dark background composite naturally) and crossfade via scene-wide
+// material opacity — the screen never cuts to black.
 import * as THREE from '../vendor/three.module.min.js'
 
 const ease = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2
+// clamped smoothstep for the fade windows inside a tween
+const window01 = t => {
+  const x = Math.min(1, Math.max(0, t))
+  return x * x * (3 - 2 * x)
+}
 
 export class Transitions {
-  constructor(fadeEl, reducedMotion) {
-    this.fade = fadeEl
+  constructor(reducedMotion) {
     this.reducedMotion = reducedMotion
     this.queue = []
+    this.overlap = false // main.js renders both scenes while set
   }
 
   get active() { return this.queue.length > 0 }
@@ -30,8 +37,7 @@ export class Transitions {
     }
   }
 
-  // fly the galaxy camera into the star, swap scenes at full fade,
-  // then dolly the system camera into place while fading back out
+  // fly into the star while the solar system materializes inside its glow
   async zoomIn(galaxy, star, system, onSwap) {
     if (this.reducedMotion) {
       onSwap()
@@ -42,44 +48,50 @@ export class Transitions {
     const starPos = star.getWorldPosition(new THREE.Vector3())
     const to = starPos.clone().add(new THREE.Vector3(0, 2.5, 7))
     const look = new THREE.Vector3()
-    await this.#tween(1.5, t => {
+    const sysFrom = system.cameraHome.clone().add(new THREE.Vector3(0, 5, 14))
+    const sysTo = system.cameraHome
+    system.setOpacity(0)
+    this.overlap = true
+    await this.#tween(1.8, t => {
       galaxy.camera.position.lerpVectors(from, to, t)
       galaxy.camera.lookAt(look.lerpVectors(fromLook, starPos, t))
-      // fade only at the very end, most of the flight stays visible
-      this.fade.style.opacity = Math.max(0, (t - 0.9) / 0.1)
+      galaxy.setOpacity(1 - window01((t - 0.6) / 0.4))
+      const s = window01((t - 0.45) / 0.55)
+      system.setOpacity(s)
+      system.camera.position.lerpVectors(sysFrom, sysTo, s)
+      system.camera.lookAt(0, 0, 0)
     })
     onSwap()
-    const sysFrom = system.cameraHome.clone().add(new THREE.Vector3(0, 3, 8))
-    const sysTo = system.cameraHome
-    await this.#tween(0.7, t => {
-      system.camera.position.lerpVectors(sysFrom, sysTo, t)
-      system.camera.lookAt(0, 0, 0)
-      this.fade.style.opacity = Math.max(0, 1 - t / 0.15)
-    })
+    this.overlap = false
+    galaxy.setOpacity(1) // ready for the trip back
+    system.setOpacity(1)
   }
 
+  // the system recedes while the galaxy fades back in around the star
   async zoomOut(system, galaxy, star, onSwap) {
     if (this.reducedMotion) {
       onSwap()
       return
     }
-    const sysFrom = system.camera.position.clone()
-    const sysTo = system.cameraHome.clone().add(new THREE.Vector3(0, 3, 8))
-    await this.#tween(0.5, t => {
-      system.camera.position.lerpVectors(sysFrom, sysTo, t)
-      system.camera.lookAt(0, 0, 0)
-      // pull back visibly first, black only at the very end
-      this.fade.style.opacity = Math.max(0, (t - 0.8) / 0.2)
-    })
-    onSwap()
     const starPos = star.getWorldPosition(new THREE.Vector3())
     const from = starPos.clone().add(new THREE.Vector3(0, 2.5, 7))
     const to = galaxy.cameraHome
     const look = new THREE.Vector3()
-    await this.#tween(1.3, t => {
+    const sysFrom = system.camera.position.clone()
+    const sysTo = system.cameraHome.clone().add(new THREE.Vector3(0, 5, 14))
+    galaxy.setOpacity(0)
+    this.overlap = true
+    await this.#tween(1.8, t => {
+      const s = window01(t / 0.55)
+      system.camera.position.lerpVectors(sysFrom, sysTo, s)
+      system.camera.lookAt(0, 0, 0)
+      system.setOpacity(1 - s)
+      galaxy.setOpacity(window01((t - 0.2) / 0.4))
       galaxy.camera.position.lerpVectors(from, to, t)
       galaxy.camera.lookAt(look.lerpVectors(starPos, new THREE.Vector3(0, 0, 0), t))
-      this.fade.style.opacity = Math.max(0, 1 - t / 0.15)
     })
+    onSwap()
+    this.overlap = false
+    system.setOpacity(1) // dispose/rebuild follows, but keep it sane
   }
 }

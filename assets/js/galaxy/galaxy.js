@@ -123,6 +123,7 @@ export class GalaxyScene {
         // tight falloff, big soft blobs read as out-of-focus
         map: { value: glowTexture('rgba(255,255,255,0.85)', 0.3, 0.9) },
         uScale: { value: 434 }, // drawing buffer height / 2, see setViewport
+        uOpacity: { value: 1 }, // scene-wide fade for the zoom crossfade
       },
       vertexShader: `
         attribute float size;
@@ -139,9 +140,10 @@ export class GalaxyScene {
         }`,
       fragmentShader: `
         uniform sampler2D map;
+        uniform float uOpacity;
         varying vec3 vColor;
         void main() {
-          gl_FragColor = vec4(vColor, 1.0) * texture2D(map, gl_PointCoord);
+          gl_FragColor = vec4(vColor, 1.0) * texture2D(map, gl_PointCoord) * uOpacity;
         }`,
       vertexColors: true,
       transparent: true,
@@ -154,6 +156,12 @@ export class GalaxyScene {
   // point sizes are in device pixels, keep them proportional to the buffer
   setViewport(bufferHeight) {
     this.starMaterial.uniforms.uScale.value = bufferHeight / 2
+  }
+
+  // whole-scene fade, used while both scenes render during a transition
+  setOpacity(v) {
+    this.starMaterial.uniforms.uOpacity.value = v
+    for (const material of this.spriteMaterials) material.opacity = v
   }
 
   #makeProjectStars(projects, accent) {
