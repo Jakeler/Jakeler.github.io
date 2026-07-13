@@ -72,8 +72,8 @@ export class GalaxyScene {
     // distance, only the rare tail end grows into visible discs
     const push = (x, y, z, r, g, b, sizeScale = 1) => {
       positions.push(x, y, z)
-      colors.push(r, g, b)
-      sizes.push((0.16 + Math.pow(rand(), 4) * 1.1) * sizeScale)
+      colors.push(r * 0.7, g * 0.7, b * 0.7) // dimmed: 5x the stars add up
+      sizes.push((0.1 + Math.pow(rand(), 5) * 0.9) * sizeScale)
     }
     const starColor = (radius) => {
       // warm to cool white noise, dimmer towards the rim
@@ -87,11 +87,11 @@ export class GalaxyScene {
     }
     // spiral arms with scatter fanning out along the radius
     for (let arm = 0; arm < 2; arm++) {
-      for (let i = 0; i < 6500; i++) {
+      for (let i = 0; i < 15000; i++) {
         // bias samples outward: uniform t crowds the center of a log spiral
         const t = ARM.T_MIN + Math.pow(rand(), 0.7) * (ARM.T_MAX - ARM.T_MIN)
         const p = armPoint(t, arm)
-        const spread = 0.5 + p.length() * 0.07
+        const spread = 0.5 + p.length() * 0.12
         p.x += gaussian(rand) * spread
         p.z += gaussian(rand) * spread
         p.y = gaussian(rand) * 0.6
@@ -100,15 +100,15 @@ export class GalaxyScene {
     }
     // central bulge, yellow tinted and flattened; smaller stars so the
     // dense additive core doesn't blow out
-    for (let i = 0; i < 3400; i++) {
+    for (let i = 0; i < 30000; i++) {
       const x = gaussian(rand) * 4, z = gaussian(rand) * 4, y = gaussian(rand) * 1.6
       const bright = 0.5 + rand() * 0.5
       push(x, y, z, bright, bright * 0.88, bright * 0.68, 0.7)
     }
     // faint wide halo dust; small, or near-camera ones become fat discs
-    for (let i = 0; i < 900; i++) {
+    for (let i = 0; i < 15000; i++) {
       const r = 10 + rand() * 40, theta = rand() * 2 * Math.PI
-      const b = 0.1 + rand() * 0.15
+      const b = 0.5 + rand() * 1
       push(r * Math.cos(theta), gaussian(rand) * 1.5, r * Math.sin(theta), b, b, b * 1.1, 0.5)
     }
 
@@ -133,7 +133,8 @@ export class GalaxyScene {
           vec4 mv = modelViewMatrix * vec4(position, 1.0);
           // cap the attenuated size: nearby stars otherwise balloon
           // into blurry discs when the camera dives in
-          gl_PointSize = min(size * (uScale / -mv.z), uScale * 0.028);
+          // low cap: stars stay small points even when the camera dives in
+          gl_PointSize = min(size * (uScale / -mv.z), uScale * 0.014);
           gl_Position = projectionMatrix * mv;
         }`,
       fragmentShader: `
