@@ -9,10 +9,12 @@ $mobileLimitW: 980px;
 $navH: 44px;
 
 article.galaxy-page {
+  position: relative; // anchor for the hidden fallback
+
   #galaxy-container {
     display: none;
     position: relative;
-    height: calc(100vh - 2rem);
+    height: 100vh;
     min-height: 420px;
 
     @media (max-width: $mobileLimitW) {
@@ -24,11 +26,17 @@ article.galaxy-page {
     #galaxy-container {
       display: block;
     }
-    // off-screen instead of display:none, stays indexable and readable
-    // for screen readers following the aria-hidden swap
+    // visually hidden instead of display:none, stays indexable and
+    // readable for screen readers following the aria-hidden swap;
+    // top: 0 + 1px box so it can't extend the document height
     #projects-fallback {
       position: absolute;
-      left: -9999px;
+      top: 0;
+      left: 0;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
     }
   }
 
