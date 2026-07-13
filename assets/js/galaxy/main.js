@@ -88,6 +88,7 @@ function init() {
     elapsed += dt
     if (!reducedMotion || transitions.active) {
       transitions.update(dt)
+      galaxy.rotate = !transitions.active
       galaxy.update(dt, elapsed)
       system.update(dt)
       needsRender = true

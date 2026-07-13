@@ -198,7 +198,9 @@ export class GalaxyScene {
 
   update(dt, elapsed) {
     if (this.reducedMotion) return
-    this.scene.rotation.y += 0.012 * dt
+    // main.js clears `rotate` during transitions: the flight targets the
+    // star's position at click time, so the scene must not drift under it
+    if (this.rotate !== false) this.scene.rotation.y += 0.012 * dt
     for (const s of this.projectSprites) {
       const { baseScale, index } = s.userData
       s.scale.setScalar(baseScale * (1 + 0.18 * Math.sin(elapsed * 2 + index * 1.7)))
