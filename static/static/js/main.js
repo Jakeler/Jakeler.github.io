@@ -89,4 +89,18 @@ window.addEventListener('DOMContentLoaded', _ => {
 
   const resetBtn = document.querySelector('.theme button.reset')
   resetBtn.onclick = e => reset()
+
+  // Contact link: fetch a per-visitor alias on the first click, then behave
+  // like a normal mailto. On fetch failure the href (redirect endpoint) stays.
+  const reveal = document.querySelector('a.email-reveal')
+  if (reveal) reveal.addEventListener('click', async e => {
+    e.preventDefault()
+    try {
+      const { email } = await (await fetch(reveal.dataset.api)).json()
+      reveal.href = `mailto:${email}`
+      reveal.querySelector('span').textContent = email
+    } catch {
+      location.href = reveal.href
+    }
+  }, { once: true })
 })

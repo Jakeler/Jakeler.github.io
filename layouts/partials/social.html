@@ -1,11 +1,13 @@
 <ul class="social">
-    {{ with site.Params.mail }}
+    {{ with site.Params.mailApi }}
     <li>
-        <a href="mailto:{{ . }}">
+        {{/* JS swaps in a minted alias on click; without JS the href
+             redirects to a mailto: with the same alias */}}
+        <a class="email-reveal" href="{{ . }}/contact" data-api="{{ . }}/mail">
             <svg>
                 <use href="/static/fontawesome/regular.svg#envelope"></use>
             </svg>
-            {{ . }}
+            <span>reveal email</span>
         </a>
     </li>
     {{ end }}
