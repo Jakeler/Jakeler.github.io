@@ -52,6 +52,7 @@ function init() {
     const coarse = matchMedia('(pointer: coarse)').matches
     renderer.setPixelRatio(Math.min(devicePixelRatio, coarse ? 1.5 : 2))
     renderer.setSize(w, h, false)
+    galaxy.setViewport(renderer.domElement.height)
     for (const cam of [galaxy.camera, system.camera]) {
       cam.aspect = w / h
       cam.updateProjectionMatrix()

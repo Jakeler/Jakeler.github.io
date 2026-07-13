@@ -20,16 +20,18 @@ function gaussian(rand) {
   return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v)
 }
 
-// soft radial gradient sprite, used for stars and glows
-export function glowTexture(color, coreSize = 0.25) {
+// radial gradient sprite, used for stars and glows: solid core up to
+// coreSize, colored falloff ending at edge (smaller edge = crisper star)
+export function glowTexture(color, coreSize = 0.25, edge = 1) {
   const size = 64
   const canvas = document.createElement('canvas')
   canvas.width = canvas.height = size
   const ctx = canvas.getContext('2d')
   const g = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2)
   g.addColorStop(0, '#ffffff')
+  g.addColorStop(coreSize * 0.5, '#ffffff')
   g.addColorStop(coreSize, color)
-  g.addColorStop(1, 'rgba(0,0,0,0)')
+  g.addColorStop(edge, 'rgba(0,0,0,0)')
   ctx.fillStyle = g
   ctx.fillRect(0, 0, size, size)
   const tex = new THREE.CanvasTexture(canvas)
@@ -65,8 +67,14 @@ export class GalaxyScene {
 
   #makeStars() {
     const rand = prng(1337)
-    const positions = [], colors = []
-    const push = (x, y, z, r, g, b) => { positions.push(x, y, z); colors.push(r, g, b) }
+    const positions = [], colors = [], sizes = []
+    // heavy tail: nearly all stars are ~1 px at the home camera
+    // distance, only the rare tail end grows into visible discs
+    const push = (x, y, z, r, g, b, sizeScale = 1) => {
+      positions.push(x, y, z)
+      colors.push(r, g, b)
+      sizes.push((0.16 + Math.pow(rand(), 4) * 1.1) * sizeScale)
+    }
     const starColor = (radius) => {
       // warm to cool white noise, dimmer towards the rim
       const temp = rand()
@@ -79,7 +87,7 @@ export class GalaxyScene {
     }
     // spiral arms with scatter fanning out along the radius
     for (let arm = 0; arm < 2; arm++) {
-      for (let i = 0; i < 2200; i++) {
+      for (let i = 0; i < 6500; i++) {
         // bias samples outward: uniform t crowds the center of a log spiral
         const t = ARM.T_MIN + Math.pow(rand(), 0.7) * (ARM.T_MAX - ARM.T_MIN)
         const p = armPoint(t, arm)
@@ -90,40 +98,66 @@ export class GalaxyScene {
         push(p.x, p.y, p.z, ...starColor(p.length()))
       }
     }
-    // central bulge, yellow tinted and flattened
-    for (let i = 0; i < 1200; i++) {
+    // central bulge, yellow tinted and flattened; smaller stars so the
+    // dense additive core doesn't blow out
+    for (let i = 0; i < 3400; i++) {
       const x = gaussian(rand) * 4, z = gaussian(rand) * 4, y = gaussian(rand) * 1.6
       const bright = 0.5 + rand() * 0.5
-      push(x, y, z, bright, bright * 0.88, bright * 0.68)
+      push(x, y, z, bright, bright * 0.88, bright * 0.68, 0.7)
     }
-    // faint wide halo dust
-    for (let i = 0; i < 400; i++) {
+    // faint wide halo dust; small, or near-camera ones become fat discs
+    for (let i = 0; i < 900; i++) {
       const r = 10 + rand() * 40, theta = rand() * 2 * Math.PI
       const b = 0.1 + rand() * 0.15
-      push(r * Math.cos(theta), gaussian(rand) * 1.5, r * Math.sin(theta), b, b, b * 1.1)
+      push(r * Math.cos(theta), gaussian(rand) * 1.5, r * Math.sin(theta), b, b, b * 1.1, 0.5)
     }
 
     const geometry = new THREE.BufferGeometry()
     geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3))
     geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3))
-    const material = new THREE.PointsMaterial({
-      size: 0.7,
-      map: glowTexture('rgba(255,255,255,0.6)'),
+    geometry.setAttribute('size', new THREE.Float32BufferAttribute(sizes, 1))
+    // PointsMaterial only supports one uniform size; this is the same
+    // attenuated point sprite with a per-star size attribute
+    this.starMaterial = new THREE.ShaderMaterial({
+      uniforms: {
+        // tight falloff, big soft blobs read as out-of-focus
+        map: { value: glowTexture('rgba(255,255,255,0.85)', 0.3, 0.9) },
+        uScale: { value: 434 }, // drawing buffer height / 2, see setViewport
+      },
+      vertexShader: `
+        attribute float size;
+        uniform float uScale;
+        varying vec3 vColor;
+        void main() {
+          vColor = color;
+          vec4 mv = modelViewMatrix * vec4(position, 1.0);
+          // cap the attenuated size: nearby stars otherwise balloon
+          // into blurry discs when the camera dives in
+          gl_PointSize = min(size * (uScale / -mv.z), uScale * 0.028);
+          gl_Position = projectionMatrix * mv;
+        }`,
+      fragmentShader: `
+        uniform sampler2D map;
+        varying vec3 vColor;
+        void main() {
+          gl_FragColor = vec4(vColor, 1.0) * texture2D(map, gl_PointCoord);
+        }`,
       vertexColors: true,
       transparent: true,
       depthWrite: false,
       blending: THREE.AdditiveBlending,
     })
-    return new THREE.Points(geometry, material)
+    return new THREE.Points(geometry, this.starMaterial)
+  }
+
+  // point sizes are in device pixels, keep them proportional to the buffer
+  setViewport(bufferHeight) {
+    this.starMaterial.uniforms.uScale.value = bufferHeight / 2
   }
 
   #makeProjectStars(projects, accent) {
-    this.spriteMaterial = new THREE.SpriteMaterial({
-      map: glowTexture(accent, 0.35),
-      transparent: true,
-      depthWrite: false,
-      blending: THREE.AdditiveBlending,
-    })
+    this.accentMap = glowTexture(accent, 0.35)
+    this.spriteMaterials = []
     const perArm = Math.ceil(projects.length / 2)
     const rMin = 8, rMax = ARM.A * Math.exp(ARM.B * ARM.T_MAX) * 0.95
     return projects.map((project, i) => {
@@ -133,11 +167,22 @@ export class GalaxyScene {
       const slot = Math.floor(i / 2) + 0.5
       const r = rMin + slot * (rMax - rMin) / perArm
       const t = Math.log(r / ARM.A) / ARM.B
-      const sprite = new THREE.Sprite(this.spriteMaterial)
+      // more posts = bigger and brighter star
+      const weight = Math.min(project.posts.length, 6) / 6
+      const material = new THREE.SpriteMaterial({
+        map: this.accentMap,
+        color: new THREE.Color().setScalar(0.8 + 0.2 * weight),
+        transparent: true,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending,
+      })
+      this.spriteMaterials.push(material)
+      const sprite = new THREE.Sprite(material)
       sprite.position.copy(armPoint(t, arm))
       sprite.position.y = 0.8 // float above the disk
-      sprite.scale.setScalar(2.6)
-      sprite.userData = { project, index: i, baseScale: 2.6 }
+      const baseScale = 1.5 + 2.7 * weight
+      sprite.scale.setScalar(baseScale)
+      sprite.userData = { project, index: i, baseScale }
       return sprite
     })
   }
@@ -158,8 +203,11 @@ export class GalaxyScene {
   }
 
   setAccent(color) {
-    this.spriteMaterial.map?.dispose()
-    this.spriteMaterial.map = glowTexture(color, 0.35)
-    this.spriteMaterial.needsUpdate = true
+    this.accentMap?.dispose()
+    this.accentMap = glowTexture(color, 0.35)
+    for (const material of this.spriteMaterials) {
+      material.map = this.accentMap
+      material.needsUpdate = true
+    }
   }
 }
