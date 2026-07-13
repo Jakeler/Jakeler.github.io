@@ -1,0 +1,134 @@
+// /projects/ galaxy page: near-fullscreen canvas + HTML HUD overlay.
+// The plain project list (#projects-fallback) is the default; JS swaps it
+// out by setting .galaxy-active (WebGL works) or .webgl-failed (notice).
+
+// keep in sync with post.scss
+$contentSpace: clamp(1rem, 3vw, 4rem);
+// keep in sync with nav.scss ($mobileLimitW, $navH)
+$mobileLimitW: 980px;
+$navH: 44px;
+
+article.galaxy-page {
+  #galaxy-container {
+    display: none;
+    position: relative;
+    height: calc(100vh - 2rem);
+    min-height: 420px;
+
+    @media (max-width: $mobileLimitW) {
+      height: calc(100dvh - #{$navH});
+    }
+  }
+
+  &.galaxy-active {
+    #galaxy-container {
+      display: block;
+    }
+    // off-screen instead of display:none, stays indexable and readable
+    // for screen readers following the aria-hidden swap
+    #projects-fallback {
+      position: absolute;
+      left: -9999px;
+    }
+  }
+
+  .galaxy-notice {
+    display: none;
+  }
+  &.webgl-failed .galaxy-notice {
+    display: block;
+    font-style: italic;
+  }
+
+  // the fallback div is excluded from the article.post child spacing rule
+  #projects-fallback > * {
+    margin-left: $contentSpace;
+    margin-right: $contentSpace;
+    max-width: 900px;
+    line-height: 1.6;
+  }
+}
+
+#galaxy-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+
+  &.pickable {
+    cursor: pointer;
+  }
+}
+
+#galaxy-hud {
+  position: absolute;
+  inset: 0;
+  pointer-events: none; // only selected children take clicks
+  color: #ddd; // space stays dark in both themes
+
+  [hidden] {
+    display: none !important;
+  }
+}
+
+#galaxy-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0.2em 0.7em;
+  border: 1px solid var(--accent-color);
+  border-radius: 1em;
+  background: rgba(0, 0, 0, 0.7);
+  white-space: nowrap;
+  font-size: 0.9rem;
+}
+
+#galaxy-hint {
+  position: absolute;
+  bottom: 0.5em;
+  width: 100%;
+  margin: 0;
+  text-align: center;
+  font-style: italic;
+  color: gray;
+}
+
+#galaxy-back {
+  position: absolute;
+  top: 1em;
+  left: 1em;
+  pointer-events: auto;
+  padding: 0.4em 1em;
+  border: 1px solid var(--accent-color);
+  border-radius: 1em;
+  background: rgba(0, 0, 0, 0.55);
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+#galaxy-info {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  max-width: min(22em, 70%);
+  padding: 0.5em 1em;
+  border: 1px solid var(--accent-color);
+  border-radius: 0.5em;
+  background: rgba(0, 0, 0, 0.55);
+
+  h2 {
+    margin: 0.3em 0;
+  }
+
+  a {
+    pointer-events: auto;
+    color: var(--accent-color);
+  }
+}
+
+#galaxy-fade {
+  position: absolute;
+  inset: 0;
+  background: black;
+  opacity: 0;
+}

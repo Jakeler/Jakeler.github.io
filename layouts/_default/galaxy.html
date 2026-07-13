@@ -1,0 +1,72 @@
+{{ define "main" }}
+{{- partial "navigation.html" (dict "page" . "toc" "" "title" .Title) -}}
+
+{{/* resolve post paths from data/projects.yaml once; feeds both the
+     fallback list and the JSON consumed by the galaxy JS */}}
+{{- $projects := slice }}
+{{- range hugo.Data.projects.projects }}
+  {{- $posts := slice }}
+  {{- range .posts }}
+    {{- with site.GetPage . }}
+      {{- $posts = $posts | append (dict "title" .Title "url" .RelPermalink "date" (.Date.Format "2006-01-02")) }}
+    {{- else }}
+      {{- errorf "data/projects.yaml: page not found: %s" . }}
+    {{- end }}
+  {{- end }}
+  {{- $projects = $projects | append (dict
+        "id" .id
+        "name" .name
+        "description" (.description | markdownify | plainify)
+        "repo" .repo
+        "featured" .featured
+        "posts" $posts) }}
+{{- end }}
+
+<article class="post galaxy-page">
+    <div id="galaxy-container" aria-hidden="true">
+        <canvas id="galaxy-canvas"></canvas>
+        <div id="galaxy-hud">
+            <div id="galaxy-label" hidden></div>
+            <button id="galaxy-back" hidden>&larr; Back to galaxy</button>
+            <aside id="galaxy-info" hidden></aside>
+            <p id="galaxy-hint">Click a glowing star to explore a project</p>
+            <div id="galaxy-fade"></div>
+        </div>
+    </div>
+
+    <div id="projects-fallback">
+        <p class="galaxy-notice">
+            The interactive galaxy view requires JavaScript and WebGL,
+            plain list below.
+        </p>
+        <header class="post-header">
+            <h1 class="post-title p-name">{{ .Title }}</h1>
+        </header>
+        {{ .Content }}
+        {{- range $projects }}
+        <section class="project">
+            <h3>{{ .name }}</h3>
+            <p>{{ .description }}</p>
+            {{- with .posts }}
+            <p>Posts:</p>
+            <ul>
+                {{- range . }}
+                <li><a href="{{ .url }}">{{ .title }}</a> ({{ .date }})</li>
+                {{- end }}
+            </ul>
+            {{- end }}
+            {{- with .repo }}
+            <p>Repo: <a href="{{ . }}">{{ . }}</a></p>
+            {{- end }}
+            {{- range .featured }}
+            <p>Featured in: <a href="{{ . }}">{{ . }}</a></p>
+            {{- end }}
+        </section>
+        {{- end }}
+    </div>
+</article>
+
+<script id="projects-data" type="application/json">{{ (dict "projects" $projects) | jsonify | safeJS }}</script>
+{{- $js := resources.Get "js/galaxy/main.js" | js.Build (dict "minify" hugo.IsProduction "targetPath" "js/galaxy.js") | fingerprint }}
+<script type="module" src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}"></script>
+{{ end }}
