@@ -30,7 +30,10 @@ export class Transitions {
     const tween = this.queue[0]
     if (!tween) return
     tween.elapsed = Math.min(tween.elapsed + dt, tween.duration)
-    tween.onUpdate(ease(tween.elapsed / tween.duration))
+    const raw = tween.elapsed / tween.duration
+    // eased time for motion, raw time for the fade windows: windows cut
+    // out of eased time inherit its mid-tween velocity spike and pop
+    tween.onUpdate(ease(raw), raw)
     if (tween.elapsed >= tween.duration) {
       this.queue.shift()
       tween.resolve()
@@ -46,17 +49,21 @@ export class Transitions {
     const from = galaxy.camera.position.clone()
     const fromLook = new THREE.Vector3(0, 0, 0)
     const starPos = star.getWorldPosition(new THREE.Vector3())
-    const to = starPos.clone().add(new THREE.Vector3(0, 2.5, 7))
+    const to = starPos.clone().add(new THREE.Vector3(0, 2, 7))
     const look = new THREE.Vector3()
     const sysFrom = system.cameraHome.clone().add(new THREE.Vector3(0, 5, 14))
     const sysTo = system.cameraHome
     system.setOpacity(0)
     this.overlap = true
-    await this.#tween(1.8, t => {
+    await this.#tween(2.4, (t, raw) => {
       galaxy.camera.position.lerpVectors(from, to, t)
       galaxy.camera.lookAt(look.lerpVectors(fromLook, starPos, t))
-      galaxy.setOpacity(1 - window01((t - 0.6) / 0.4))
-      const s = window01((t - 0.45) / 0.55)
+      // windows run on raw time; eased t is capped at 1 and spikes
+      // mid-tween, so windows cut from it pop instead of ramping
+      galaxy.setOpacity(1 - window01((raw - 0.9) / 0.1))
+      // long gentle reveal: the sun has to outshine the galaxy core
+      // before it reads as "appearing", so give it most of the flight
+      const s = window01((raw - 0.8) / 0.2)
       system.setOpacity(s)
       system.camera.position.lerpVectors(sysFrom, sysTo, s)
       system.camera.lookAt(0, 0, 0)
@@ -81,12 +88,12 @@ export class Transitions {
     const sysTo = system.cameraHome.clone().add(new THREE.Vector3(0, 5, 14))
     galaxy.setOpacity(0)
     this.overlap = true
-    await this.#tween(1.8, t => {
-      const s = window01(t / 0.55)
+    await this.#tween(1.2, (t, raw) => {
+      const s = window01(raw / 0.6)
       system.camera.position.lerpVectors(sysFrom, sysTo, s)
       system.camera.lookAt(0, 0, 0)
       system.setOpacity(1 - s)
-      galaxy.setOpacity(window01((t - 0.2) / 0.4))
+      galaxy.setOpacity(window01((raw - 0.25) / 0.5))
       galaxy.camera.position.lerpVectors(from, to, t)
       galaxy.camera.lookAt(look.lerpVectors(starPos, new THREE.Vector3(0, 0, 0), t))
     })

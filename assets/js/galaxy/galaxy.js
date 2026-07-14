@@ -41,7 +41,7 @@ export function glowTexture(color, coreSize = 0.25, edge = 1) {
 
 // logarithmic spiral: r = A * e^(B*t), two arms offset by PI
 const ARM = { A: 2.5, B: 0.36, T_MIN: 0.3, T_MAX: 2.5 * Math.PI }
-const CAMERA_HOME = new THREE.Vector3(0, 44, 60)
+const CAMERA_HOME = new THREE.Vector3(0, 34, 66)
 
 function armPoint(t, arm) {
   const r = ARM.A * Math.exp(ARM.B * t)
