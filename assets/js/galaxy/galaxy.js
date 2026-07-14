@@ -39,6 +39,38 @@ export function glowTexture(color, coreSize = 0.25, edge = 1) {
   return tex
 }
 
+// accretion disc texture: radial gradient (hot white inner rim through
+// orange to a transparent outer edge) plus faint seeded arc streaks so the
+// disc's spin is visible. RingGeometry UVs are planar, so a gradient
+// centered on the canvas maps straight onto the ring.
+function discTexture(innerFrac) {
+  const size = 512, R = size / 2
+  const canvas = document.createElement('canvas')
+  canvas.width = canvas.height = size
+  const ctx = canvas.getContext('2d')
+  const g = ctx.createRadialGradient(R, R, 0, R, R, R)
+  g.addColorStop(innerFrac, '#ffffff')
+  g.addColorStop(innerFrac + 0.1, '#ffcc88')
+  g.addColorStop(0.7, 'rgba(255,120,40,0.4)')
+  g.addColorStop(1, 'rgba(0,0,0,0)')
+  ctx.fillStyle = g
+  ctx.fillRect(0, 0, size, size)
+  const rand = prng(42) // seeded: same streaks every visit, like the stars
+  for (let i = 0; i < 60; i++) {
+    const r = R * (innerFrac + 0.04 + rand() * (0.95 - innerFrac))
+    const start = rand() * 2 * Math.PI
+    const bright = rand() > 0.5
+    ctx.strokeStyle = bright ? 'rgba(255,230,200,0.10)' : 'rgba(0,0,0,0.16)'
+    ctx.lineWidth = 1 + rand() * 3
+    ctx.beginPath()
+    ctx.arc(R, R, r, start, start + 0.4 + rand() * 1.6)
+    ctx.stroke()
+  }
+  const tex = new THREE.CanvasTexture(canvas)
+  tex.colorSpace = THREE.SRGBColorSpace
+  return tex
+}
+
 // logarithmic spiral: r = A * e^(B*t), two arms offset by PI
 const ARM = { A: 2.5, B: 0.36, T_MIN: 0.3, T_MAX: 2.5 * Math.PI }
 const CAMERA_HOME = new THREE.Vector3(0, 34, 66)
@@ -59,6 +91,7 @@ export class GalaxyScene {
     this.raycaster = new THREE.Raycaster()
 
     this.scene.add(this.#makeStars())
+    this.scene.add(this.#makeBlackHole())
     this.projectSprites = this.#makeProjectStars(projects, accent)
     for (const s of this.projectSprites) this.scene.add(s)
   }
@@ -101,7 +134,14 @@ export class GalaxyScene {
     // central bulge, yellow tinted and flattened; smaller stars so the
     // dense additive core doesn't blow out
     for (let i = 0; i < 30000; i++) {
-      const x = gaussian(rand) * 4, z = gaussian(rand) * 4, y = gaussian(rand) * 1.6
+      // resample points that land on the black hole: additive dots would
+      // sprinkle across the dark core and the accretion disc
+      let x, z
+      do {
+        x = gaussian(rand) * 4
+        z = gaussian(rand) * 4
+      } while (Math.hypot(x, z) < 2.2)
+      const y = gaussian(rand) * 1.6
       const bright = 0.5 + rand() * 0.5
       push(x, y, z, bright, bright * 0.88, bright * 0.68, 0.7)
     }
@@ -153,6 +193,61 @@ export class GalaxyScene {
     return new THREE.Points(geometry, this.starMaterial)
   }
 
+  // supermassive black hole at the galaxy center: event horizon sphere,
+  // accretion disc in the galactic plane, and a soft photon glow
+  #makeBlackHole() {
+    // separate from spriteMaterials: setAccent() swaps the map on those,
+    // which would replace the disc texture with the accent glow
+    this.fadeMaterials = []
+    const fade = material => {
+      material.userData.baseOpacity = material.opacity
+      this.fadeMaterials.push(material)
+      return material
+    }
+    const group = new THREE.Group()
+
+    // event horizon: writes depth, so the additive stars (depth-tested,
+    // drawn later) are culled behind it — a hole punched in the bright
+    // core. renderOrder puts it first within the transparent pass, where
+    // its depth-sort key ties with the star Points (both at the origin).
+    const HORIZON = 1.4
+    const horizon = new THREE.Mesh(
+      new THREE.SphereGeometry(HORIZON, 32, 16),
+      fade(new THREE.MeshBasicMaterial({ color: 0x000000, transparent: true })),
+    )
+    horizon.renderOrder = -1
+    group.add(horizon)
+
+    // accretion disc, spun in update(); warm white-orange on purpose,
+    // independent of the theme accent
+    const inner = HORIZON + 0.2, outer = 5
+    this.disc = new THREE.Mesh(
+      new THREE.RingGeometry(inner, outer, 96),
+      fade(new THREE.MeshBasicMaterial({
+        map: discTexture(inner / outer * 0.5), // uv radius of the inner rim
+        transparent: true,
+        depthWrite: false,
+        side: THREE.DoubleSide,
+        blending: THREE.AdditiveBlending,
+      })),
+    )
+    this.disc.rotation.x = -Math.PI / 2
+    group.add(this.disc)
+
+    // photon glow: camera-facing halo; its center fragments sit behind the
+    // horizon's depth, so only a bright ring survives around the silhouette
+    const glow = new THREE.Sprite(fade(new THREE.SpriteMaterial({
+      map: glowTexture('#ffaa66', 0.1),
+      transparent: true,
+      opacity: 0.4,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+    })))
+    glow.scale.setScalar(7)
+    group.add(glow)
+    return group
+  }
+
   // point sizes are in device pixels, keep them proportional to the buffer
   setViewport(bufferHeight) {
     this.starMaterial.uniforms.uScale.value = bufferHeight / 2
@@ -162,6 +257,8 @@ export class GalaxyScene {
   setOpacity(v) {
     this.starMaterial.uniforms.uOpacity.value = v
     for (const material of this.spriteMaterials) material.opacity = v
+    for (const material of this.fadeMaterials)
+      material.opacity = material.userData.baseOpacity * v
   }
 
   #makeProjectStars(projects, accent) {
@@ -201,6 +298,7 @@ export class GalaxyScene {
     // main.js clears `rotate` during transitions: the flight targets the
     // star's position at click time, so the scene must not drift under it
     if (this.rotate !== false) this.scene.rotation.y += 0.012 * dt
+    this.disc.rotation.z += 0.05 * dt // accretion disc spins faster
     for (const s of this.projectSprites) {
       const { baseScale, index } = s.userData
       s.scale.setScalar(baseScale * (1 + 0.18 * Math.sin(elapsed * 2 + index * 1.7)))

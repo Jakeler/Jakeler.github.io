@@ -115,6 +115,9 @@ function init() {
         // crossfade: both scenes composite into the same frame
         renderer.render(galaxy.scene, galaxy.camera)
         renderer.autoClear = false
+        // the black hole's horizon writes depth; drop it so it can't
+        // occlude the sun/planets composited on top
+        renderer.clearDepth()
         renderer.render(system.scene, system.camera)
         renderer.autoClear = true
       } else {
