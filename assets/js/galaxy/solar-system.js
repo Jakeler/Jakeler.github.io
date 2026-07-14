@@ -22,6 +22,74 @@ function hash01(str, salt = 0) {
 
 const CAMERA_HOME = new THREE.Vector3(0, 20, 46)
 
+// markdownify in the template turns straight quotes into HTML entities
+// (&rdquo; etc); canvas fillText would draw them literally, so decode first
+const decoder = document.createElement('textarea')
+function decodeEntities(s) {
+  decoder.innerHTML = s
+  return decoder.value
+}
+
+// bake the project name + description + a hint onto a canvas mapped over the
+// star. The text is kept in a narrow band around the camera-facing point of
+// the sphere UV (+Z pole, u≈0.25 v≈0.5), vertically centred, so it sits on
+// the flattest part of the visible face and only curves gently. White with a
+// dark outline to read over the bright sun.
+function infoTexture(project) {
+  const W = 2048, H = 1024
+  const MAX_W = 400 // narrow column = text stays central, curvature stays mild
+  const canvas = document.createElement('canvas')
+  canvas.width = W
+  canvas.height = H
+  const ctx = canvas.getContext('2d')
+  ctx.translate(W * 0.25, H * 0.5) // origin at the camera-facing point
+  ctx.textAlign = 'center'
+  ctx.textBaseline = 'middle'
+  ctx.lineJoin = 'round'
+  const face = (px, style = '') =>
+    `${style} ${px}px -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif`
+
+  // rows: shrink the name to fit, wrap the description, then a hint
+  const rows = []
+  let nameFont = 46
+  ctx.font = face(nameFont, 'bold')
+  while (ctx.measureText(decodeEntities(project.name)).width > MAX_W + 40 && nameFont > 24) {
+    ctx.font = face(nameFont -= 2, 'bold')
+  }
+  rows.push({ text: decodeEntities(project.name), px: nameFont, style: 'bold', stroke: 8, h: nameFont + 14 })
+
+  ctx.font = face(26)
+  let cur = ''
+  for (const word of decodeEntities(project.description).split(/\s+/)) {
+    const test = cur ? `${cur} ${word}` : word
+    if (cur && ctx.measureText(test).width > MAX_W) { rows.push({ text: cur, px: 26, stroke: 6, h: 32 }); cur = word }
+    else cur = test
+  }
+  if (cur) rows.push({ text: cur, px: 26, stroke: 6, h: 32 })
+
+  const n = project.posts.length
+  rows.push({
+    text: n ? `${n} post${n > 1 ? 's' : ''} · click one to read` : 'no posts yet · see the repo',
+    px: 22, style: 'italic', stroke: 5, h: 46,
+  })
+
+  // centre the whole block vertically on the equator
+  let y = -rows.reduce((sum, r) => sum + r.h, 0) / 2
+  for (const r of rows) {
+    y += r.h / 2
+    ctx.font = face(r.px, r.style || '')
+    ctx.strokeStyle = 'rgba(0,0,0,0.85)'
+    ctx.lineWidth = r.stroke
+    ctx.strokeText(r.text, 0, y)
+    ctx.fillStyle = '#fff'
+    ctx.fillText(r.text, 0, y)
+    y += r.h / 2
+  }
+  const tex = new THREE.CanvasTexture(canvas)
+  tex.colorSpace = THREE.SRGBColorSpace
+  return tex
+}
+
 export class SolarSystemScene {
   constructor({ accent, reducedMotion }) {
     this.reducedMotion = reducedMotion
@@ -34,10 +102,17 @@ export class SolarSystemScene {
     this.pivots = []
     this.pickables = []
     this.orbits = []
+    this.infoMesh = null
     this.built = null
   }
 
   get cameraHome() { return CAMERA_HOME.clone() }
+
+  // keep the text side of the star turned toward the camera (called from the
+  // render loop so it also tracks drag/zoom in reduced-motion mode)
+  orient() {
+    if (this.infoMesh) this.infoMesh.lookAt(this.camera.position)
+  }
 
   show(project) {
     this.dispose()
@@ -63,11 +138,21 @@ export class SolarSystemScene {
       glow.scale.setScalar(scale)
       this.scene.add(glow)
     }
-    // invisible anchor above the sun so its name label clears the glow at
-    // any zoom (tracked in 3D, unlike a fixed pixel offset)
-    this.sunAnchor = new THREE.Object3D()
-    this.sunAnchor.position.set(0, 5, 0)
-    this.scene.add(this.sunAnchor)
+    // project name + description painted onto the star's surface so it
+    // curves with the sphere. A hair above the surface, rotated to face the
+    // camera each frame (orient()) so the text is always the near side. Tiny
+    // at the home distance, so you zoom in to read it.
+    const info = new THREE.Mesh(
+      new THREE.SphereGeometry(2.24, 48, 32),
+      new THREE.MeshBasicMaterial({
+        map: infoTexture(project),
+        transparent: true,
+        depthWrite: false,
+      }),
+    )
+    info.renderOrder = 5
+    this.scene.add(info)
+    this.infoMesh = info
 
     project.posts.forEach((post, j) => {
       // wide inner radius so even a long title stays a gentle arc, not a
@@ -159,6 +244,7 @@ export class SolarSystemScene {
     this.pivots = []
     this.pickables = []
     this.orbits = []
+    this.infoMesh = null
     this.built = null
   }
 }

@@ -17,7 +17,7 @@ const container = document.getElementById('galaxy-container')
 const canvas = document.getElementById('galaxy-canvas')
 const hud = {
   back: document.getElementById('galaxy-back'),
-  info: document.getElementById('galaxy-info'),
+  links: document.getElementById('galaxy-links'),
   hint: document.getElementById('galaxy-hint'),
 }
 
@@ -53,7 +53,6 @@ function init() {
       html: `<span class="name">${esc(project.name)}</span><span class="count">${project.posts.length}</span>`,
     }
   })
-  const sunLabel = () => [{ object: system.sunAnchor, kind: 'sun', html: esc(system.built.name) }]
 
   let state = 'galaxy' // galaxy | zooming-in | system | zooming-out
   let activeStar = null
@@ -111,6 +110,7 @@ function init() {
       needsRender = true
     }
     if (needsRender) {
+      system.orient() // turn the star's text side toward the camera
       if (transitions.overlap) {
         // crossfade: both scenes composite into the same frame
         renderer.render(galaxy.scene, galaxy.camera)
@@ -123,6 +123,7 @@ function init() {
       }
       labels.update(active().camera, container.clientWidth, container.clientHeight)
       orbits.update(active().camera, container.clientWidth, container.clientHeight)
+      if (current === system) updateLinks()
       needsRender = false
     }
   }
@@ -142,22 +143,34 @@ function init() {
   function setHudState() {
     hud.hint.hidden = state !== 'galaxy'
     hud.back.hidden = state !== 'system'
-    hud.info.hidden = state !== 'system'
+    // name + description now live on the star; only the links stay as HTML
+    hud.links.hidden = state !== 'system' || !hud.links.innerHTML
   }
 
-  function showInfo(project) {
+  // the project name/description are painted on the star (see solar-system);
+  // repo + featured links can't live on a texture, so keep them as HTML
+  function showLinks(project) {
     const links = []
     if (project.repo)
-      links.push(`<a href="${project.repo}">Repo</a>`)
+      links.push(`<a href="${project.repo}">Repository</a>`)
     for (const url of project.featured ?? [])
-      links.push(`<a href="${url}">Featured in ${new URL(url).hostname}</a>`)
-    hud.info.innerHTML = `
-      <h2>${project.name}</h2>
-      <p>${project.description}</p>
-      <p>${project.posts.length
-        ? `${project.posts.length} post${project.posts.length > 1 ? 's' : ''} orbiting — click a planet to read`
-        : 'No posts yet, see the repo'}</p>
-      ${links.length ? `<p>${links.join(' · ')}</p>` : ''}`
+      links.push(`<a href="${url}">Featured on ${new URL(url).hostname}</a>`)
+    hud.links.innerHTML = links.join('')
+  }
+
+  // links are pinned just under the star and only fade in once you've zoomed
+  // in close to it (the .near class drives opacity + clickability). The
+  // anchor is offset along screen-down (camera's own down axis), not world
+  // -Y, so it stays the same distance below the star at any camera angle —
+  // like the on-star text, which always faces the camera.
+  const linkAnchor = new THREE.Vector3()
+  function updateLinks() {
+    if (!hud.links.innerHTML) return
+    hud.links.classList.toggle('near', system.camera.position.length() < 28)
+    linkAnchor.set(0, -1, 0).applyQuaternion(system.camera.quaternion).multiplyScalar(3.6).project(system.camera)
+    const x = (linkAnchor.x * 0.5 + 0.5) * container.clientWidth
+    const y = (-linkAnchor.y * 0.5 + 0.5) * container.clientHeight
+    hud.links.style.transform = `translate(-50%, 0) translate(${x}px, ${y}px)`
   }
 
   // --- picking ---
@@ -200,10 +213,10 @@ function init() {
     setHudState()
     labels.show(false) // fade galaxy names out for the flight
     system.show(star.userData.project)
-    showInfo(star.userData.project)
+    showLinks(star.userData.project)
     await transitions.zoomIn(galaxy, star, system, () => {
       current = system
-      labels.set(sunLabel())
+      labels.set([]) // the sun carries its own name now
       orbits.set(system.orbits)
       needsRender = true
     })
@@ -254,8 +267,8 @@ function init() {
     state = 'system'
     current = system
     system.show(initial.userData.project)
-    showInfo(initial.userData.project)
-    labels.set(sunLabel())
+    showLinks(initial.userData.project)
+    labels.set([])
     orbits.set(system.orbits)
     // keep a galaxy entry below, so Back zooms out instead of leaving
     const hash = location.hash

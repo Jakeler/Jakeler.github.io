@@ -120,13 +120,6 @@ article.galaxy-page {
   }
 }
 
-.galaxy-sun-label {
-  white-space: nowrap;
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: var(--accent-color);
-}
-
 // post titles drawn curving along their orbit rings (see orbit-text.js)
 .galaxy-orbit-labels {
   position: absolute;
@@ -185,22 +178,28 @@ article.galaxy-page {
   cursor: pointer;
 }
 
-#galaxy-info {
+// repo / featured links, pinned under the star; JS sets the transform and
+// toggles .near so they only fade in (and become clickable) once zoomed in
+#galaxy-links {
   position: absolute;
-  top: 1em;
-  right: 1em;
-  max-width: min(22em, 70%);
-  padding: 0.5em 1em;
-  border: 1px solid var(--accent-color);
-  border-radius: 0.5em;
-  background: rgba(0, 0, 0, 0.55);
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
 
-  h2 {
-    margin: 0.3em 0;
+  &.near {
+    opacity: 1;
+
+    a {
+      pointer-events: auto;
+    }
   }
 
   a {
-    pointer-events: auto;
+    margin: 0 0.5em;
     color: var(--accent-color);
+    text-shadow: 0 0 4px #000, 0 0 8px #000;
   }
 }
