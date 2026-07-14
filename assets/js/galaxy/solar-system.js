@@ -20,7 +20,7 @@ function hash01(str, salt = 0) {
   return (h >>> 0) / 4294967296
 }
 
-const CAMERA_HOME = new THREE.Vector3(0, 16, 36)
+const CAMERA_HOME = new THREE.Vector3(0, 20, 46)
 
 export class SolarSystemScene {
   constructor({ accent, reducedMotion }) {
@@ -33,6 +33,7 @@ export class SolarSystemScene {
     this.raycaster = new THREE.Raycaster()
     this.pivots = []
     this.pickables = []
+    this.orbits = []
     this.built = null
   }
 
@@ -62,9 +63,16 @@ export class SolarSystemScene {
       glow.scale.setScalar(scale)
       this.scene.add(glow)
     }
+    // invisible anchor above the sun so its name label clears the glow at
+    // any zoom (tracked in 3D, unlike a fixed pixel offset)
+    this.sunAnchor = new THREE.Object3D()
+    this.sunAnchor.position.set(0, 5, 0)
+    this.scene.add(this.sunAnchor)
 
     project.posts.forEach((post, j) => {
-      const orbit = 6 + 3.5 * j
+      // wide inner radius so even a long title stays a gentle arc, not a
+      // vertical curl (a small ring can't hold long text flatly)
+      const orbit = 9 + 4 * j
       const size = 0.55 + hash01(post.title) * 0.4
       const planet = new THREE.Mesh(
         new THREE.SphereGeometry(size, 24, 12),
@@ -95,6 +103,19 @@ export class SolarSystemScene {
       )
       ring.rotation.x = Math.PI / 2
       this.scene.add(ring)
+
+      // invisible fat torus over the ring so a click anywhere along the
+      // orbit (not only on the planet) opens the post
+      const hoop = new THREE.Mesh(new THREE.TorusGeometry(orbit, 1.1, 6, 80))
+      hoop.rotation.x = Math.PI / 2
+      hoop.visible = false
+      hoop.userData = post
+      this.scene.add(hoop)
+      this.pickables.push(hoop)
+
+      // title drawn curving along this ring (orbit-text.js); its centre and
+      // arc length are derived from the camera there each frame
+      this.orbits.push({ radius: orbit, title: post.title })
     })
   }
 
@@ -137,6 +158,7 @@ export class SolarSystemScene {
     }
     this.pivots = []
     this.pickables = []
+    this.orbits = []
     this.built = null
   }
 }

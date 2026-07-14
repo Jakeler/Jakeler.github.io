@@ -7,12 +7,15 @@ import { SolarSystemScene } from './solar-system.js'
 import { Transitions } from './transitions.js'
 import { ThemeWatcher } from './theme.js'
 import { DragOrbit } from './controls.js'
+import { LabelLayer } from './labels.js'
+import { OrbitText } from './orbit-text.js'
+
+const esc = s => String(s).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]))
 
 const article = document.querySelector('article.galaxy-page')
 const container = document.getElementById('galaxy-container')
 const canvas = document.getElementById('galaxy-canvas')
 const hud = {
-  label: document.getElementById('galaxy-label'),
   back: document.getElementById('galaxy-back'),
   info: document.getElementById('galaxy-info'),
   hint: document.getElementById('galaxy-hint'),
@@ -37,6 +40,20 @@ function init() {
   const system = new SolarSystemScene({ accent: theme.accent, reducedMotion })
   const transitions = new Transitions(reducedMotion)
   renderer.setClearColor(theme.background)
+
+  // always-on captions: point labels for the stars and the sun (LabelLayer),
+  // titles curving along each orbit ring for the posts (OrbitText)
+  const labels = new LabelLayer(container)
+  const orbits = new OrbitText(container)
+  const galaxyLabels = galaxy.projectSprites.map(sprite => {
+    const { project } = sprite.userData
+    return {
+      object: sprite,
+      kind: 'star',
+      html: `<span class="name">${esc(project.name)}</span><span class="count">${project.posts.length}</span>`,
+    }
+  })
+  const sunLabel = () => [{ object: system.sunAnchor, kind: 'sun', html: esc(system.built.name) }]
 
   let state = 'galaxy' // galaxy | zooming-in | system | zooming-out
   let activeStar = null
@@ -104,6 +121,8 @@ function init() {
         const scene = active()
         renderer.render(scene.scene, scene.camera)
       }
+      labels.update(active().camera, container.clientWidth, container.clientHeight)
+      orbits.update(active().camera, container.clientWidth, container.clientHeight)
       needsRender = false
     }
   }
@@ -124,7 +143,6 @@ function init() {
     hud.hint.hidden = state !== 'galaxy'
     hud.back.hidden = state !== 'system'
     hud.info.hidden = state !== 'system'
-    hud.label.hidden = true
   }
 
   function showInfo(project) {
@@ -142,15 +160,6 @@ function init() {
       ${links.length ? `<p>${links.join(' · ')}</p>` : ''}`
   }
 
-  function moveLabel(object, text) {
-    const pos = object.getWorldPosition(new THREE.Vector3()).project(active().camera)
-    const x = (pos.x * 0.5 + 0.5) * container.clientWidth
-    const y = (-pos.y * 0.5 + 0.5) * container.clientHeight
-    hud.label.textContent = text
-    hud.label.style.transform = `translate(-50%, -130%) translate(${x}px, ${y}px)`
-    hud.label.hidden = false
-  }
-
   // --- picking ---
   const ndc = new THREE.Vector2()
   function toNdc(event) {
@@ -162,18 +171,10 @@ function init() {
     return ndc
   }
 
+  // labels are always on now; hover only sets the pointer affordance
   canvas.addEventListener('pointermove', event => {
     if (transitions.active) return
-    const hit = active().pick(toNdc(event))
-    canvas.classList.toggle('pickable', !!hit)
-    if (!hit) {
-      hud.label.hidden = true
-    } else if (state === 'galaxy') {
-      const { project } = hit.userData
-      moveLabel(hit, `${project.name} (${project.posts.length} post${project.posts.length === 1 ? '' : 's'})`)
-    } else if (state === 'system') {
-      moveLabel(hit, `${hit.userData.title} · ${hit.userData.date}`)
-    }
+    canvas.classList.toggle('pickable', !!active().pick(toNdc(event)))
   })
 
   // ignore clicks that were drags
@@ -197,26 +198,36 @@ function init() {
     activeStar = star
     state = 'zooming-in'
     setHudState()
+    labels.show(false) // fade galaxy names out for the flight
     system.show(star.userData.project)
     showInfo(star.userData.project)
     await transitions.zoomIn(galaxy, star, system, () => {
       current = system
+      labels.set(sunLabel())
+      orbits.set(system.orbits)
       needsRender = true
     })
     state = 'system'
     setHudState()
+    labels.show(true)
+    orbits.show(true)
   }
 
   async function exitSystem() {
     if (state !== 'system' || !activeStar) return
     state = 'zooming-out'
     setHudState()
+    labels.show(false)
+    orbits.show(false)
     await transitions.zoomOut(system, galaxy, activeStar, () => {
       current = galaxy
+      labels.set(galaxyLabels)
+      orbits.clear()
       needsRender = true
     })
     state = 'galaxy'
     setHudState()
+    labels.show(true)
     system.dispose()
     activeStar = null
   }
@@ -244,11 +255,17 @@ function init() {
     current = system
     system.show(initial.userData.project)
     showInfo(initial.userData.project)
+    labels.set(sunLabel())
+    orbits.set(system.orbits)
     // keep a galaxy entry below, so Back zooms out instead of leaving
     const hash = location.hash
     history.replaceState({ view: 'galaxy' }, '', location.pathname)
     history.pushState({ view: 'system' }, '', hash)
+  } else {
+    labels.set(galaxyLabels)
   }
+  labels.show(true)
+  if (initial) orbits.show(true)
   setHudState()
 }
 
