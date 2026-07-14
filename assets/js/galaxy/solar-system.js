@@ -227,6 +227,12 @@ export class SolarSystemScene {
       const material = obj.material
       if (!material) return
       material.userData.baseOpacity ??= material.opacity
+      // an opaque material that has already been compiled (the sun and
+      // planets, once a deep-linked scene has rendered at full opacity)
+      // needs a program recompile when it turns transparent — otherwise
+      // three keeps its opaque program and ignores opacity, so the fade
+      // never takes and the system hangs on screen until the swap
+      if (!material.transparent) material.needsUpdate = true
       material.transparent = true
       material.opacity = material.userData.baseOpacity * v
     })
